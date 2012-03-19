@@ -37,7 +37,7 @@ namespace King_of_Thieves.Graphics
         /*
             * x == row
             * y == column
-            */
+        */
         private void _assembleTextureAtlas(CTextureAtlas textureAtlas)
         {
             for (int y = 0; y <= (textureAtlas.SourceImage.Bounds.Height / textureAtlas.FrameHeight) - 1; y++)
