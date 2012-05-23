@@ -12,6 +12,7 @@ namespace King_of_Thieves
         {
             using (Game1 game = new Game1())
             {
+                //git sanity test
                 game.Run();
             }
         }
