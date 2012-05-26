@@ -9,6 +9,7 @@ namespace King_of_Thieves.Input
 {
     static class CInput
     {
+        //git sanity test, don't mind me. -Steve
         public static bool getInputDown(Buttons button)
         {
             if (!_padStateCurrent.IsConnected)
