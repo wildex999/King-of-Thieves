@@ -15,14 +15,14 @@ namespace King_of_Thieves.Graphics
         private VertexBuffer _vertexBuffer;
         public float aspectRatio = (float)CGraphics.GPU.Viewport.Width / (float)CGraphics.GPU.Viewport.Height;
 
-        public CRenderable(Effect shader, params VertexPositionColor[] vertices)
+        public CRenderable(Effect shader = null, params VertexPositionColor[] vertices)
         {
             _shader = shader;
             this.vertices = vertices;
             _vertexBuffer = new VertexBuffer(CGraphics.GPU, VertexPositionColor.VertexDeclaration, vertices.Length, BufferUsage.WriteOnly);
         }
 
-        public void draw(GraphicsDevice graphics)
+        public virtual void draw(GraphicsDevice graphics)
         {
 
             foreach (EffectPass pass in _shader.CurrentTechnique.Passes)
