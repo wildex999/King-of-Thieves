@@ -17,20 +17,23 @@ namespace King_of_Thieves.Graphics
 
         public CRenderable(Effect shader = null, params VertexPositionColor[] vertices)
         {
-            _shader = shader;
-            this.vertices = vertices;
-            _vertexBuffer = new VertexBuffer(CGraphics.GPU, VertexPositionColor.VertexDeclaration, vertices.Length, BufferUsage.WriteOnly);
+            if (vertices.Count() > 0)
+            {
+                _shader = shader;
+                this.vertices = vertices;
+                _vertexBuffer = new VertexBuffer(CGraphics.GPU, VertexPositionColor.VertexDeclaration, vertices.Length, BufferUsage.WriteOnly);
+            }
         }
 
-        public virtual void draw(GraphicsDevice graphics)
+        public virtual void draw()
         {
-
-            foreach (EffectPass pass in _shader.CurrentTechnique.Passes)
-            {
-                pass.Apply();
-                CGraphics.GPU.SetVertexBuffer(_vertexBuffer);
-                graphics.DrawIndexedPrimitives(PrimitiveType.LineList, 0, 0, vertices.Length, 0, 1);
-            }
+            if (_shader != null)
+                foreach (EffectPass pass in _shader.CurrentTechnique.Passes)
+                {
+                    pass.Apply();
+                    CGraphics.GPU.SetVertexBuffer(_vertexBuffer);
+                    CGraphics.GPU.DrawIndexedPrimitives(PrimitiveType.LineList, 0, 0, vertices.Length, 0, 1);
+                }
         }
 
         public void swapTechnique(string name)

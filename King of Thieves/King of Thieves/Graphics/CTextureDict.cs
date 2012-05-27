@@ -15,7 +15,8 @@ namespace King_of_Thieves.Graphics
 
         public static void init(ContentManager content)
         {
-            //_textures.Add(
+            _textures = new Dictionary<string, Texture2D>();
+            _textures.Add("test", content.Load<Texture2D>("test"));
         }
 
         public static Texture2D getTexture(string name)

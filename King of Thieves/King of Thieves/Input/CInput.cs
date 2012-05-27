@@ -9,6 +9,14 @@ namespace King_of_Thieves.Input
 {
     static class CInput
     {
+        private static GamePadState _padStateCurrent;
+        private static KeyboardState _keyStateCurrent;
+        private static MouseState _mouseStateCurrent;
+
+        private static GamePadState _padStatePrevious;
+        private static KeyboardState _keyStatePrevious;
+        private static MouseState _mouseStatePrevious;
+
         //sanity test for git, don't mind me. -Steve
         public static bool getInputDown(Buttons button)
         {
@@ -83,13 +91,7 @@ namespace King_of_Thieves.Input
             _mouseStateCurrent = Mouse.GetState();
         }
 
-        private static GamePadState _padStateCurrent;
-        private static KeyboardState _keyStateCurrent;
-        private static MouseState _mouseStateCurrent;
-
-        private static GamePadState _padStatePrevious;
-        private static KeyboardState _keyStatePrevious;
-        private static MouseState _mouseStatePrevious;
+        
     }
 
 

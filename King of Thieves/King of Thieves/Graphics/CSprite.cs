@@ -20,10 +20,10 @@ namespace King_of_Thieves.Graphics
             _size = new Rectangle(0, 0, _sprite.Width, _sprite.Height);
         }
 
-        public override void draw(ref SpriteBatch batch, ref GraphicsDevice device)
+        public void draw(ref SpriteBatch batch)
         {
             batch.Draw(_sprite, _size, Color.White);
-            base.draw(device);
+            base.draw();
         }
 
         public int width
