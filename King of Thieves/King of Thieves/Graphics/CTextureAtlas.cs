@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System.Windows.Forms;
 
 namespace King_of_Thieves.Graphics
 {
@@ -12,6 +13,8 @@ namespace King_of_Thieves.Graphics
         public int FrameWidth = 0, FrameHeight = 0, FrameRate = 1, CellSpacing = 0, Column = 0, Row = 0, CurrentCell = 0;
         private Rectangle[,] _textureAtlas;
         private Texture2D SourceImage;
+
+       
 
         public CTextureAtlas(Texture2D _sourceImage, int _frameWidth, int _frameHeight, int _cellSpacing)
         {

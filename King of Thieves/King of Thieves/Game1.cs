@@ -49,6 +49,7 @@ namespace King_of_Thieves
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
+            Graphics.CGraphics.spriteBatch = spriteBatch;
 
             // TODO: use this.Content to load your game content here
             Graphics.CTextureDict.init(Content);
@@ -93,7 +94,7 @@ namespace King_of_Thieves
 
             base.Draw(gameTime);
             spriteBatch.Begin();
-            testSprite.draw(ref spriteBatch);
+            testSprite.draw();
             spriteBatch.End();
         }
     }

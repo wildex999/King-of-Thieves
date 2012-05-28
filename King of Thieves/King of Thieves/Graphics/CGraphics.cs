@@ -10,6 +10,7 @@ namespace King_of_Thieves.Graphics
     static class CGraphics
     {
         private static GraphicsDeviceManager _graphicsInfo;
+        public static  SpriteBatch spriteBatch;
 
         public static GraphicsDevice GPU
         {

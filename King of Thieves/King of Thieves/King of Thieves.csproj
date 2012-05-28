@@ -93,6 +93,9 @@
     <Reference Include="System">
       <Private>False</Private>
     </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml">
       <Private>False</Private>
     </Reference>
@@ -107,6 +110,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Forms\TextureAtlas\frmTextureAtlas.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\TextureAtlas\frmTextureAtlas.Designer.cs">
+      <DependentUpon>frmTextureAtlas.cs</DependentUpon>
+    </Compile>
     <Compile Include="Graphics\CGraphics.cs" />
     <Compile Include="Graphics\CRenderable.cs" />
     <Compile Include="Graphics\CSprite.cs" />
@@ -153,6 +162,11 @@
       <ProductName>Microsoft XNA Framework Redistributable 4.0</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Forms\TextureAtlas\frmTextureAtlas.resx">
+      <DependentUpon>frmTextureAtlas.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\Microsoft.Xna.GameStudio.targets" />

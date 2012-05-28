@@ -20,9 +20,9 @@ namespace King_of_Thieves.Graphics
             _size = new Rectangle(0, 0, _sprite.Width, _sprite.Height);
         }
 
-        public void draw(ref SpriteBatch batch)
+        public override void draw()
         {
-            batch.Draw(_sprite, _size, Color.White);
+            CGraphics.spriteBatch.Draw(_sprite, _size, Color.White);
             base.draw();
         }
 
