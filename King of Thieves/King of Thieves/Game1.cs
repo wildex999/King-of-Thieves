@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
+using King_of_Thieves.Graphics;
 
 namespace King_of_Thieves
 {
@@ -18,10 +19,12 @@ namespace King_of_Thieves
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+        CSprite testSprite = null;
 
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
+            Graphics.CGraphics.acquireGraphics(ref graphics);
             Content.RootDirectory = "Content";
         }
 
@@ -34,7 +37,7 @@ namespace King_of_Thieves
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-
+            
             base.Initialize();
         }
 
@@ -46,8 +49,12 @@ namespace King_of_Thieves
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
+            Graphics.CGraphics.spriteBatch = spriteBatch;
 
             // TODO: use this.Content to load your game content here
+            Graphics.CTextureDict.init(Content);
+            testSprite = new CSprite(Graphics.CTextureDict.getTexture("test"));
+
         }
 
         /// <summary>
@@ -86,6 +93,9 @@ namespace King_of_Thieves
             // TODO: Add your drawing code here
 
             base.Draw(gameTime);
+            spriteBatch.Begin();
+            testSprite.draw();
+            spriteBatch.End();
         }
     }
 }
