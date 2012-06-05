@@ -11,25 +11,22 @@ namespace King_of_Thieves.Graphics
     {
 
         private Texture2D _sprite = null;
-        private CTileSheet _sheet = null;
         private Rectangle _size;
+        protected string _name = "";
 
         public CSprite(Texture2D sprite, Effect shader = null, params VertexPositionColor[] vertices)
             : base(shader, vertices)
         {
             _sprite = sprite;
             _size = new Rectangle(0, 0, _sprite.Width, _sprite.Height);
-        }
-
-        public CSprite(CTileSheet spriteSheet, Effect shader = null, params VertexPositionColor[] vertices)
-            :base(shader, vertices)
-        {
-            _sheet = spriteSheet;
-            _size = new Rectangle(0, 0, _sprite.Width, _sprite.Height);
+            _name = sprite.Name;
         }
 
         public override void draw()
         {
+            if (_sprite == null)
+                throw new FormatException("Unable to draw sprite " + _name + ", may be the target of an animation.");
+
             CGraphics.spriteBatch.Draw(_sprite, _size, Color.White);
             base.draw();
         }
