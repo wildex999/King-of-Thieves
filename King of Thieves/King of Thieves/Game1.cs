@@ -78,6 +78,9 @@ namespace King_of_Thieves
                 this.Exit();
 
             // TODO: Add your update logic here
+            Input.CInput.update();
+            testSprite.X = Input.CInput.mouseX;
+            testSprite.Y = Input.CInput.mouseY;
 
             base.Update(gameTime);
         }
@@ -91,10 +94,10 @@ namespace King_of_Thieves
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // TODO: Add your drawing code here
-
+            CMasterControl.drawQueue.Enqueue(testSprite);
             base.Draw(gameTime);
             spriteBatch.Begin();
-            testSprite.draw();
+            CMasterControl.drawQueue.Dequeue().draw();
             spriteBatch.End();
         }
     }

@@ -13,6 +13,7 @@ namespace King_of_Thieves.Graphics
         private Texture2D _sprite = null;
         private Rectangle _size;
         protected string _name = "";
+        private Vector2 _position = new Vector2(0);
 
         public CSprite(Texture2D sprite, Effect shader = null, params VertexPositionColor[] vertices)
             : base(shader, vertices)
@@ -27,9 +28,34 @@ namespace King_of_Thieves.Graphics
             if (_sprite == null)
                 throw new FormatException("Unable to draw sprite " + _name + ", may be the target of an animation.");
 
-            CGraphics.spriteBatch.Draw(_sprite, _size, Color.White);
+            CGraphics.spriteBatch.Draw(_sprite, _position, _size, Color.White);
             base.draw();
         }
+
+        public int X
+        {
+            get
+            {
+                return (int)_position.X;
+            }
+            set
+            {
+                _position.X = value;
+            }
+        }
+
+        public int Y
+        {
+            get
+            {
+                return (int)_position.Y;
+            }
+            set
+            {
+                _position.Y = value;
+            }
+        }
+
 
         public int width
         {
