@@ -110,6 +110,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CMasterControl.cs" />
     <Compile Include="Forms\TextureAtlas\frmTextureAtlas.cs">
       <SubType>Form</SubType>
     </Compile>
