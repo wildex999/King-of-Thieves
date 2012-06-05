@@ -13,7 +13,7 @@ namespace King_of_Thieves.Graphics
         private Texture2D _sprite = null;
         private Rectangle _size;
         protected string _name = "";
-        private Vector2 _position = new Vector2(0);
+        protected Vector2 _position = new Vector2(0);
 
         public CSprite(Texture2D sprite, Effect shader = null, params VertexPositionColor[] vertices)
             : base(shader, vertices)

@@ -110,7 +110,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Actors\CActor.cs" />
+    <Compile Include="Actors\CComponent.cs" />
     <Compile Include="CMasterControl.cs" />
+    <Compile Include="Events.cs" />
     <Compile Include="Forms\TextureAtlas\frmTextureAtlas.cs">
       <SubType>Form</SubType>
     </Compile>
