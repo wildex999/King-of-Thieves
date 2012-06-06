@@ -6,11 +6,12 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace King_of_Thieves.Graphics
-{
+{ 
     class CSprite : CRenderable
     {
 
         private Texture2D _sprite = null;
+        //private Texture2D _spritertar = null; Hang on, might not be needed, not 100% sure atm. -- gm112
         private Rectangle _size;
         protected string _name = "";
         protected Vector2 _position = new Vector2(0);

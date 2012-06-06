@@ -11,7 +11,7 @@ namespace King_of_Thieves.Graphics
     {
         private static GraphicsDeviceManager _graphicsInfo;
         public static  SpriteBatch spriteBatch;
-
+        public static RenderTarget2D _rtar2D = null;
         public static GraphicsDevice GPU
         {
             get
@@ -25,6 +25,10 @@ namespace King_of_Thieves.Graphics
             _graphicsInfo = manager;
         }
 
-        
+        public static void spawnRenderTarget(ref RenderTarget2D _rtar)
+        {
+            _rtar2D = _rtar;
+            CGraphics.GPU.SetRenderTarget(_rtar2D);
+        }
     }
 }

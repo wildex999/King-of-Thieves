@@ -11,10 +11,11 @@ namespace King_of_Thieves.Graphics
     {
 
         private Effect _shader;
-        public VertexPositionColor[] vertices;
+        
         private VertexBuffer _vertexBuffer;
         public float aspectRatio = (float)CGraphics.GPU.Viewport.Width / (float)CGraphics.GPU.Viewport.Height;
-
+        public VertexPositionColor[] vertices;
+        public bool isOffscreen = false;
         public CRenderable(Effect shader = null, params VertexPositionColor[] vertices)
         {
             if (vertices.Count() > 0)
@@ -28,12 +29,20 @@ namespace King_of_Thieves.Graphics
         public virtual void draw()
         {
             if (_shader != null)
-                foreach (EffectPass pass in _shader.CurrentTechnique.Passes)
+                if (isOffscreen != true)
                 {
-                    pass.Apply();
-                    CGraphics.GPU.SetVertexBuffer(_vertexBuffer);
-                    CGraphics.GPU.DrawIndexedPrimitives(PrimitiveType.LineList, 0, 0, vertices.Length, 0, 1);
+                    foreach (EffectPass pass in _shader.CurrentTechnique.Passes)
+                    {
+                        pass.Apply();
+                        CGraphics.GPU.SetVertexBuffer(_vertexBuffer);
+                        CGraphics.GPU.DrawIndexedPrimitives(PrimitiveType.LineList, 0, 0, vertices.Length, 0, 1);
+                    }
                 }
+                else
+                {
+                    //
+                }
+           
         }
 
         public void swapTechnique(string name)
@@ -46,6 +55,10 @@ namespace King_of_Thieves.Graphics
             _shader.CurrentTechnique = _shader.Techniques[index];
         }
 
+        public virtual void renderOffScreen(string name)
+        {
+            //
+        }
         
     }
 }
