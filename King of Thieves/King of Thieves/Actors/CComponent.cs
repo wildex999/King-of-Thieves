@@ -14,6 +14,7 @@ namespace King_of_Thieves.Actors
         public CActor root;
         public Dictionary<string, CActor> actors;
 
+        //not 100% sure how these will work yet
         public void updateActors()
         {
             root.update();
