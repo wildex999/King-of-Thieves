@@ -57,5 +57,10 @@ namespace King_of_Thieves.Actors
         {
             onDraw(this);
         }
+
+        public virtual void destroy()
+        {
+            onDestroy(this);
+        }
     }
 }
