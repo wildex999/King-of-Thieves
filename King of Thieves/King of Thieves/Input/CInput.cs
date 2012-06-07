@@ -17,6 +17,8 @@ namespace King_of_Thieves.Input
         private static GamePadState _padStatePrevious;
         private static KeyboardState _keyStatePrevious;
         private static MouseState _mouseStatePrevious;
+        public static keyEventArgs keyEvents;
+        
 
         //sanity test for git, don't mind me. -Steve
         public static bool getInputDown(Buttons button)
@@ -80,6 +82,22 @@ namespace King_of_Thieves.Input
             }
         }
 
+        public static bool areKeysPressed
+        {
+            get
+            {
+                return (_keyStateCurrent.GetPressedKeys().Count() > 0);
+            }
+        }
+
+        public static Keys[] keysPressed
+        {
+            get
+            {
+                return _keyStateCurrent.GetPressedKeys();
+            }
+        }
+
         //should be called once per frame
         public static void update()
         {
@@ -90,9 +108,17 @@ namespace King_of_Thieves.Input
             _padStateCurrent = GamePad.GetState(PlayerIndex.One);
             _keyStateCurrent = Keyboard.GetState();
             _mouseStateCurrent = Mouse.GetState();
+
+            if (areKeysPressed)
+                keyEvents.keys = keysPressed;
         }
 
         
+    }
+
+    class keyEventArgs : EventArgs
+    {
+        public Keys[] keys;
     }
 
 
