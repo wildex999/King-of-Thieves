@@ -11,7 +11,6 @@ namespace King_of_Thieves.Graphics
     {
 
         private Effect _shader;
-        
         private VertexBuffer _vertexBuffer;
         public float aspectRatio = (float)CGraphics.GPU.Viewport.Width / (float)CGraphics.GPU.Viewport.Height;
         public VertexPositionColor[] vertices;
@@ -28,21 +27,15 @@ namespace King_of_Thieves.Graphics
 
         public virtual void draw()
         {
+            if (isOffscreen != false)
+                renderOffScreen();
             if (_shader != null)
-                if (isOffscreen != true)
+                foreach (EffectPass pass in _shader.CurrentTechnique.Passes)
                 {
-                    foreach (EffectPass pass in _shader.CurrentTechnique.Passes)
-                    {
-                        pass.Apply();
-                        CGraphics.GPU.SetVertexBuffer(_vertexBuffer);
-                        CGraphics.GPU.DrawIndexedPrimitives(PrimitiveType.LineList, 0, 0, vertices.Length, 0, 1);
-                    }
+                    pass.Apply();
+                    CGraphics.GPU.SetVertexBuffer(_vertexBuffer);
+                    CGraphics.GPU.DrawIndexedPrimitives(PrimitiveType.LineList, 0, 0, vertices.Length, 0, 1);
                 }
-                else
-                {
-                    //
-                }
-           
         }
 
         public void swapTechnique(string name)
@@ -55,9 +48,14 @@ namespace King_of_Thieves.Graphics
             _shader.CurrentTechnique = _shader.Techniques[index];
         }
 
-        public virtual void renderOffScreen(string name)
+        public void renderOffScreen()
         {
-            //
+            if (CGraphics._rtar2D != null)
+                CGraphics.GPU.SetRenderTarget(CGraphics._rtar2D);
+            else
+                throw new NullReferenceException("Off-sreen render target is null!");
+
+            CGraphics.GPU.Clear(Color.Transparent);
         }
         
     }

@@ -25,10 +25,9 @@ namespace King_of_Thieves.Graphics
             _graphicsInfo = manager;
         }
 
-        public static void spawnRenderTarget(ref RenderTarget2D _rtar)
+        public static void spawnRenderTarget(ref RenderTarget2D offScreenBuffer)
         {
-            _rtar2D = _rtar;
-            CGraphics.GPU.SetRenderTarget(_rtar2D);
+            _rtar2D = offScreenBuffer;
         }
     }
 }

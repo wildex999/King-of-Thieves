@@ -11,7 +11,7 @@ namespace King_of_Thieves.Graphics
     {
 
         private Texture2D _sprite = null;
-        //private Texture2D _spritertar = null; Hang on, might not be needed, not 100% sure atm. -- gm112
+        private Texture2D _shaderTex = null; 
         private Rectangle _size;
         protected string _name = "";
         protected Vector2 _position = new Vector2(0);
@@ -28,7 +28,8 @@ namespace King_of_Thieves.Graphics
         {
             if (_sprite == null)
                 throw new FormatException("Unable to draw sprite " + _name + ", may be the target of an animation.");
-
+            if (isOffscreen != false)
+                renderOffScreen();
             CGraphics.spriteBatch.Draw(_sprite, _position, _size, Color.White);
             base.draw();
         }
