@@ -14,7 +14,23 @@ namespace King_of_Thieves.Actors
         public CActor root;
         public Dictionary<string, CActor> actors;
 
-        
+        public void updateActors()
+        {
+            root.update();
+            foreach (KeyValuePair<string, CActor> kvp in actors)
+            {
+                kvp.Value.update();
+            }
+        }
+
+        public void drawActors()
+        {
+            root.draw();
+            foreach (KeyValuePair<string, CActor> kvp in actors)
+            {
+                kvp.Value.draw();
+            }
+        }
 
 
 

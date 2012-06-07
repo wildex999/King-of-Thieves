@@ -79,8 +79,11 @@ namespace King_of_Thieves
 
             // TODO: Add your update logic here
             Input.CInput.update();
+
             testSprite.X = Input.CInput.mouseX;
             testSprite.Y = Input.CInput.mouseY;
+
+
 
             base.Update(gameTime);
         }
