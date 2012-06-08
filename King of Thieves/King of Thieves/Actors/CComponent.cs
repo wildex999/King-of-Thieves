@@ -14,22 +14,32 @@ namespace King_of_Thieves.Actors
         public CActor root;
         public Dictionary<string, CActor> actors;
 
+        public CComponent()
+        {
+            actors = new Dictionary<string, CActor>();
+        }
+
         //not 100% sure how these will work yet
         public void updateActors()
         {
             root.update();
+
             foreach (KeyValuePair<string, CActor> kvp in actors)
             {
+                //update position relative to the root
+                kvp.Value.position += root.distanceFromLastFrame;
+
+                //update the faggot
                 kvp.Value.update();
             }
         }
 
         public void drawActors()
         {
-            root.draw();
+            root.drawMe();
             foreach (KeyValuePair<string, CActor> kvp in actors)
             {
-                kvp.Value.draw();
+                kvp.Value.drawMe();
             }
         }
 

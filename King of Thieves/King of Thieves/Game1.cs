@@ -9,6 +9,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using King_of_Thieves.Graphics;
+using King_of_Thieves.Actors;
 
 namespace King_of_Thieves
 {
@@ -20,6 +21,8 @@ namespace King_of_Thieves
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         CSprite testSprite = null;
+        CActorTest actorTest;
+        CComponent compTest = new CComponent();
 
         public Game1()
         {
@@ -55,6 +58,10 @@ namespace King_of_Thieves
             Graphics.CTextureDict.init(Content);
             testSprite = new CSprite(Graphics.CTextureDict.getTexture("test"));
 
+            CMasterControl.drawList.AddLast(testSprite);
+            actorTest = new CActorTest();
+            compTest.root = actorTest;
+
         }
 
         /// <summary>
@@ -80,9 +87,10 @@ namespace King_of_Thieves
             // TODO: Add your update logic here
             Input.CInput.update();
 
-            testSprite.X = Input.CInput.mouseX;
-            testSprite.Y = Input.CInput.mouseY;
 
+            
+            compTest.root.position = new Vector2(Input.CInput.mouseX, Input.CInput.mouseY);
+            compTest.updateActors();
 
 
             base.Update(gameTime);
@@ -97,10 +105,10 @@ namespace King_of_Thieves
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // TODO: Add your drawing code here
-            CMasterControl.drawQueue.Enqueue(testSprite);
+            
             base.Draw(gameTime);
             spriteBatch.Begin();
-            CMasterControl.drawQueue.Dequeue().draw();
+            compTest.drawActors();
             spriteBatch.End();
         }
     }

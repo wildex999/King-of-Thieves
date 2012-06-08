@@ -7,8 +7,8 @@ namespace King_of_Thieves
 {
     static class CMasterControl
     {
-        //owners of the CRenderable should determine whether or not it gets queued back up after being drawn
-        public static Queue<Graphics.CRenderable> drawQueue = new Queue<Graphics.CRenderable>();
+        public static LinkedList<Graphics.CRenderable> drawList = new LinkedList<Graphics.CRenderable>();
+        public static LinkedList<Actors.CActor> componentList = new LinkedList<Actors.CActor>();
 
        
     }

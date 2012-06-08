@@ -10,6 +10,7 @@ namespace King_of_Thieves
     public delegate void keyDownHandler(object sender);
     public delegate void frameHandler(object sender);
     public delegate void drawHandler(object sender);
-
+    public delegate void keyReleaseHandler(object sender);
+    public delegate void collideHandler(object sender, object collider);
     
 }

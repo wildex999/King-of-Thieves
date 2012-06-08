@@ -17,7 +17,7 @@ namespace King_of_Thieves.Input
         private static GamePadState _padStatePrevious;
         private static KeyboardState _keyStatePrevious;
         private static MouseState _mouseStatePrevious;
-        public static keyEventArgs keyEvents;
+        public static keyEventArgs keyEvents = new keyEventArgs();
         
 
         //sanity test for git, don't mind me. -Steve
@@ -98,9 +98,23 @@ namespace King_of_Thieves.Input
             }
         }
 
+        public static Keys[] keysOld
+        {
+            get
+            {
+                return keyEvents.oldKeys;
+            }
+        }
+
         //should be called once per frame
         public static void update()
         {
+            keyEvents.oldKeys = keyEvents.keys;
+
+            //foreach (Keys key in keyEvents.oldKeys)
+            //    if (!keyEvents.keys.Contains(key))
+
+
             _padStatePrevious = _padStateCurrent;
             _keyStatePrevious = _keyStateCurrent;
             _mouseStateCurrent = _mouseStatePrevious;
@@ -119,6 +133,8 @@ namespace King_of_Thieves.Input
     class keyEventArgs : EventArgs
     {
         public Keys[] keys;
+        public Keys[] oldKeys;
+        public Keys[] releasedKeys;
     }
 
 
