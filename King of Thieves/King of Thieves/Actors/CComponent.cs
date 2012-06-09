@@ -43,7 +43,14 @@ namespace King_of_Thieves.Actors
             }
         }
 
-
+        public void destroyActors()
+        {
+            root.destroy();
+            foreach (KeyValuePair<string, CActor> kvp in actors)
+            {
+                kvp.Value.destroy();
+            }
+        }
 
 
     }

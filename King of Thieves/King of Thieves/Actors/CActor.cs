@@ -100,5 +100,10 @@ namespace King_of_Thieves.Actors
                 return (position - oldPosition);
             }
         }
+
+        public virtual void destroy()
+        {
+            onDestroy(this);
+        }
     }
 }
