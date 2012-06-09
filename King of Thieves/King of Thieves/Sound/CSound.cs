@@ -10,6 +10,7 @@ namespace King_of_Thieves.Sound
 {
     class CSound
     {
+        //:D
         private SoundEffect _sfx;
 
         public CSound(SoundEffect fx)
