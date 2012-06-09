@@ -9,8 +9,8 @@ namespace King_of_Thieves.Actors
 {
     abstract class CActor
     {
-        private Vector2 _position = Vector2.Zero;
-        private Vector2 _oldPosition = Vector2.Zero;
+        protected Vector2 _position = Vector2.Zero;
+        protected Vector2 _oldPosition = Vector2.Zero;
         public Graphics.CSprite image;
         //hitboxes will go here as well? What a terrible night for a curse...
         //event handlers will be added here

@@ -89,7 +89,7 @@ namespace King_of_Thieves
 
 
             
-            compTest.root.position = new Vector2(Input.CInput.mouseX, Input.CInput.mouseY);
+            //compTest.root.position = new Vector2(Input.CInput.mouseX, Input.CInput.mouseY);
             compTest.updateActors();
 
 
