@@ -62,6 +62,7 @@ namespace King_of_Thieves.Sound
         }
 
         //this function name is an abomination to my programming abilities. Luckily only the thread is going to use this.
+        //I used your cpu usage fix in here.  Keep in mind, this needs to be in a loop so it can catch song changes. -Steve
         private void _checkForThingsToPlay()
         {
             while (true)
