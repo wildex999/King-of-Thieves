@@ -22,6 +22,7 @@ namespace King_of_Thieves.Graphics
             _sprite = sprite;
             _size = new Rectangle(0, 0, _sprite.Width, _sprite.Height);
             _name = sprite.Name;
+            CMasterControl.drawList.AddLast(this);
         }
 
         public override void draw()

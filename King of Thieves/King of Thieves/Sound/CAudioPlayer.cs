@@ -61,7 +61,7 @@ namespace King_of_Thieves.Sound
             _effects.Enqueue(sfx);
         }
 
-        //this function name is an abomination to my programming abilities.  Luckily only the thread is going to use this.
+        //this function name is an abomination to my programming abilities. Luckily only the thread is going to use this.
         private void _checkForThingsToPlay()
         {
             while (true)
@@ -76,7 +76,7 @@ namespace King_of_Thieves.Sound
                     _playSfx(_effects.Dequeue());
 
                 Thread.Sleep(100);
-                
+
             }
         }
 

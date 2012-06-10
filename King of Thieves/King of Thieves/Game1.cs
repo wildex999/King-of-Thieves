@@ -34,13 +34,13 @@ namespace King_of_Thieves
         /// <summary>
         /// Allows the game to perform any initialization it needs to before starting to run.
         /// This is where it can query for any required services and load any non-graphic
-        /// related content.  Calling base.Initialize will enumerate through any components
+        /// related content. Calling base.Initialize will enumerate through any components
         /// and initialize them as well.
         /// </summary>
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-            
+
             base.Initialize();
         }
 
@@ -58,10 +58,9 @@ namespace King_of_Thieves
             Graphics.CTextureDict.init(Content);
             testSprite = new CSprite(Graphics.CTextureDict.getTexture("test"));
 
-            CMasterControl.drawList.AddLast(testSprite);
             actorTest = new CActorTest();
             compTest.root = actorTest;
-            CMasterControl.audioPlayer.song = new Sound.CSound(Content.Load<Song>("04_-_Phantom_Ganon"),false,0);
+            CMasterControl.test.song = new Sound.CSound(Content.Load<Song>("04_-_Phantom_Ganon"), false, 0);
 
         }
 
@@ -72,7 +71,6 @@ namespace King_of_Thieves
         protected override void UnloadContent()
         {
             // TODO: Unload any non ContentManager content here
-            CMasterControl.audioPlayer.stop();
         }
 
         /// <summary>
@@ -90,13 +88,14 @@ namespace King_of_Thieves
             Input.CInput.update();
 
 
-            
+
             //compTest.root.position = new Vector2(Input.CInput.mouseX, Input.CInput.mouseY);
             compTest.updateActors();
 
-            if (Input.CInput.keysPressed.Contains(Microsoft.Xna.Framework.Input.Keys.Enter))
-                CMasterControl.audioPlayer.addSfx(new Sound.CSound(Content.Load<SoundEffect>("lttp_heart")));
+            if (Input.CInput.getInputRelease(Microsoft.Xna.Framework.Input.Keys.Enter))
+                CMasterControl.test.addSfx(new Sound.CSound(Content.Load<SoundEffect>("lttp_heart")));
 
+            CMasterControl.test.Update();
             base.Update(gameTime);
         }
 
@@ -109,7 +108,7 @@ namespace King_of_Thieves
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // TODO: Add your drawing code here
-            
+
             base.Draw(gameTime);
             spriteBatch.Begin();
             compTest.drawActors();
