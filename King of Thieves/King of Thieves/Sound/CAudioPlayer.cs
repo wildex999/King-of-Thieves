@@ -18,7 +18,7 @@ namespace King_of_Thieves.Sound
         public CAudioPlayer()
         {
             _effects = new Queue<CSound>();
-            System.Threading.ThreadStart threadStarter = _checkForThingsToPlay;
+            System.Threading.ThreadStart threadStarter = Update;
             _audioThread = new Thread(threadStarter);
             _audioThread.Start();
         }
@@ -56,23 +56,19 @@ namespace King_of_Thieves.Sound
             _effects.Enqueue(sfx);
         }
 
-        //this function name is an abomination to my programming abilities.  Luckily only the thread is going to use this.
-        private void _checkForThingsToPlay()
+        public void Update()
         {
-            while (true)
+            //Thread.Sleep(100); // small hack to reduce CPU usage a bit. =\
+            if (_song != null)
             {
-                Thread.Sleep(100); // small hack to reduce CPU usage a bit. =\
-                if (_song != null)
-                {
-                    _playSong(_song);
-                    _song = null;
-                }
-
-                while (_effects.Count > 0)
-                    _playSfx(_effects.Dequeue());
+                _playSong(_song);
+                _song = null;
             }
-        }
 
+            while (_effects.Count > 0)
+                _playSfx(_effects.Dequeue());
+           
+        }
 
         private void _playSong(CSound song)
         {

@@ -96,6 +96,7 @@ namespace King_of_Thieves
             if (Input.CInput.getInputRelease(Microsoft.Xna.Framework.Input.Keys.Enter))
                 CMasterControl.test.addSfx(new Sound.CSound(Content.Load<SoundEffect>("lttp_heart")));
 
+            CMasterControl.test.Update();
             base.Update(gameTime);
         }
 
