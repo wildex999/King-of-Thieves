@@ -61,6 +61,7 @@ namespace King_of_Thieves.Sound
         {
             while (true)
             {
+                Thread.Sleep(100); // small hack to reduce CPU usage a bit. =\
                 if (_song != null)
                 {
                     _playSong(_song);
