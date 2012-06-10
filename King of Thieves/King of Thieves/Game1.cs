@@ -58,7 +58,6 @@ namespace King_of_Thieves
             Graphics.CTextureDict.init(Content);
             testSprite = new CSprite(Graphics.CTextureDict.getTexture("test"));
 
-            CMasterControl.drawList.AddLast(testSprite);
             actorTest = new CActorTest();
             compTest.root = actorTest;
             CMasterControl.test.song = new Sound.CSound(Content.Load<Song>("04_-_Phantom_Ganon"),false,0);
