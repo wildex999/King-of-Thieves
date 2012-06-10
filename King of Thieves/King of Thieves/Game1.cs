@@ -61,6 +61,7 @@ namespace King_of_Thieves
             CMasterControl.drawList.AddLast(testSprite);
             actorTest = new CActorTest();
             compTest.root = actorTest;
+            CMasterControl.test.song = new Sound.CSound(Content.Load<Song>("04_-_Phantom_Ganon"),false,0);
 
         }
 
@@ -92,6 +93,8 @@ namespace King_of_Thieves
             //compTest.root.position = new Vector2(Input.CInput.mouseX, Input.CInput.mouseY);
             compTest.updateActors();
 
+            if (Input.CInput.keysPressed.Contains(Microsoft.Xna.Framework.Input.Keys.Enter))
+                CMasterControl.test.addSfx(new Sound.CSound(Content.Load<SoundEffect>("lttp_heart")));
 
             base.Update(gameTime);
         }

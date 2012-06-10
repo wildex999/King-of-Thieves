@@ -9,7 +9,7 @@ namespace King_of_Thieves
     {
         public static LinkedList<Graphics.CRenderable> drawList = new LinkedList<Graphics.CRenderable>();
         public static LinkedList<Actors.CActor> componentList = new LinkedList<Actors.CActor>();
-
+        public static Sound.CAudioPlayer test = new Sound.CAudioPlayer();
        
     }
 }
