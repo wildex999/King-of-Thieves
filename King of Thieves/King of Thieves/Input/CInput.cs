@@ -106,15 +106,27 @@ namespace King_of_Thieves.Input
             }
         }
 
+        public static bool areKeysReleased
+        {
+            get
+            {
+                return (keyEvents.releasedKeys.Count() > 0);
+            }
+        }
+
         //should be called once per frame
         public static void update()
         {
             keyEvents.oldKeys = keyEvents.keys;
+            List<Keys> temp = new List<Keys>();
 
-            //foreach (Keys key in keyEvents.oldKeys)
-            //    if (!keyEvents.keys.Contains(key))
+            if (keyEvents.oldKeys != null)
+                foreach (Keys key in keyEvents.oldKeys)
+                    if (!keyEvents.keys.Contains(key))
+                        temp.Add(key);
 
-
+            keyEvents.releasedKeys = temp.ToArray();
+            
             _padStatePrevious = _padStateCurrent;
             _keyStatePrevious = _keyStateCurrent;
             _mouseStateCurrent = _mouseStatePrevious;
@@ -125,6 +137,8 @@ namespace King_of_Thieves.Input
 
             if (areKeysPressed)
                 keyEvents.keys = keysPressed;
+
+
         }
 
         

@@ -43,8 +43,6 @@ namespace King_of_Thieves.Actors
 
         ~CActor()
         {
-            onDestroy(this);
-
             onCreate -= new createHandler(create);
             onDestroy -= new destroyHandler(destroy);
             onKeyDown -= new keyDownHandler(keyDown);
@@ -63,6 +61,9 @@ namespace King_of_Thieves.Actors
 
             if (Input.CInput.areKeysPressed)
                 onKeyDown(this);
+
+            if (Input.CInput.areKeysReleased)
+                onKeyRelease(this);
         }
 
         public virtual void drawMe()

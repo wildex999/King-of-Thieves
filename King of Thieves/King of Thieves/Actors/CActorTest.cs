@@ -26,11 +26,14 @@ namespace King_of_Thieves.Actors
         public override void frame(object sender)
         {
             //throw new NotImplementedException();
-            _position.X += 1;
+            
         }
 
         public override void keyDown(object sender)
         {
+            if (Input.CInput.keysPressed.Contains(Microsoft.Xna.Framework.Input.Keys.D))
+                _position.X += 1;
+
             
         }
 
