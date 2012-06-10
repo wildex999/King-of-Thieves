@@ -93,9 +93,10 @@ namespace King_of_Thieves
             //compTest.root.position = new Vector2(Input.CInput.mouseX, Input.CInput.mouseY);
             compTest.updateActors();
 
-            if (Input.CInput.keysPressed.Contains(Microsoft.Xna.Framework.Input.Keys.Enter))
+            if (Input.CInput.getInputRelease(Microsoft.Xna.Framework.Input.Keys.Enter))
                 CMasterControl.test.addSfx(new Sound.CSound(Content.Load<SoundEffect>("lttp_heart")));
 
+            CMasterControl.test.Update();
             base.Update(gameTime);
         }
 
