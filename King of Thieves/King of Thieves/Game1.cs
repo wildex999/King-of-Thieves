@@ -61,7 +61,7 @@ namespace King_of_Thieves
             CMasterControl.drawList.AddLast(testSprite);
             actorTest = new CActorTest();
             compTest.root = actorTest;
-            CMasterControl.test.song = new Sound.CSound(Content.Load<Song>("04_-_Phantom_Ganon"),false,0);
+            CMasterControl.audioPlayer.song = new Sound.CSound(Content.Load<Song>("04_-_Phantom_Ganon"),false,0);
 
         }
 
@@ -72,6 +72,7 @@ namespace King_of_Thieves
         protected override void UnloadContent()
         {
             // TODO: Unload any non ContentManager content here
+            CMasterControl.audioPlayer.stop();
         }
 
         /// <summary>
@@ -94,7 +95,7 @@ namespace King_of_Thieves
             compTest.updateActors();
 
             if (Input.CInput.keysPressed.Contains(Microsoft.Xna.Framework.Input.Keys.Enter))
-                CMasterControl.test.addSfx(new Sound.CSound(Content.Load<SoundEffect>("lttp_heart")));
+                CMasterControl.audioPlayer.addSfx(new Sound.CSound(Content.Load<SoundEffect>("lttp_heart")));
 
             base.Update(gameTime);
         }

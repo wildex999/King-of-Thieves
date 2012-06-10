@@ -31,6 +31,11 @@ namespace King_of_Thieves.Sound
             _song = null;
         }
 
+        public void stop()
+        {
+            _audioThread.Abort();
+        }
+
         public CSound song
         {
             get
@@ -69,6 +74,9 @@ namespace King_of_Thieves.Sound
 
                 while (_effects.Count > 0)
                     _playSfx(_effects.Dequeue());
+
+                Thread.Sleep(100);
+                
             }
         }
 
