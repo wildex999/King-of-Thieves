@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using King_of_Thieves.Sound;
 
 namespace King_of_Thieves
 {
@@ -12,5 +13,6 @@ namespace King_of_Thieves
     public delegate void drawHandler(object sender);
     public delegate void keyReleaseHandler(object sender);
     public delegate void collideHandler(object sender, object collider);
+    public delegate void soundQueued(object sender, CSound sound);
     
 }

@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework.Media;
 
 namespace King_of_Thieves.Sound
 {
-    class CSound
+    public class CSound
     {
         //:D
         private SoundEffect _sfx;

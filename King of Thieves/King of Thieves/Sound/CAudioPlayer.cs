@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Concurrent;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -13,11 +14,11 @@ namespace King_of_Thieves.Sound
     {
         private Thread _audioThread;
         private CSound _song;
-        private Queue<CSound> _effects;
+        private BlockingCollection<CSound> _effects;
 
         public CAudioPlayer()
         {
-            _effects = new Queue<CSound>();
+            _effects = new BlockingCollection<CSound>();
             System.Threading.ThreadStart threadStarter = _checkForThingsToPlay;
             _audioThread = new Thread(threadStarter);
             _audioThread.Start();
@@ -26,7 +27,7 @@ namespace King_of_Thieves.Sound
         ~CAudioPlayer()
         {
             _audioThread.Abort();
-            _effects.Clear();
+            _effects.Dispose();
             _effects = null;
             _song = null;
         }
@@ -48,23 +49,24 @@ namespace King_of_Thieves.Sound
             }
         }
 
-        public CSound sfx
-        {
-            get
-            {
-                return _effects.Peek();
-            }
-        }
+        //public CSound sfx
+        //{
+        //    get
+        //    {
+        //        return _effects.
+        //    }
+        //}
 
         public void addSfx(CSound sfx)
         {
-            _effects.Enqueue(sfx);
+            _effects.Add(sfx);
         }
 
         //this function name is an abomination to my programming abilities. Luckily only the thread is going to use this.
         //I used your cpu usage fix in here.  Keep in mind, this needs to be in a loop so it can catch song changes. -Steve
         private void _checkForThingsToPlay()
         {
+
             while (true)
             {
                 if (_song != null)
@@ -73,14 +75,23 @@ namespace King_of_Thieves.Sound
                     _song = null;
                 }
 
-                while (_effects.Count > 0)
-                    _playSfx(_effects.Dequeue());
-
-                Thread.Sleep(100);
-
+                _playSfx(_effects.Take());
             }
+
+         
         }
 
+        //public void update()
+        //{
+        //    if (_song != null)
+        //    {
+        //        _playSong(_song);
+        //        _song = null;
+        //    }
+
+        //    while (_effects.Count > 0)
+        //        _playSfx(_effects.Dequeue());
+        //}
 
         private void _playSong(CSound song)
         {
