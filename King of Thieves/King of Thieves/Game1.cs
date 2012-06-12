@@ -73,6 +73,7 @@ namespace King_of_Thieves
         {
             // TODO: Unload any non ContentManager content here
             CMasterControl.audioPlayer.stop();
+            Content.Unload();
         }
 
         /// <summary>
