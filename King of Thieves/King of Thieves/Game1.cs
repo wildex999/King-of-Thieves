@@ -29,6 +29,7 @@ namespace King_of_Thieves
             graphics = new GraphicsDeviceManager(this);
             Graphics.CGraphics.acquireGraphics(ref graphics);
             Content.RootDirectory = "Content";
+            this.IsFixedTimeStep = false;
         }
 
         /// <summary>
