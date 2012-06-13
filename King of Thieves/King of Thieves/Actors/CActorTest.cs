@@ -31,7 +31,7 @@ namespace King_of_Thieves.Actors
 
         public override void keyDown(object sender)
         {
-            if (Input.CInput.keysPressed.Contains(Microsoft.Xna.Framework.Input.Keys.D))
+            if (Input.CInput.getInputDown(Microsoft.Xna.Framework.Input.Keys.D))
                 _position.X += 1;
 
             
