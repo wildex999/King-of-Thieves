@@ -49,69 +49,31 @@ namespace King_of_Thieves.Sound
             }
         }
 
-        //public CSound sfx
-        //{
-        //    get
-        //    {
-        //        return _effects.
-        //    }
-        //}
-
         public void addSfx(CSound sfx)
         {
             _effects.Add(sfx);
         }
 
         //this function name is an abomination to my programming abilities. Luckily only the thread is going to use this.
-        //I used your cpu usage fix in here.  Keep in mind, this needs to be in a loop so it can catch song changes. -Steve
         private void _checkForThingsToPlay()
         {
-
             while (true)
             {
-                if (_song != null)
-                {
-                    _playSong(_song);
-                    _song = null;
-                }
-
-                _playSfx(_effects.Take());
+                _play(_effects.Take());
             }
-
-         
         }
 
-        //public void update()
-        //{
-        //    if (_song != null)
-        //    {
-        //        _playSong(_song);
-        //        _song = null;
-        //    }
-
-        //    while (_effects.Count > 0)
-        //        _playSfx(_effects.Dequeue());
-        //}
-
-        private void _playSong(CSound song)
+        private void _play(CSound file)
         {
-            if (song.song != null)
+            if (file.sfx != null)
+                file.sfx.Play();
+            else if (file.song != null)
             {
-                MediaPlayer.IsRepeating = song.loop;
-                MediaPlayer.Play(song.song);
+                MediaPlayer.IsRepeating = file.loop;
+                MediaPlayer.Play(file.song);
             }
             else
-                throw new FormatException("The CSound passed did not contain any song information.");
-        }
-
-        private void _playSfx(CSound sfx)
-        {
-            if (sfx.sfx != null)
-            {
-                sfx.sfx.Play();
-            }
-            else
-                throw new FormatException("The CSound passed did not contain any sfx information.");
+                throw new FormatException("The CSound passed did not contain any valid audio information.");
         }
     }
 }
