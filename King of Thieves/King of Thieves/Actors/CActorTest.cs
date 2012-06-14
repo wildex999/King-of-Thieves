@@ -8,9 +8,15 @@ namespace King_of_Thieves.Actors
     class CActorTest : CActor
     {
 
-        public CActorTest()
+        public CActorTest(string name) :
+            base(name)
         {
             image = new Graphics.CSprite(Graphics.CTextureDict.getTexture("test"));
+        }
+
+        protected override void _addCollidables()
+        {
+            _collidables.Add(typeof(CActorTest));
         }
 
         public override void create(object sender)
