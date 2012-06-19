@@ -31,6 +31,7 @@ namespace King_of_Thieves.Actors
         public event frameHandler onFrame;
         public event drawHandler onDraw;
         public event keyReleaseHandler onKeyRelease;
+        public event collideHandler onCollide;
 
         public abstract void create(object sender);
         public abstract void destroy(object sender);
@@ -38,6 +39,7 @@ namespace King_of_Thieves.Actors
         public abstract void keyRelease(object sender);
         public abstract void frame(object sender);
         public abstract void draw(object sender);
+        public abstract void collide(object sender, object collider);
 
         protected abstract void _addCollidables(); //Use this guy to tell the Actor what kind of actors it can collide with
 
@@ -144,10 +146,14 @@ namespace King_of_Thieves.Actors
 
         private void checkCollisions()
         {
-            //This shit is WEIRD.  But it should work when it's finished. No touchy!! :)
+            //This shit is WEIRD.
+            //fetch my hitboxes
+            List<BoundingBox> myBoxes = CMasterControl.hitboxes[this.GetType()][_name];
+            
+            //fetch hitboxes of other collidables
             foreach (Type type in _collidables)
             {
-                List<List<BoundingBox>> mapLevel = null;
+                Dictionary<string,List<BoundingBox>> mapLevel = null;
                 try
                 {
                     mapLevel = CMasterControl.hitboxes[type];
@@ -157,10 +163,23 @@ namespace King_of_Thieves.Actors
                     continue;
                 }
 
-                foreach (List<BoundingBox> entityLevel in mapLevel)
+                //cycle through my boxes
+                foreach (BoundingBox myBox in myBoxes)
                 {
-                    //foreach (BoundingBox boxLevel in entityLevel)
-                        //foreach(
+                    //cycle through each actor of type
+                    foreach (KeyValuePair<string, List<BoundingBox>> actor in mapLevel)
+                    {
+                        if (actor.Key == _name)
+                            continue;
+
+                        //cycle through each hitbox of the actor
+                        foreach (BoundingBox box in actor.Value)
+                        {
+                            if (myBox.Contains(box) == ContainmentType.Contains)
+                                collide(this, CMasterControl.componentList[actor.Key]);
+
+                        }
+                    }
                 }
 
 
