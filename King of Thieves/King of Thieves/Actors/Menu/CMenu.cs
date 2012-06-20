@@ -23,6 +23,11 @@ namespace King_of_Thieves.Actors.Menu
             _displayTime = displayTime;
         }
 
+        public override void animationEnd(object sender)
+        {
+            throw new NotImplementedException();
+        }
+
         protected override void _addCollidables()
         {
             throw new NotImplementedException();

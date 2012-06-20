@@ -13,6 +13,7 @@ namespace King_of_Thieves.Graphics
         public int FrameWidth = 0, FrameHeight = 0, FrameRate = 1, CellSpacing = 0, Column = 0, Row = 0, CurrentCell = 0;
         private Rectangle[,] _textureAtlas;
         private Texture2D SourceImage;
+        private int _fixedWidth = 0, _fixedHeight = 0;
 
        
 
@@ -22,7 +23,11 @@ namespace King_of_Thieves.Graphics
             FrameHeight = _frameHeight;
             CellSpacing = _cellSpacing;
             SourceImage = _sourceImage;
-            _textureAtlas = new Rectangle[(_sourceImage.Bounds.Width / _frameWidth), (_sourceImage.Bounds.Height / _frameHeight)];
+
+            _fixedWidth = (_sourceImage.Bounds.Width / (_frameWidth + _cellSpacing));
+            _fixedHeight = (_sourceImage.Bounds.Height / (_frameHeight + _cellSpacing));
+
+            _textureAtlas = new Rectangle[_fixedWidth, _fixedHeight];//made a small change here to allow for cellspacing in the calculation. -Steve
             _assembleTextureAtlas(this);
         }
 
@@ -33,7 +38,11 @@ namespace King_of_Thieves.Graphics
             CellSpacing = _cellSpacing;
             SourceImage = _sourceImage;
             FrameRate = frameRate;
-            _textureAtlas = new Rectangle[(_sourceImage.Bounds.Width / _frameWidth),(_sourceImage.Bounds.Height / _frameHeight)];
+
+            _fixedWidth = (_sourceImage.Bounds.Width / (_frameWidth + _cellSpacing));
+            _fixedHeight = (_sourceImage.Bounds.Height / (_frameHeight + _cellSpacing));
+
+            _textureAtlas = new Rectangle[_fixedWidth, _fixedHeight];
             _assembleTextureAtlas(this);
         }
 
@@ -43,14 +52,18 @@ namespace King_of_Thieves.Graphics
         */
         private void _assembleTextureAtlas(CTextureAtlas textureAtlas)
         {
-            for (int y = 0; y <= (textureAtlas.SourceImage.Bounds.Height / textureAtlas.FrameHeight) - 1; y++)
+            for (int y = 0; y <= _fixedHeight - 1; y++)
             {
-                for (int x = 0; x <= (textureAtlas.SourceImage.Bounds.Width / textureAtlas.FrameWidth) - 1; x++)
+                for (int x = 0; x <= _fixedWidth - 1; x++)
                 {
+
+                    //this math seems a bit iffy due to the cellspacing, but we'll see how it goes! -Steve
                     textureAtlas._textureAtlas[x,y] = new Rectangle
                         (textureAtlas.FrameWidth * x, textureAtlas.FrameHeight * y,
                         textureAtlas.FrameWidth + textureAtlas.CellSpacing, 
                         textureAtlas.FrameHeight + textureAtlas.CellSpacing);
+
+                    
                 }
             }
         }

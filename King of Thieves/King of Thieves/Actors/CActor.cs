@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using King_of_Thieves.Graphics;
 
 namespace King_of_Thieves.Actors
 {
@@ -20,6 +21,7 @@ namespace King_of_Thieves.Actors
         public readonly ACTORTYPES ACTORTYPE;
         private string _name;
         protected List<Type> _collidables;
+        protected CAnimation _sprite;
         
         public Graphics.CSprite image;
         //hitboxes will go here as well? What a terrible night for a curse...
@@ -32,6 +34,7 @@ namespace King_of_Thieves.Actors
         public event drawHandler onDraw;
         public event keyReleaseHandler onKeyRelease;
         public event collideHandler onCollide;
+        public event animationEndHandler onAnimationEnd;
 
         public abstract void create(object sender);
         public abstract void destroy(object sender);
@@ -40,10 +43,23 @@ namespace King_of_Thieves.Actors
         public abstract void frame(object sender);
         public abstract void draw(object sender);
         public abstract void collide(object sender, object collider);
+        public abstract void animationEnd(object sender);
 
         protected abstract void _addCollidables(); //Use this guy to tell the Actor what kind of actors it can collide with
 
-        public CActor(string name, ACTORTYPES type = 0)
+        public CAnimation spriteIndex
+        {
+            get
+            {
+                return _sprite;
+            }
+            set
+            {
+                _sprite = value;
+            }
+        }
+
+        public CActor(string name, ACTORTYPES type = ACTORTYPES.INTERACTABLE)
             
         {
             onCreate += new createHandler(create);
@@ -52,6 +68,7 @@ namespace King_of_Thieves.Actors
             onKeyRelease += new keyReleaseHandler(keyRelease);
             onFrame += new frameHandler(frame);
             onDraw += new drawHandler(draw);
+            onAnimationEnd += new animationEndHandler(animationEnd);
 
             ACTORTYPE = type;
             _name = name;
@@ -131,7 +148,7 @@ namespace King_of_Thieves.Actors
             }
         }
 
-        public virtual void destroy()
+        public virtual void remove()
         {
             onDestroy(this);
         }

@@ -40,6 +40,11 @@ namespace King_of_Thieves.Actors
             
         }
 
+        public override void animationEnd(object sender)
+        {
+            throw new NotImplementedException();
+        }
+
         public override void keyDown(object sender)
         {
             if (Input.CInput.keysPressed.Contains(Microsoft.Xna.Framework.Input.Keys.D))
