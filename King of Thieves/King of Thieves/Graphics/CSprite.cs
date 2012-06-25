@@ -9,29 +9,22 @@ namespace King_of_Thieves.Graphics
 { 
     class CSprite : CRenderable
     {
-
-        private Texture2D _sprite = null;
         private Texture2D _shaderTex = null; 
         private Rectangle _size;
         protected string _name = "";
         protected Vector2 _position = new Vector2(0);
         private CTextureAtlas _imageAtlas;
+        private int _frameTracker = 0;
+        private int frameX = 0, frameY = 0;
+        
 
-        public CSprite(Texture2D sprite, Effect shader = null, params VertexPositionColor[] vertices)
-            : base(shader, vertices)
-        {
-            _sprite = sprite;
-            _size = new Rectangle(0, 0, _sprite.Width, _sprite.Height);
-            _name = sprite.Name;
-            CMasterControl.drawList.AddLast(this);
-        }
-
-        public CSprite(CTextureAtlas atlas, Effect shader = null, params VertexPositionColor[] vertices)
+        public CSprite(CTextureAtlas atlas, int frameRate = 0, Effect shader = null, params VertexPositionColor[] vertices)
             : base(shader, vertices)
         {
             _imageAtlas = atlas;
             _size = new Rectangle(atlas.CellSpacing, atlas.CellSpacing, atlas.FrameWidth, atlas.FrameHeight);
             _name = _imageAtlas.sourceImage.Name;
+            _imageAtlas.FrameRate = frameRate;
             CMasterControl.drawList.AddLast(this);
         }
 
@@ -41,6 +34,25 @@ namespace King_of_Thieves.Graphics
                 throw new FormatException("Unable to draw sprite " + _name + ", may be the target of an animation.");
             if (isOffscreen != false)
                 renderOffScreen();
+
+            _frameTracker += _imageAtlas.FrameRate;
+
+            if (_frameTracker == 60)
+            {
+                _frameTracker = 0;
+                frameX++;
+
+                if (frameX > _imageAtlas.tileXCount)
+                {
+                    frameX = 0;
+                    frameY++;
+
+                    if (frameY > _imageAtlas.tileYCount)
+                        frameY = 0;
+                }
+                _size = _imageAtlas.getTile(frameX, frameY);
+            }
+
             CGraphics.spriteBatch.Draw(_imageAtlas.sourceImage, _position, _size, Color.White);
             base.draw();
         }

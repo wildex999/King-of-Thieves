@@ -44,11 +44,32 @@ namespace King_of_Thieves.Graphics
             _assembleTextureAtlas(this);
         }
 
+        public Rectangle getTile(int row, int col)
+        {
+            return _textureAtlas[row,col];
+        }
+
         public Texture2D sourceImage
         {
             get
             {
                 return _sourceImage;
+            }
+        }
+
+        public int tileXCount
+        {
+            get
+            {
+                return _fixedWidth;
+            }
+        }
+
+        public int tileYCount
+        {
+            get
+            {
+                return _fixedHeight;
             }
         }
 
