@@ -12,15 +12,15 @@ namespace King_of_Thieves.Graphics
     {
         public int FrameWidth = 0, FrameHeight = 0, FrameRate = 0, CellSpacing = 0, Column = 0, Row = 0, CurrentCell = 0;
         private Rectangle[,] _textureAtlas;
-        private Texture2D SourceImage;
+        private Texture2D _sourceImage;
         private int _fixedWidth = 0, _fixedHeight = 0;
 
-        public CTextureAtlas(Texture2D _sourceImage, int _frameWidth, int _frameHeight, int _cellSpacing)
+        public CTextureAtlas(Texture2D sourceImage, int _frameWidth, int _frameHeight, int _cellSpacing)
         {
             FrameWidth = _frameWidth;
             FrameHeight = _frameHeight;
             CellSpacing = _cellSpacing;
-            SourceImage = _sourceImage;
+            _sourceImage = sourceImage;
 
             _fixedWidth = (_sourceImage.Bounds.Width / (_frameWidth + _cellSpacing));
             _fixedHeight = (_sourceImage.Bounds.Height / (_frameHeight + _cellSpacing));
@@ -29,12 +29,12 @@ namespace King_of_Thieves.Graphics
             _assembleTextureAtlas(this);
         }
 
-        public CTextureAtlas(Texture2D _sourceImage, int _frameWidth, int _frameHeight, int _cellSpacing, int frameRate)
+        public CTextureAtlas(Texture2D sourceImage, int _frameWidth, int _frameHeight, int _cellSpacing, int frameRate)
         {
             FrameWidth = _frameWidth;
             FrameHeight = _frameHeight;
             CellSpacing = _cellSpacing;
-            SourceImage = _sourceImage;
+            _sourceImage = sourceImage;
             FrameRate = frameRate;
 
             _fixedWidth = (_sourceImage.Bounds.Width / (_frameWidth + _cellSpacing));
@@ -48,7 +48,7 @@ namespace King_of_Thieves.Graphics
         {
             get
             {
-                return sourceImage;
+                return _sourceImage;
             }
         }
 
