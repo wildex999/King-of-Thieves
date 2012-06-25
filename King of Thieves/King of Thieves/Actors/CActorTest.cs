@@ -8,12 +8,23 @@ namespace King_of_Thieves.Actors
     class CActorTest : CActor
     {
 
-        public CActorTest()
+        public CActorTest(string name) :
+            base(name)
         {
-            image = new Graphics.CSprite(Graphics.CTextureDict.getTexture("test"));
+            //image = new Graphics.CSprite(Graphics.CTextureDict.getTexture("test"));
+        }
+
+        protected override void _addCollidables()
+        {
+            _collidables.Add(typeof(CActorTest));
         }
 
         public override void create(object sender)
+        {
+            //throw new NotImplementedException();
+        }
+
+        public override void collide(object sender, object collider)
         {
             //throw new NotImplementedException();
         }
@@ -27,6 +38,11 @@ namespace King_of_Thieves.Actors
         {
             //throw new NotImplementedException();
             
+        }
+
+        public override void animationEnd(object sender)
+        {
+            throw new NotImplementedException();
         }
 
         public override void keyDown(object sender)

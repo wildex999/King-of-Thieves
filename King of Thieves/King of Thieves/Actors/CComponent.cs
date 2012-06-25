@@ -45,10 +45,10 @@ namespace King_of_Thieves.Actors
 
         public void destroyActors()
         {
-            root.destroy();
+            root.remove();
             foreach (KeyValuePair<string, CActor> kvp in actors)
             {
-                kvp.Value.destroy();
+                kvp.Value.remove();
             }
         }
 

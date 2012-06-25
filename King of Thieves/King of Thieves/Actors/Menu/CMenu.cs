@@ -16,10 +16,26 @@ namespace King_of_Thieves.Actors.Menu
         private Sound.CSound _itemSwitch;
         private Sound.CSound _itemSelect;
 
-        public CMenu(Graphics.CSprite image, int displayTime)
+        public CMenu(string name, Graphics.CSprite image, int displayTime):
+            base(name)
         {
             _image = image;
             _displayTime = displayTime;
+        }
+
+        public override void animationEnd(object sender)
+        {
+            throw new NotImplementedException();
+        }
+
+        protected override void _addCollidables()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void collide(object sender, object collider)
+        {
+            //throw new NotImplementedException();
         }
 
         public override void create(object sender)
