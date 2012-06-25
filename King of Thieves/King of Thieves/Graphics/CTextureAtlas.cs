@@ -8,7 +8,7 @@ using System.Windows.Forms;
 
 namespace King_of_Thieves.Graphics
 {
-    class CTextureAtlas
+    internal class CTextureAtlas
     {
         public int FrameWidth = 0, FrameHeight = 0, FrameRate = 0, CellSpacing = 0, Column = 0, Row = 0, CurrentCell = 0;
         private Rectangle[,] _textureAtlas;
