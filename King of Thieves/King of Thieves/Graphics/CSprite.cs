@@ -15,6 +15,7 @@ namespace King_of_Thieves.Graphics
         private Rectangle _size;
         protected string _name = "";
         protected Vector2 _position = new Vector2(0);
+        private CTextureAtlas _imageAtlas;
 
         public CSprite(Texture2D sprite, Effect shader = null, params VertexPositionColor[] vertices)
             : base(shader, vertices)
@@ -25,13 +26,22 @@ namespace King_of_Thieves.Graphics
             CMasterControl.drawList.AddLast(this);
         }
 
+        public CSprite(CTextureAtlas atlas, Effect shader = null, params VertexPositionColor[] vertices)
+            : base(shader, vertices)
+        {
+            _imageAtlas = atlas;
+            _size = new Rectangle(atlas.CellSpacing, atlas.CellSpacing, atlas.FrameWidth, atlas.FrameHeight);
+            _name = _imageAtlas.sourceImage.Name;
+            CMasterControl.drawList.AddLast(this);
+        }
+
         public override void draw()
         {
-            if (_sprite == null)
+            if (_imageAtlas == null)
                 throw new FormatException("Unable to draw sprite " + _name + ", may be the target of an animation.");
             if (isOffscreen != false)
                 renderOffScreen();
-            CGraphics.spriteBatch.Draw(_sprite, _position, _size, Color.White);
+            CGraphics.spriteBatch.Draw(_imageAtlas.sourceImage, _position, _size, Color.White);
             base.draw();
         }
 
