@@ -131,6 +131,7 @@
     <Compile Include="Graphics\CRenderable.cs" />
     <Compile Include="Graphics\CSprite.cs" />
     <Compile Include="Graphics\CTextureAtlas.cs" />
+    <Compile Include="Graphics\CTextures.cs" />
     <Compile Include="Input\CInput.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />

@@ -58,7 +58,7 @@ namespace King_of_Thieves
             // TODO: use this.Content to load your game content here
            // Graphics.CTextureDict.init(Content);
             testSprite = new CSprite(new CTextureAtlas(Content.Load<Texture2D>("test"), 19, 23, 0));
-
+            Graphics.CTextures.init(Content);
             actorTest = new CActorTest("Test");
             compTest.root = actorTest;
             //CMasterControl.audioPlayer.song = new Sound.CSound(Content.Load<Song>("04_-_Phantom_Ganon"), false, 0);
