@@ -11,7 +11,7 @@ namespace King_of_Thieves.Actors
         public CActorTest(string name) :
             base(name)
         {
-            image = new Graphics.CSprite(Graphics.CTextureDict.getTexture("test"));
+            //image = new Graphics.CSprite(Graphics.CTextureDict.getTexture("test"));
         }
 
         protected override void _addCollidables()

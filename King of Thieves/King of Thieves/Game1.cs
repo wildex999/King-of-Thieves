@@ -56,8 +56,8 @@ namespace King_of_Thieves
             Graphics.CGraphics.spriteBatch = spriteBatch;
 
             // TODO: use this.Content to load your game content here
-            Graphics.CTextureDict.init(Content);
-            testSprite = new CSprite(Graphics.CTextureDict.getTexture("test"));
+           // Graphics.CTextureDict.init(Content);
+            //testSprite = new CSprite(Graphics.CTextureDict.getTexture("test"));
 
             actorTest = new CActorTest("Test");
             compTest.root = actorTest;

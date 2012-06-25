@@ -167,40 +167,7 @@ namespace King_of_Thieves.Actors
             //fetch my hitboxes
             List<BoundingBox> myBoxes = CMasterControl.hitboxes[this.GetType()][_name];
             
-            //fetch hitboxes of other collidables
-            foreach (Type type in _collidables)
-            {
-                Dictionary<string,List<BoundingBox>> mapLevel = null;
-                try
-                {
-                    mapLevel = CMasterControl.hitboxes[type];
-                }
-                catch (KeyNotFoundException)
-                {
-                    continue;
-                }
-
-                //cycle through my boxes
-                foreach (BoundingBox myBox in myBoxes)
-                {
-                    //cycle through each actor of type
-                    foreach (KeyValuePair<string, List<BoundingBox>> actor in mapLevel)
-                    {
-                        if (actor.Key == _name)
-                            continue;
-
-                        //cycle through each hitbox of the actor
-                        foreach (BoundingBox box in actor.Value)
-                        {
-                            if (myBox.Contains(box) == ContainmentType.Contains)
-                                collide(this, CMasterControl.componentList[actor.Key]);
-
-                        }
-                    }
-                }
-
-
-            }
+           
         }
     }
 }
