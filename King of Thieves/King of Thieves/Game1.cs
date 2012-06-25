@@ -57,7 +57,7 @@ namespace King_of_Thieves
 
             // TODO: use this.Content to load your game content here
            // Graphics.CTextureDict.init(Content);
-            //testSprite = new CSprite(Graphics.CTextureDict.getTexture("test"));
+            testSprite = new CSprite(new CTextureAtlas(Content.Load<Texture2D>("test"), 19, 23, 0));
 
             actorTest = new CActorTest("Test");
             compTest.root = actorTest;
