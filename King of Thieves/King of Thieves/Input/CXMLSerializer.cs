@@ -7,7 +7,7 @@ using System.Xml.Serialization;
 using System.IO;
 namespace King_of_Thieves.Input
 {
-    static class CXMLSerializer <T>
+    class CXMLSerializer <T>
     {
         private XmlSerializer _xmlserializer;
         private object _stream;
