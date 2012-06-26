@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
+using Microsoft.Xna.Framework;
 namespace King_of_Thieves.Actors
 {
     //component is a series of actors.  Bongo Bongo for example would be 3 actors: 2 hands and a main body, main body being the root.
@@ -20,9 +20,9 @@ namespace King_of_Thieves.Actors
         }
 
         //not 100% sure how these will work yet
-        public void updateActors()
+        public void updateActors(GameTime gameTime)
         {
-            root.update();
+            root.update(gameTime);
 
             foreach (KeyValuePair<string, CActor> kvp in actors)
             {
@@ -30,7 +30,7 @@ namespace King_of_Thieves.Actors
                 kvp.Value.position += root.distanceFromLastFrame;
 
                 //update the faggot
-                kvp.Value.update();
+                kvp.Value.update(gameTime);
             }
         }
 
