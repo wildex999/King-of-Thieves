@@ -115,6 +115,7 @@
     <Compile Include="Actors\CActor.cs" />
     <Compile Include="Actors\CActorTest.cs" />
     <Compile Include="Actors\CComponent.cs" />
+    <Compile Include="Actors\Map\CMrMap.cs" />
     <Compile Include="Actors\Menu\CMenu.cs" />
     <Compile Include="Actors\Menu\CMenuItem.cs" />
     <Compile Include="Actors\Player\CPlayer.cs" />
@@ -133,6 +134,7 @@
     <Compile Include="Graphics\CTextureAtlas.cs" />
     <Compile Include="Graphics\CTextures.cs" />
     <Compile Include="Input\CInput.cs" />
+    <Compile Include="Input\CXMLSerializer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Game1.cs" />

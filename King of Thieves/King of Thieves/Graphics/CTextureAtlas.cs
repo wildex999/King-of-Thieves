@@ -44,11 +44,6 @@ namespace King_of_Thieves.Graphics
             _assembleTextureAtlas(this);
         }
 
-        public Rectangle getTile(int row, int col)
-        {
-            return _textureAtlas[row,col];
-        }
-
         public Texture2D sourceImage
         {
             get
@@ -73,6 +68,11 @@ namespace King_of_Thieves.Graphics
             }
         }
 
+        public Rectangle getTile(int frameX, int frameY)
+        {
+            return this._textureAtlas[frameX, frameY];
+        }
+
         /*
             * x == row
             * y == column
@@ -83,7 +83,7 @@ namespace King_of_Thieves.Graphics
             {
                 for (int x = 0; x <= _fixedWidth - 1; x++)
                 {
-
+                    //The math is completely fine. 
                     //this math seems a bit iffy due to the cellspacing, but we'll see how it goes! -Steve
                     textureAtlas._textureAtlas[x,y] = new Rectangle
                         (textureAtlas.FrameWidth * x, textureAtlas.FrameHeight * y,
@@ -93,56 +93,6 @@ namespace King_of_Thieves.Graphics
                     
                 }
             }
-        }
-/*
-* Must refactor frame-cycle code now.
-        public void UpdateFrames(GameTime gameTime, int _frameRate)
-        {
-            float _timeElapsed = 0;
-            if (FrameRate != _frameRate)
-                FrameRate = _frameRate;
-
-            _timeElapsed += (float)gameTime.ElapsedGameTime.TotalSeconds;
-            if (_timeElapsed > (1 / (float)FrameRate))
-            {
-                Cell++;
-                Cell = Cell % TextureAtlas.Count();
-                _timeElapsed -= (1 / (float)FrameRate);
-            }
-        }
-
-        public void UpdateFrames(GameTime gameTime, int StartingFrame, int EndingFrame, int _frameRate)
-        {
-            float _timeElapsed = 0;
-            if (Cell < StartingFrame)
-                Cell = StartingFrame;
-
-            if (FrameRate != _frameRate)
-                FrameRate = _frameRate;
-
-            _timeElapsed += (float)gameTime.ElapsedGameTime.TotalSeconds;
-            if (_timeElapsed > (1 / (float)FrameRate))
-            {
-                Cell++;
-                Cell = Cell % TextureAtlas.Count();
-                _timeElapsed -= (1 / (float)FrameRate);
-            }
-            if (Cell > EndingFrame)
-                Cell = StartingFrame;
-        }
-*/
-    /*
-        public void DrawFrames(SpriteBatch sb, Vector2 position, Color color, SpriteFont spriteFont)
-        {
-#if DEBUG
-            sb.DrawString(spriteFont, "Current Frame: " + _currFrame.ToString(), Vector2.Zero, color);
-#endif
-            sb.Draw(_sprite.Tex, position, _sprite.Cells[_currFrame], color);
-        }
-    */
-        ~CTextureAtlas()
-        {
-
         }
     }
 }
