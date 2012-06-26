@@ -27,6 +27,10 @@ namespace King_of_Thieves
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
+            graphics.PreferredBackBufferHeight = 240;
+            graphics.PreferredBackBufferWidth = 320;
+            graphics.SynchronizeWithVerticalRetrace = true;
+            graphics.ApplyChanges();
             Graphics.CGraphics.acquireGraphics(ref graphics);
             Content.RootDirectory = "Content";
             this.IsFixedTimeStep = false;
