@@ -14,7 +14,7 @@ namespace King_of_Thieves.Actors.Map
 
     class CMrMap : CActor
     {
-        private CXMLSerializer<string> _xmlcereal;
+        private CMrMapIO iocereal;
 
         public CMrMap(string name, int type)
             : base(name, ACTORTYPES.MANAGER)
@@ -28,16 +28,6 @@ namespace King_of_Thieves.Actors.Map
         }
 
         public override void destroy(object sender)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override void keyDown(object sender)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override void keyRelease(object sender)
         {
             throw new NotImplementedException();
         }

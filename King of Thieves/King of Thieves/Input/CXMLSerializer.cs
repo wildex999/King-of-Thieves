@@ -10,10 +10,9 @@ namespace King_of_Thieves.Input
     class CXMLSerializer <T>
     {
         private XmlSerializer _xmlserializer;
-        private object _stream;
-        private object _input;
+        private T _input;
 
-        public CXMLSerializer(object Input)
+        public CXMLSerializer(T Input)
         {
             _input = Input;
             XmlSerializer _xmlserializer = new XmlSerializer(typeof(T));
