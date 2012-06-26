@@ -9,7 +9,7 @@ namespace King_of_Thieves.Actors.Map
     enum MAPTYPES
     {
         ROOT = 0,
-        CHUNK
+        CHUNK = 1
     }
 
     class CMrMap : CActor
@@ -23,6 +23,7 @@ namespace King_of_Thieves.Actors.Map
         }
         public override void create(object sender)
         {
+            // Load the map here.
             throw new NotImplementedException();
         }
 
