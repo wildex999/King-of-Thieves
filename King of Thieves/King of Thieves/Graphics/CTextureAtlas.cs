@@ -94,55 +94,5 @@ namespace King_of_Thieves.Graphics
                 }
             }
         }
-/*
-* Must refactor frame-cycle code now.
-        public void UpdateFrames(GameTime gameTime, int _frameRate)
-        {
-            float _timeElapsed = 0;
-            if (FrameRate != _frameRate)
-                FrameRate = _frameRate;
-
-            _timeElapsed += (float)gameTime.ElapsedGameTime.TotalSeconds;
-            if (_timeElapsed > (1 / (float)FrameRate))
-            {
-                Cell++;
-                Cell = Cell % TextureAtlas.Count();
-                _timeElapsed -= (1 / (float)FrameRate);
-            }
-        }
-
-        public void UpdateFrames(GameTime gameTime, int StartingFrame, int EndingFrame, int _frameRate)
-        {
-            float _timeElapsed = 0;
-            if (Cell < StartingFrame)
-                Cell = StartingFrame;
-
-            if (FrameRate != _frameRate)
-                FrameRate = _frameRate;
-
-            _timeElapsed += (float)gameTime.ElapsedGameTime.TotalSeconds;
-            if (_timeElapsed > (1 / (float)FrameRate))
-            {
-                Cell++;
-                Cell = Cell % TextureAtlas.Count();
-                _timeElapsed -= (1 / (float)FrameRate);
-            }
-            if (Cell > EndingFrame)
-                Cell = StartingFrame;
-        }
-*/
-    /*
-        public void DrawFrames(SpriteBatch sb, Vector2 position, Color color, SpriteFont spriteFont)
-        {
-#if DEBUG
-            sb.DrawString(spriteFont, "Current Frame: " + _currFrame.ToString(), Vector2.Zero, color);
-#endif
-            sb.Draw(_sprite.Tex, position, _sprite.Cells[_currFrame], color);
-        }
-    */
-        ~CTextureAtlas()
-        {
-
-        }
     }
 }
