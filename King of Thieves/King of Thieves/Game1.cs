@@ -41,7 +41,7 @@ namespace King_of_Thieves
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-
+            CTextures.init(Content);
             base.Initialize();
         }
 

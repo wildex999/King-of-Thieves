@@ -15,7 +15,7 @@ namespace King_of_Thieves.Input
         public CXMLSerializer(T Input)
         {
             _input = Input;
-            XmlSerializer _xmlserializer = new XmlSerializer(typeof(T));
+            _xmlserializer = new XmlSerializer(typeof(T));
         }
 
         public void Serialize(string path)

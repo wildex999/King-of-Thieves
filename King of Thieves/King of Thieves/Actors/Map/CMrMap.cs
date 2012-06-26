@@ -32,6 +32,16 @@ namespace King_of_Thieves.Actors.Map
             throw new NotImplementedException();
         }
 
+        public override void keyDown(object sender)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void keyRelease(object sender)
+        {
+            throw new NotImplementedException();
+        }
+
         public override void frame(object sender)
         {
             throw new NotImplementedException();
