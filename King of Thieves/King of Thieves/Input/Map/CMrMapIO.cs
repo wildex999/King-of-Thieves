@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Xml;
-
+using King_of_Thieves.Actors.Map;
 namespace King_of_Thieves.Input
 {
     /*
@@ -43,6 +43,47 @@ namespace King_of_Thieves.Input
      *              database format that'll allow us to tell CActor who is on the map. MrMap will like this.
      *             
      */
+    /* Structure:
+     *          MAP CHUNK STRUCTURE
+     *          0.00 I WROTE THIS WHILE BEING HALF AWAKE FUCK ME.
+     *          <map>
+     *          <version>written half awaken please dont sue me</version>
+     *          <name>map.Name</name>
+     *          <type>0</type>
+     *          <layerCount>map.layerCount</layerCount>
+     *          <tileset>map.tileset</tileset>
+     *          
+     *          <ID>
+     *              <type>0</type> <!-- Type 0 == Event -->
+     *              <ID#>per-mapID</ID#> <!-- This might not even make it because it might cause ID collision. Thinking of just having a coordinate here. -->
+     *              <callback>objectNameOrTagMaybeHere?</callback>
+     *          </ID>
+     *          
+     *           <tileLayer>   
+     *              <layer#>i.ToString()</layer#>
+     *              <mapData>0,0,0,0,0,0,0,0,0</mapData>
+     *           </tileLayer>
+     *           
+     *           <hitBoxLayer>
+     *              <layer#>i.ToString()</layer#>
+     *              <type>0</type> <!-- Type 0 == Rectangle hitbox -->
+     *              <hitBox>0,1,2,3</hitBox> <!-- Since we have a rectangle, only define x,y and width/height -->
+     *           </hitBoxLayer>
+     *          </map>
+     *          
+     *          MAP ROOT STRUCTURE
+     *          <map>
+     *          <version>written half awaken please dont sue me</version>
+     *          <name>map.Name</name>
+     *          <chunkCount>map.ChunkCount</chunkCount>
+     *          
+     *          <chunk>
+     *              <file>map.GetChunk(ID)</file>
+     *              <region>map.GetChunkRegion(ID)</region> <!-- Possibly a selection defining what positions this chunk makes up? -->
+     *              <!-- Feels like we might need more for this chunk structure -->
+     *          </chunk>
+     *          </map>
+     */
     class CMrMapIO
     {
         private string _mapName;
@@ -52,84 +93,17 @@ namespace King_of_Thieves.Input
             _mapName = name;
         }
 
-        public void Save(string path, King_of_Thieves.Actors.Map.CMrMap map)
+        public void Save(CMrMap map, string path)
         {
-            try
-            {
-                using (XmlWriter writer = XmlWriter.Create(path))
-                {
-                    writer.WriteStartDocument();
-                    for(int i = 0; i <= map.layerCount; i++)
-                    {
-                        /* Structure:
-                         *          MAP CHUNK STRUCTURE
-                         *          0.00 I WROTE THIS WHILE BEING HALF AWAKE FUCK ME.
-                         *          <map>
-                         *          <version>written half awaken please dont sue me</version>
-                         *          <name>map.Name</name>
-                         *          <layerCount>map.layerCount</layerCount>
-                         *          <tileset>map.tileset</tileset>
-                         *          
-                         *          <ID>
-                         *              <type>0</type> <!-- Type 0 == Event -->
-                         *              <ID#>per-mapID</ID#> <!-- This might not even make it because it might cause ID collision. Thinking of just having a coordinate here. -->
-                         *              <callback>objectNameOrTagMaybeHere?</callback>
-                         *          </ID>
-                         *          
-                         *           <tileLayer>   
-                         *              <layer#>i.ToString()</layer#>
-                         *              <mapData>0,0,0,0,0,0,0,0,0</mapData>
-                         *           </tileLayer>
-                         *           
-                         *           <hitBoxLayer>
-                         *              <layer#>i.ToString()</layer#>
-                         *              <type>0</type> <!-- Type 0 == Rectangle hitbox -->
-                         *              <hitBox>0,1,2,3</hitBox> <!-- Since we have a rectangle, only define x,y and width/height -->
-                         *           </hitBoxLayer>
-                         *          </map>
-                         *          
-                         *          MAP ROOT STRUCTURE
-                         *          <map>
-                         *          <version>written half awaken please dont sue me</version>
-                         *          <name>map.Name</name>
-                         *          <chunkCount>map.ChunkCount</chunkCount>
-                         *          
-                         *          <chunk>
-                         *              <file>map.GetChunk(ID)</file>
-                         *              <region>map.GetChunkRegion(ID)</region> <!-- Possibly a selection defining what positions this chunk makes up? -->
-                         *              <!-- Feels like we might need more for this chunk structure -->
-                         *          </chunk>
-                         *          </map>
-                         */
-                            writer.WriteElementString("mapName",map.name);
-                            writer.WriteElementString("layer#", i.ToString());
-                            writer.WriteElementString("mapData", map.GetLayer(i));
-                        //maybe more...
-                        writer.WriteEndElement();
-                    }
-                    writer.WriteEndElement();
-                    writer.WriteEndDocument();
-                }
-            }
-            catch
-            {
-                throw new Exception();
-            }
+            CXMLSerializer<CMrMap> serializer = new CXMLSerializer<CMrMap>(map);
+            serializer.Serialize(path);
         }
 
-        public void Read(string path)
+        public CMrMap Read(CMrMap map, string path)
         {
-            try
-            {
-                using (XmlReader reader = XmlReader.Create(path))
-                {
-                    //stub
-                }
-            }
-            catch
-            {
-                throw new Exception();
-            }
+            CXMLSerializer<CMrMap> serializer = new CXMLSerializer<CMrMap>(map);
+            CMrMap temp = serializer.Load(path);
+            return temp;
         }
     }
 }
