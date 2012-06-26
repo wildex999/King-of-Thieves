@@ -43,47 +43,7 @@ namespace King_of_Thieves.Input
      *              database format that'll allow us to tell CActor who is on the map. MrMap will like this.
      *             
      */
-    /* Structure:
-     *          MAP CHUNK STRUCTURE
-     *          0.00 I WROTE THIS WHILE BEING HALF AWAKE FUCK ME.
-     *          <map>
-     *          <version>written half awaken please dont sue me</version>
-     *          <name>map.Name</name>
-     *          <type>0</type>
-     *          <layerCount>map.layerCount</layerCount>
-     *          <tileset>map.tileset</tileset>
-     *          
-     *          <ID>
-     *              <type>0</type> <!-- Type 0 == Event -->
-     *              <ID#>per-mapID</ID#> <!-- This might not even make it because it might cause ID collision. Thinking of just having a coordinate here. -->
-     *              <callback>objectNameOrTagMaybeHere?</callback>
-     *          </ID>
-     *          
-     *           <tileLayer>   
-     *              <layer#>i.ToString()</layer#>
-     *              <mapData>0,0,0,0,0,0,0,0,0</mapData>
-     *           </tileLayer>
-     *           
-     *           <hitBoxLayer>
-     *              <layer#>i.ToString()</layer#>
-     *              <type>0</type> <!-- Type 0 == Rectangle hitbox -->
-     *              <hitBox>0,1,2,3</hitBox> <!-- Since we have a rectangle, only define x,y and width/height -->
-     *           </hitBoxLayer>
-     *          </map>
-     *          
-     *          MAP ROOT STRUCTURE
-     *          <map>
-     *          <version>written half awaken please dont sue me</version>
-     *          <name>map.Name</name>
-     *          <chunkCount>map.ChunkCount</chunkCount>
-     *          
-     *          <chunk>
-     *              <file>map.GetChunk(ID)</file>
-     *              <region>map.GetChunkRegion(ID)</region> <!-- Possibly a selection defining what positions this chunk makes up? -->
-     *              <!-- Feels like we might need more for this chunk structure -->
-     *          </chunk>
-     *          </map>
-     */
+
     class CMrMapIO
     {
         private string _mapName;

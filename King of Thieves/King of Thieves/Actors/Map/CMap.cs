@@ -131,7 +131,7 @@ namespace King_of_Thieves.Actors.Map
 
     class CObjectLayer
     {
-        [XmlElement("layer#"])
+        [XmlElement("layer#")]
         public int layerNum
         {
             get; set;
@@ -208,7 +208,7 @@ namespace King_of_Thieves.Actors.Map
         }
 
         [XmlArray(ElementName = "region")]
-        public int[][] Region
+        public int[] Region
         {
             get; set;
         }
