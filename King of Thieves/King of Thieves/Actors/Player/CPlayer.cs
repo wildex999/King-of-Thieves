@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework;
 
 namespace King_of_Thieves.Actors.Player
 {
@@ -63,9 +64,9 @@ namespace King_of_Thieves.Actors.Player
             throw new NotImplementedException();
         }
 
-        public override void update()
+        public override void update(GameTime gameTime)
         {
-            base.update();
+            base.update(gameTime);
         }
 
         public override void drawMe()

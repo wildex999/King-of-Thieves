@@ -94,7 +94,7 @@ namespace King_of_Thieves.Actors
             onDraw -= new drawHandler(draw);
         }
 
-        public virtual void update()
+        public virtual void update(GameTime gameTime)
         {
             
             onFrame(this);

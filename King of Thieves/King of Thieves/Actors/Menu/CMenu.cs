@@ -80,9 +80,9 @@ namespace King_of_Thieves.Actors.Menu
             throw new NotImplementedException();
         }
 
-        public override void update()
+        public override void update(GameTime gameTime)
         {
-            base.update();
+            base.update(gameTime);
             
             
         }
