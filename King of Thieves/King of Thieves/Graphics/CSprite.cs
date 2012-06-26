@@ -18,13 +18,12 @@ namespace King_of_Thieves.Graphics
         private int frameX = 0, frameY = 0;
         
 
-        public CSprite(CTextureAtlas atlas, int frameRate = 0, Effect shader = null, params VertexPositionColor[] vertices)
+        public CSprite(CTextureAtlas atlas, Effect shader = null, params VertexPositionColor[] vertices)
             : base(shader, vertices)
         {
             _imageAtlas = atlas;
             _size = new Rectangle(atlas.CellSpacing, atlas.CellSpacing, atlas.FrameWidth, atlas.FrameHeight);
             _name = _imageAtlas.sourceImage.Name;
-            _imageAtlas.FrameRate = frameRate;
             CMasterControl.drawList.AddLast(this);
         }
 
@@ -37,17 +36,17 @@ namespace King_of_Thieves.Graphics
 
             _frameTracker += _imageAtlas.FrameRate;
 
-            if (_frameTracker == 60)
+            if (_frameTracker >= 60)
             {
                 _frameTracker = 0;
                 frameX++;
 
-                if (frameX > _imageAtlas.tileXCount)
+                if (frameX >= _imageAtlas.tileXCount)
                 {
                     frameX = 0;
                     frameY++;
 
-                    if (frameY > _imageAtlas.tileYCount)
+                    if (frameY >= _imageAtlas.tileYCount)
                         frameY = 0;
                 }
                 _size = _imageAtlas.getTile(frameX, frameY);

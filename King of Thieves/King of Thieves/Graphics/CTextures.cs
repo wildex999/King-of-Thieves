@@ -20,6 +20,7 @@ namespace King_of_Thieves.Graphics
 
 
             _textures.Add("test", new CTextureAtlas(_content.Load<Texture2D>("test"), 19, 23, 0));
+            _textures.Add("mcDungeon2", new CTextureAtlas(_content.Load<Texture2D>("mcDungeon2"), 16, 16, 0, 5));
         }
 
         public static CTextureAtlas texture(string name)

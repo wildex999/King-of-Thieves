@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using King_of_Thieves.Input;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework;
 
 namespace King_of_Thieves.Actors.Menu
 {
@@ -15,12 +16,14 @@ namespace King_of_Thieves.Actors.Menu
         private Sound.CSound _bgm;
         private Sound.CSound _itemSwitch;
         private Sound.CSound _itemSelect;
+        private GameTime _gameTime;
 
-        public CMenu(string name, Graphics.CSprite image, int displayTime):
+        public CMenu(string name, Graphics.CSprite image, int displayTime, GameTime gameTime):
             base(name)
         {
             _image = image;
             _displayTime = displayTime;
+            _gameTime = gameTime;
         }
 
         public override void animationEnd(object sender)
@@ -80,6 +83,8 @@ namespace King_of_Thieves.Actors.Menu
         public override void update()
         {
             base.update();
+            
+            
         }
     }
 }
