@@ -83,7 +83,7 @@ namespace King_of_Thieves.Graphics
             {
                 for (int x = 0; x <= _fixedWidth - 1; x++)
                 {
-
+                    //The math is completely fine. 
                     //this math seems a bit iffy due to the cellspacing, but we'll see how it goes! -Steve
                     textureAtlas._textureAtlas[x,y] = new Rectangle
                         (textureAtlas.FrameWidth * x, textureAtlas.FrameHeight * y,

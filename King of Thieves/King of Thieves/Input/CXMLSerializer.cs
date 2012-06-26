@@ -19,16 +19,16 @@ namespace King_of_Thieves.Input
             XmlSerializer _xmlserializer = new XmlSerializer(typeof(T));
         }
 
-        public void Serialize()
+        public void Serialize(string path)
         {
-            StreamWriter streamWriter = new StreamWriter();
+            StreamWriter streamWriter = new StreamWriter(path);
             _xmlserializer.Serialize(streamWriter, _input);
             streamWriter.Close();
         }
 
-        public T Load()
+        public T Load(string path)
         {
-            StreamReader streamReader = new StreamReader();
+            StreamReader streamReader = new StreamReader(path);
             T Output = (T)_xmlserializer.Deserialize(streamReader);
             streamReader.Close();
             return Output;

@@ -2,13 +2,22 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using King_of_Thieves.Input;
 
 namespace King_of_Thieves.Actors.Map
 {
+    enum MAPTYPES
+    {
+        ROOT = 0,
+        CHUNK
+    }
+
     class CMrMap : CActor
     {
-        public CMrMap()
-            : base("MrMap", ACTORTYPES.MANAGER)
+        private CXMLSerializer<string> _xmlcereal;
+
+        public CMrMap(string name, int type)
+            : base(name, ACTORTYPES.MANAGER)
         {
 
         }
