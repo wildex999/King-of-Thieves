@@ -33,5 +33,6 @@ namespace King_of_Thieves.Input
             streamReader.Close();
             return Output;
         }
+
     }
 }

@@ -12,7 +12,7 @@ namespace King_of_Thieves.Graphics
         private Texture2D _shaderTex = null; 
         private Rectangle _size;
         protected string _name = "";
-        protected Vector2 _position = new Vector2(0);
+        protected Vector2 _position = Vector2.Zero;
         private CTextureAtlas _imageAtlas;
         private int _frameTracker = 0;
         private int frameX = 0, frameY = 0;
