@@ -11,19 +11,40 @@ namespace King_of_Thieves.Actors.Menu
     //This class is the menu background itself
     class CMenu : CActor
     {
-        private Graphics.CSprite _image;
         private int _displayTime;
-        private Sound.CSound _bgm;
-        private Sound.CSound _itemSwitch;
-        private Sound.CSound _itemSelect;
+        private Sound.CSound _bgm = null;
+        private Sound.CSound _itemSwitch = null;
+        private Sound.CSound _itemSelect = null;
         private GameTime _gameTime;
+        private TimeSpan _startTime;
+        private int _menuIndex = 0;
+        private int _numberOfItems = 0;
 
-        public CMenu(string name, Graphics.CSprite image, int displayTime, GameTime gameTime):
+        public CMenu(string name, Graphics.CSprite image, int displayTime, Sound.CSound BGM = null, Sound.CSound itemSwitch = null, Sound.CSound itemSelect = null):
             base(name)
         {
-            _image = image;
+            base.image = image;
             _displayTime = displayTime;
-            _gameTime = gameTime;
+            _bgm = BGM;
+            _itemSelect = itemSelect;
+            _itemSwitch = itemSwitch;
+
+            if (_bgm != null)
+                CMasterControl.audioPlayer.addSfx(_bgm);
+            
+        }
+
+        public void registerItem()
+        {
+            _numberOfItems++;
+        }
+
+        public int numberofItems
+        {
+            get
+            {
+                return _numberOfItems;
+            }
         }
 
         public override void animationEnd(object sender)
@@ -43,8 +64,7 @@ namespace King_of_Thieves.Actors.Menu
 
         public override void create(object sender)
         {
-            throw new NotImplementedException();
-            //play bgm here
+            
         }
 
         public override void destroy(object sender)
@@ -59,18 +79,30 @@ namespace King_of_Thieves.Actors.Menu
 
         public override void frame(object sender)
         {
-            throw new NotImplementedException();
+            //if ((_gameTime.ElapsedGameTime - _startTime).CompareTo(new TimeSpan(0, 0, _displayTime)) >= 0)
+            //    destroy(this);
         }
 
         public override void keyDown(object sender)
         {
+
+            if (_itemSwitch != null)
+                CMasterControl.audioPlayer.addSfx(_itemSwitch);
+
             if (CInput.keysPressed.Contains(Keys.Down))
             {
-                //move selector down
+                if (++_menuIndex >= _numberOfItems)
+                    _menuIndex = 0;
             }
             else if (CInput.keysPressed.Contains(Keys.Up))
             {
-                //move selector up
+                if (--_menuIndex >= _numberOfItems)
+                    _menuIndex = _numberOfItems - 1;
+            }
+
+            else if (CInput.keysPressed.Contains(Keys.Enter))
+            {
+                CMasterControl.audioPlayer.addSfx(_itemSelect);
             }
             
         }

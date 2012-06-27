@@ -15,6 +15,7 @@ namespace King_of_Thieves.Sound
         private Thread _audioThread;
         private CSound _song;
         private BlockingCollection<CSound> _effects;
+        public Dictionary<string, CSound> soundBank = new Dictionary<string, CSound>();
 
         public CAudioPlayer()
         {

@@ -129,7 +129,8 @@ namespace King_of_Thieves.Input
             
             _padStatePrevious = _padStateCurrent;
             _keyStatePrevious = _keyStateCurrent;
-            _mouseStateCurrent = _mouseStatePrevious;
+            _mouseStatePrevious = _mouseStateCurrent;
+             
 
             _padStateCurrent = GamePad.GetState(PlayerIndex.One);
             _keyStateCurrent = Keyboard.GetState();

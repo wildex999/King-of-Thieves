@@ -114,7 +114,12 @@ namespace King_of_Thieves.Actors
 
         public virtual void drawMe()
         {
-            onDraw(this);
+            try
+            {
+                onDraw(this);
+            }
+            catch (NotImplementedException)
+            { ;}
 
             image.draw();
         }

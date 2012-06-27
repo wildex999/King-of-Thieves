@@ -23,6 +23,9 @@ namespace King_of_Thieves
         CSprite testSprite = null;
         CActorTest actorTest;
         CComponent compTest = new CComponent();
+        Actors.Menu.CMenu testMenu;
+        CComponent menuComo = new CComponent();
+        
 
         public Game1()
         {
@@ -63,10 +66,19 @@ namespace King_of_Thieves
            // Graphics.CTextureDict.init(Content);
             testSprite = new CSprite(new CTextureAtlas(Content.Load<Texture2D>("test"), 19, 23, 0));
 
+            
+
             actorTest = new CActorTest("Test");
             compTest.root = actorTest;
+
+            
+
+            CMasterControl.audioPlayer.soundBank.Add("04_-_Phantom_Ganon", new Sound.CSound(Content.Load<Song>("04_-_Phantom_Ganon"), false, 0));
+
+            testMenu = new Actors.Menu.CMenu("MenuTest", new CSprite(CTextures.texture("menu")), 120, CMasterControl.audioPlayer.soundBank["04_-_Phantom_Ganon"]);
+            menuComo.root = testMenu;
             //CMasterControl.audioPlayer.song = new Sound.CSound(Content.Load<Song>("04_-_Phantom_Ganon"), false, 0);
-            CMasterControl.audioPlayer.addSfx(new Sound.CSound(Content.Load<Song>("04_-_Phantom_Ganon"), false, 0));
+            //CMasterControl.audioPlayer.addSfx(new Sound.CSound(Content.Load<Song>("04_-_Phantom_Ganon"), false, 0));
         }
 
         /// <summary>
@@ -94,10 +106,11 @@ namespace King_of_Thieves
             // TODO: Add your update logic here
             Input.CInput.update();
 
-
+            
 
             //compTest.root.position = new Vector2(Input.CInput.mouseX, Input.CInput.mouseY);
             compTest.updateActors(gameTime);
+            menuComo.updateActors(gameTime);
 
             if (Input.CInput.getInputRelease(Microsoft.Xna.Framework.Input.Keys.Enter))
                 CMasterControl.audioPlayer.addSfx(new Sound.CSound(Content.Load<SoundEffect>("lttp_heart")));
@@ -119,6 +132,7 @@ namespace King_of_Thieves
             base.Draw(gameTime);
             spriteBatch.Begin();
             compTest.drawActors();
+            menuComo.drawActors();
             spriteBatch.End();
         }
     }
