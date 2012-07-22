@@ -35,6 +35,9 @@ namespace King_of_Thieves.Actors
         public event keyReleaseHandler onKeyRelease;
         public event collideHandler onCollide;
         public event animationEndHandler onAnimationEnd;
+        public event timerHandler onTimer0;
+        public event timerHandler onTimer1;
+        public event timerHandler onTimer2;
 
         public abstract void create(object sender);
         public abstract void destroy(object sender);
@@ -59,7 +62,7 @@ namespace King_of_Thieves.Actors
             }
         }
 
-        public CActor(string name, ACTORTYPES type = ACTORTYPES.INTERACTABLE)
+        public CActor(string name, Vector2 position, ACTORTYPES type = ACTORTYPES.INTERACTABLE )
             
         {
             onCreate += new createHandler(create);
@@ -80,7 +83,9 @@ namespace King_of_Thieves.Actors
             }
             catch (NotImplementedException)
             { ;}
-               
+
+            _position = position;
+
             onCreate(this);
         }
 

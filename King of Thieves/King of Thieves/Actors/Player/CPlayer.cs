@@ -9,7 +9,7 @@ namespace King_of_Thieves.Actors.Player
     class CPlayer : CActor
     {
         public CPlayer() :
-            base("PLAYER", ACTORTYPES.INTERACTABLE)
+            base("PLAYER", Vector2.Zero, ACTORTYPES.INTERACTABLE)
         {
 
         }

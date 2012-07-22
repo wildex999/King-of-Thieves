@@ -138,16 +138,13 @@ namespace King_of_Thieves.Input
 
             if (areKeysPressed)
                 keyEvents.keys = keysPressed;
-
-
-        }
-
-        
+        }  
     }
 
     class keyEventArgs : EventArgs
     {
         public Keys[] keys;
+        public Keys[] tappedKeys;
         public Keys[] oldKeys;
         public Keys[] releasedKeys;
     }

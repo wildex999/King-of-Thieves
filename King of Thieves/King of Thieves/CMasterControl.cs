@@ -12,5 +12,7 @@ namespace King_of_Thieves
         public static Dictionary<string, Actors.CActor> componentList = new Dictionary<string,Actors.CActor>();
         public static Sound.CAudioPlayer audioPlayer = new Sound.CAudioPlayer();
         public static Dictionary<Type, Dictionary<string, List<BoundingBox>>> hitboxes = new Dictionary<Type, Dictionary<string,List<BoundingBox>>>(); //jeez this is wacky
+        public static GameTime gameTime;
+
     }
 }

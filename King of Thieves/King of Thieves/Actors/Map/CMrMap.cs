@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using King_of_Thieves.Input;
+using Microsoft.Xna.Framework;
 
 namespace King_of_Thieves.Actors.Map
 {
@@ -17,7 +18,7 @@ namespace King_of_Thieves.Actors.Map
         private CMrMapIO iocereal;
 
         public CMrMap(string name, int type)
-            : base(name, ACTORTYPES.MANAGER)
+            : base(name, Vector2.Zero, ACTORTYPES.MANAGER)
         {
 
         }

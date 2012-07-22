@@ -21,7 +21,7 @@ namespace King_of_Thieves.Actors.Menu
         private int _numberOfItems = 0;
 
         public CMenu(string name, Graphics.CSprite image, int displayTime, Sound.CSound BGM = null, Sound.CSound itemSwitch = null, Sound.CSound itemSelect = null):
-            base(name)
+            base(name, new Vector2(18,18))
         {
             base.image = image;
             _displayTime = displayTime;
@@ -85,19 +85,23 @@ namespace King_of_Thieves.Actors.Menu
 
         public override void keyDown(object sender)
         {
-
-            if (_itemSwitch != null)
-                CMasterControl.audioPlayer.addSfx(_itemSwitch);
+            
 
             if (CInput.keysPressed.Contains(Keys.Down))
             {
                 if (++_menuIndex >= _numberOfItems)
                     _menuIndex = 0;
+
+                if (_itemSwitch != null)
+                    CMasterControl.audioPlayer.addSfx(_itemSwitch);
             }
             else if (CInput.keysPressed.Contains(Keys.Up))
             {
                 if (--_menuIndex >= _numberOfItems)
                     _menuIndex = _numberOfItems - 1;
+
+                if (_itemSwitch != null)
+                    CMasterControl.audioPlayer.addSfx(_itemSwitch);
             }
 
             else if (CInput.keysPressed.Contains(Keys.Enter))

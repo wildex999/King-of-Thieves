@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework;
 
 namespace King_of_Thieves.Actors
 {
@@ -9,7 +10,7 @@ namespace King_of_Thieves.Actors
     {
 
         public CActorTest(string name) :
-            base(name)
+            base(name, Vector2.Zero )
         {
             image = new Graphics.CSprite(Graphics.CTextures.texture("mcDungeon2"));
         }
