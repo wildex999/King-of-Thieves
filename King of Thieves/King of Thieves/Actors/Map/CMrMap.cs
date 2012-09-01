@@ -16,35 +16,41 @@ namespace King_of_Thieves.Actors.Map
     abstract class CMrMap
     {
         private CMrMapIO iocereal;
+        private string _name;
+        private int _type;
 
-        public CMrMap(string name, int type)
-        {
+        public delegate void ioHandler(object sender);
 
-        }
-        public override void create(object sender)
+        public event createHandler onCreate;
+        public event ioHandler onLoad;
+        public event destroyHandler onDestroy;
+        public event drawHandler onDraw;
+
+        public readonly MAPTYPES MAPETYPE;
+
+        abstract public void create(object sender);
+        abstract public void load(object sender);
+        abstract public void destroy(object sender);
+        abstract public void draw(object sender);
+
+        public CMrMap(string name, MAPTYPES type = MAPTYPES.ROOT)
         {
-            // Load the map here.
-            throw new NotImplementedException();
+            onCreate += new createHandler(create);
+            onLoad += new ioHandler(load);
+            onDestroy += new destroyHandler(destroy);
+            onDraw += new drawHandler(draw);
+            _name = name;
+            MAPETYPE = type;
         }
 
-        public override void destroy(object sender)
+        ~CMrMap()
         {
-            throw new NotImplementedException();
+            onCreate -= new createHandler(create);
+            onLoad -= new ioHandler(load);
+            onDestroy -= new destroyHandler(destroy);
+            onDraw -= new drawHandler(draw);
         }
 
-        public override void frame(object sender)
-        {
-            throw new NotImplementedException();
-        }
 
-        public override void draw(object sender)
-        {
-            throw new NotImplementedException();
-        }
-
-        protected override void _addCollidables()
-        {
-            throw new NotImplementedException();
-        }
     }
 }

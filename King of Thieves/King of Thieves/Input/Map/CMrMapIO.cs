@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Xml;
 using King_of_Thieves.Actors.Map;
+
 namespace King_of_Thieves.Input
 {
     /*
@@ -47,11 +48,6 @@ namespace King_of_Thieves.Input
     class CMrMapIO
     {
         private string _mapName;
-
-        public CMrMapIO(string name, int type)
-        {
-            _mapName = name;
-        }
 
         public void Save(CMrMap map, string path)
         {
