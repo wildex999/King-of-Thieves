@@ -13,12 +13,11 @@ namespace King_of_Thieves.Actors.Map
         CHUNK = 1
     }
 
-    class CMrMap : CActor
+    abstract class CMrMap
     {
         private CMrMapIO iocereal;
 
         public CMrMap(string name, int type)
-            : base(name, Vector2.Zero, ACTORTYPES.MANAGER)
         {
 
         }
@@ -33,32 +32,12 @@ namespace King_of_Thieves.Actors.Map
             throw new NotImplementedException();
         }
 
-        public override void keyDown(object sender)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override void keyRelease(object sender)
-        {
-            throw new NotImplementedException();
-        }
-
         public override void frame(object sender)
         {
             throw new NotImplementedException();
         }
 
         public override void draw(object sender)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override void collide(object sender, object collider)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override void animationEnd(object sender)
         {
             throw new NotImplementedException();
         }
