@@ -57,8 +57,7 @@ namespace King_of_Thieves.Input
         static public CMap Read(CMap map, string path)
         {
             CXMLSerializer<CMap> serializer = new CXMLSerializer<CMap>(map);
-            CMap temp = serializer.Load(path);
-            return temp;
+            return serializer.Load(path);
         }
     }
 }

@@ -20,6 +20,9 @@ namespace King_of_Thieves.Map
         protected string _name;
         protected MAPTYPES _type;
         protected CMap _map;
+        protected CTileLayer _tile;
+        protected CHitBoxLayer _hitBoxLayer;
+        protected CObjectLayer _objectLayer;
 
         public delegate void ioHandler(object sender);
 

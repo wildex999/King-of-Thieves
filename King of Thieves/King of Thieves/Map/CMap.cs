@@ -91,7 +91,7 @@ namespace King_of_Thieves.Map
 
         //<hitBoxLayer>
         [XmlElement("hitBoxLayer")]
-        public CHitBoxType hitBoxLayer;
+        public CHitBoxLayer hitBoxLayer;
 
         //<objectLayer>
         [XmlElement("objectLayer")]
@@ -127,7 +127,7 @@ namespace King_of_Thieves.Map
         public object Callback;
     }
 
-    public class CHitBoxType
+    public class CHitBoxLayer
     {
         [XmlElement("layerNum")]
         public int layerNum
