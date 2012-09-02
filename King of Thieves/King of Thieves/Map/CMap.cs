@@ -1,10 +1,11 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Xml.Serialization;
 
-namespace King_of_Thieves.Actors.Map
+namespace King_of_Thieves.Map
 {
     /* Structure:
      *          MAP CHUNK STRUCTURE
@@ -53,43 +54,28 @@ namespace King_of_Thieves.Actors.Map
      *          </chunk>
      *          </map>
      */
-    [XmlRoot("Map")]
-    class CMap
+    [XmlRoot("map")]
+    public class CMap
     {
         //<Version>
-        [XmlElement("version")]
-        public int Version
-        {
-            get; set;
-        }
+        [XmlElement(DataType = "int", ElementName = "version")]
+        public int Version;
 
         //<Name>
-        [XmlElement("name")]
-        public string Name
-        {
-            get; set;
-        }
+        [XmlElement(DataType="string", ElementName="name")]
+        public string Name;
 
         //<Type>
-        [XmlElement("type")]
-        public int Type
-        {
-            get; set;
-        }
+        [XmlElement(ElementName="type")]
+        public MAPTYPES Type;
 
         //<layerCount>
-        [XmlElement("layerCount")]
-        public int layerCount
-        {
-            get; set;
-        }
+        [XmlElement(DataType="int",ElementName="layerCount")]
+        public int layerCount;
 
         //<tileSet>
-        [XmlElement("tileSet")]
-        public string tileSet
-        {
-            get; set;
-        }
+        [XmlElement(DataType="string",ElementName="tileSet")]
+        public string tileSet;
 
         //<ID>
         /*
@@ -101,70 +87,49 @@ namespace King_of_Thieves.Actors.Map
 
         //<tileLayer>
         [XmlElement("tileLayer")]
-        public CTileLayer tileLayer
-        {
-            get; set;
-        }
+        public CTileLayer tileLayer;
 
         //<hitBoxLayer>
         [XmlElement("hitBoxLayer")]
-        public CHitBoxType hitBoxLayer
-        {
-            get; set;
-        }
+        public CHitBoxLayer hitBoxLayer;
 
         //<objectLayer>
         [XmlElement("objectLayer")]
-        public CObjectLayer objectLayer
-        {
-            get; set;
-        }
+        public CObjectLayer objectLayer;
     }
 
-    class CTileLayer
+    public class CTileLayer
     {
-        [XmlElement("layer#")]
+        [XmlElement("layerNum")]
         public int layerNum;
-        [XmlElement("tileData")]
+
+        [XmlArray(ElementName="tile",IsNullable=true)]
         public int[] tileData;
     }
 
-    class CObjectLayer
+    public class CObjectLayer
     {
-        [XmlElement("layer#")]
-        public int layerNum
-        {
-            get; set;
-        }
-        [XmlElement("objectData")]
-        public int[] objectData
-        {
-            get; set;
-        }
+        [XmlElement("layerNum")]
+        public int layerNum;
+        [XmlArray(ElementName="objectData",IsNullable=true)]
+        public int[] objectData;
     }
 
-    class CSpecialID
+    public class CSpecialID
     {
         [XmlElement("type")]
-        public int Type
-        {
-            get; set;
-        }
+        public int Type;
+
         [XmlElement("Position")]
-        public int[] Position
-        {
-            get; set;
-        }
+        public int[] Position;
+
         [XmlElement("callback")]
-        public object Callback
-        {
-            get; set;
-        }
+        public object Callback;
     }
 
-    class CHitBoxType
+    public class CHitBoxLayer
     {
-        [XmlElement("layer#")]
+        [XmlElement("layerNum")]
         public int layerNum
         {
             get; set;
@@ -174,7 +139,7 @@ namespace King_of_Thieves.Actors.Map
         {
             get; set;
         }
-        [XmlArray(ElementName = "hitBox")]
+        [XmlArray(ElementName = "hitBox",IsNullable=true)]
         public int[] hitBox
         {
             get; set;
@@ -182,7 +147,7 @@ namespace King_of_Thieves.Actors.Map
     }
 
     [XmlRoot("Root")]
-    class CMapRoot
+    public class CMapRoot
     {
         [XmlElement("version")]
         public int Version
@@ -199,7 +164,7 @@ namespace King_of_Thieves.Actors.Map
     }
 
     [XmlRoot("Chunk")]
-    class CMapChunk
+    public class CMapChunk
     {
         [XmlElement("file")]
         public string file
@@ -207,7 +172,7 @@ namespace King_of_Thieves.Actors.Map
             get; set;
         }
 
-        [XmlArray(ElementName = "region")]
+        [XmlArray(ElementName = "region",IsNullable=true)]
         public int[] Region
         {
             get; set;

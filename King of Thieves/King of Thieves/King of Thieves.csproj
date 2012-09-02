@@ -115,9 +115,10 @@
     <Compile Include="Actors\CActor.cs" />
     <Compile Include="Actors\CActorTest.cs" />
     <Compile Include="Actors\CComponent.cs" />
-    <Compile Include="Actors\Map\CMap.cs" />
-    <Compile Include="Actors\Map\CMrMap.cs" />
-    <Compile Include="Actors\Map\CTimeSys.cs" />
+    <Compile Include="Map\CMap.cs" />
+    <Compile Include="Map\CMrMap.cs" />
+    <Compile Include="Map\CTimeSys.cs" />
+    <Compile Include="Map\MTestMap.cs" />
     <Compile Include="Actors\Menu\CMenu.cs" />
     <Compile Include="Actors\Menu\CMenuItem.cs" />
     <Compile Include="Actors\Player\CPlayer.cs" />

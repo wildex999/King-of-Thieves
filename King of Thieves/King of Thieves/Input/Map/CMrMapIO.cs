@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Xml;
-using King_of_Thieves.Actors.Map;
+using King_of_Thieves.Map;
+
 namespace King_of_Thieves.Input
 {
     /*
@@ -44,26 +45,19 @@ namespace King_of_Thieves.Input
      *             
      */
 
-    class CMrMapIO
+    static class CMrMapIO
     {
-        private string _mapName;
 
-        public CMrMapIO(string name, int type)
+        static public void Save(CMap map, string path)
         {
-            _mapName = name;
-        }
-
-        public void Save(CMrMap map, string path)
-        {
-            CXMLSerializer<CMrMap> serializer = new CXMLSerializer<CMrMap>(map);
+            CXMLSerializer<CMap> serializer = new CXMLSerializer<CMap>(map);
             serializer.Serialize(path);
         }
 
-        public CMrMap Read(CMrMap map, string path)
+        static public CMap Read(CMap map, string path)
         {
-            CXMLSerializer<CMrMap> serializer = new CXMLSerializer<CMrMap>(map);
-            CMrMap temp = serializer.Load(path);
-            return temp;
+            CXMLSerializer<CMap> serializer = new CXMLSerializer<CMap>(map);
+            return serializer.Load(path);
         }
     }
 }
