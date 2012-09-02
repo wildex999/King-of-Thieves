@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,9 +17,9 @@ namespace King_of_Thieves.Map
     abstract class CMrMap
     {
         //private CMrMapIO iocereal;
-        private string _name;
-        private MAPTYPES _type;
-        public CMap Map;
+        protected string _name;
+        protected MAPTYPES _type;
+        protected CMap _map;
 
         public delegate void ioHandler(object sender);
 

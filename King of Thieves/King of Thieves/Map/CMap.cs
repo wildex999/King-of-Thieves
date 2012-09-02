@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -53,43 +54,28 @@ namespace King_of_Thieves.Map
      *          </chunk>
      *          </map>
      */
-    [Serializable]
+    [XmlRoot("map")]
     public class CMap
     {
         //<Version>
-        [XmlElement(DataType="int",ElementName="version")]
-        public int Version
-        {
-            get; set;
-        }
+        [XmlElement(DataType = "int", ElementName = "version")]
+        public int Version;
 
         //<Name>
         [XmlElement(DataType="string", ElementName="name")]
-        public string Name
-        {
-            get; set;
-        }
+        public string Name;
 
         //<Type>
         [XmlElement(ElementName="type")]
-        public MAPTYPES Type
-        {
-            get; set;
-        }
+        public MAPTYPES Type;
 
         //<layerCount>
         [XmlElement(DataType="int",ElementName="layerCount")]
-        public int layerCount
-        {
-            get; set;
-        }
+        public int layerCount;
 
         //<tileSet>
         [XmlElement(DataType="string",ElementName="tileSet")]
-        public string tileSet
-        {
-            get; set;
-        }
+        public string tileSet;
 
         //<ID>
         /*
@@ -100,71 +86,50 @@ namespace King_of_Thieves.Map
         } */
 
         //<tileLayer>
-        [XmlElement(ElementName="tileLayer")]
-        public CTileLayer tileLayer
-        {
-            get; set;
-        }
+        [XmlElement("tileLayer")]
+        public CTileLayer tileLayer;
 
         //<hitBoxLayer>
-        [XmlElement(ElementName="hitBoxLayer")]
-        public CHitBoxType hitBoxLayer
-        {
-            get; set;
-        }
+        [XmlElement("hitBoxLayer")]
+        public CHitBoxType hitBoxLayer;
 
         //<objectLayer>
         [XmlElement("objectLayer")]
-        public CObjectLayer objectLayer
-        {
-            get; set;
-        }
+        public CObjectLayer objectLayer;
     }
 
     public class CTileLayer
     {
-        [XmlElement("layer#")]
+        [XmlElement("layerNum")]
         public int layerNum;
-        [XmlElement("tileData")]
+
+        [XmlArray(ElementName="tile",IsNullable=true)]
         public int[] tileData;
     }
 
     public class CObjectLayer
     {
-        [XmlElement("layer#")]
-        public int layerNum
-        {
-            get; set;
-        }
-        [XmlElement("objectData")]
-        public int[] objectData
-        {
-            get; set;
-        }
+        [XmlElement("layerNum")]
+        public int layerNum;
+        [XmlArray(ElementName="objectData",IsNullable=true)]
+        public int[] objectData;
     }
 
     public class CSpecialID
     {
         [XmlElement("type")]
-        public int Type
-        {
-            get; set;
-        }
+        public int Type;
+
         [XmlElement("Position")]
-        public int[] Position
-        {
-            get; set;
-        }
+        public int[] Position;
+
         [XmlElement("callback")]
-        public object Callback
-        {
-            get; set;
-        }
+        public object Callback;
     }
 
     public class CHitBoxType
     {
-        [XmlElement("layer#")]
+        [XmlElement("layerNum")]
         public int layerNum
         {
             get; set;
@@ -174,7 +139,7 @@ namespace King_of_Thieves.Map
         {
             get; set;
         }
-        [XmlArray(ElementName = "hitBox")]
+        [XmlArray(ElementName = "hitBox",IsNullable=true)]
         public int[] hitBox
         {
             get; set;
@@ -207,7 +172,7 @@ namespace King_of_Thieves.Map
             get; set;
         }
 
-        [XmlArray(ElementName = "region")]
+        [XmlArray(ElementName = "region",IsNullable=true)]
         public int[] Region
         {
             get; set;

@@ -47,11 +47,6 @@ namespace King_of_Thieves.Input
 
     static class CMrMapIO
     {
-        static public void Save(CMrMap map, string path)
-        {
-            CXMLSerializer<CMrMap> serializer = new CXMLSerializer<CMrMap>(map);
-            serializer.Serialize(path);
-        }
 
         static public void Save(CMap map, string path)
         {
@@ -59,10 +54,10 @@ namespace King_of_Thieves.Input
             serializer.Serialize(path);
         }
 
-        static public CMrMap Read(CMrMap map, string path)
+        static public CMap Read(CMap map, string path)
         {
-            CXMLSerializer<CMrMap> serializer = new CXMLSerializer<CMrMap>(map);
-            CMrMap temp = serializer.Load(path);
+            CXMLSerializer<CMap> serializer = new CXMLSerializer<CMap>(map);
+            CMap temp = serializer.Load(path);
             return temp;
         }
     }

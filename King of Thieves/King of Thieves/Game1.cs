@@ -80,8 +80,8 @@ namespace King_of_Thieves
 
             //We really, really need an object database to just do this shit automagically.
             CMasterControl.mapList.Add("TestMap",new Map.MTestMap("TestMap", Map.MAPTYPES.ROOT));
-            CMasterControl.mapList.Add("TestMapPart1", new Map.MTestMap("TestMapPart1", Map.MAPTYPES.CHUNK));
-            Input.CMrMapIO.Save(CMasterControl.mapList["TestMap"].Map, "testmap.xml");
+            //CMasterControl.mapList.Add("TestMapPart1", new Map.MTestMap("TestMapPart1", Map.MAPTYPES.CHUNK));
+            //Input.CMrMapIO.Save(CMasterControl.mapList["TestMap"].Map, "testmap.xml");
             //CMasterControl.audioPlayer.song = new Sound.CSound(Content.Load<Song>("04_-_Phantom_Ganon"), false, 0);
             //CMasterControl.audioPlayer.addSfx(new Sound.CSound(Content.Load<Song>("04_-_Phantom_Ganon"), false, 0));
         }
