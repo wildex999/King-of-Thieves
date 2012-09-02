@@ -25,7 +25,6 @@ namespace King_of_Thieves
         CComponent compTest = new CComponent();
         Actors.Menu.CMenu testMenu;
         CComponent menuComo = new CComponent();
-        
 
         public Game1()
         {
@@ -65,7 +64,6 @@ namespace King_of_Thieves
             // TODO: use this.Content to load your game content here
            // Graphics.CTextureDict.init(Content);
             testSprite = new CSprite(new CTextureAtlas(Content.Load<Texture2D>("test"), 19, 23, 0));
-
             
 
             actorTest = new CActorTest("Test");
@@ -79,6 +77,10 @@ namespace King_of_Thieves
 
             testMenu = new Actors.Menu.CMenu("MenuTest", new CSprite(CTextures.texture("menu")), 120, CMasterControl.audioPlayer.soundBank["04_-_Phantom_Ganon"], CMasterControl.audioPlayer.soundBank["cursor"]);
             menuComo.root = testMenu;
+
+
+            CMasterControl.mapList.Add("TestMapPart1",new Map.MTestMap("TestMap", Map.MAPTYPES.ROOT));
+
             //CMasterControl.audioPlayer.song = new Sound.CSound(Content.Load<Song>("04_-_Phantom_Ganon"), false, 0);
             //CMasterControl.audioPlayer.addSfx(new Sound.CSound(Content.Load<Song>("04_-_Phantom_Ganon"), false, 0));
         }

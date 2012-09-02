@@ -118,6 +118,7 @@
     <Compile Include="Actors\Map\CMap.cs" />
     <Compile Include="Actors\Map\CMrMap.cs" />
     <Compile Include="Actors\Map\CTimeSys.cs" />
+    <Compile Include="Actors\Map\MTestMap.cs" />
     <Compile Include="Actors\Menu\CMenu.cs" />
     <Compile Include="Actors\Menu\CMenuItem.cs" />
     <Compile Include="Actors\Player\CPlayer.cs" />

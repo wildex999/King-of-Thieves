@@ -5,7 +5,7 @@ using System.Text;
 using King_of_Thieves.Input;
 using Microsoft.Xna.Framework;
 
-namespace King_of_Thieves.Actors.Map
+namespace King_of_Thieves.Map
 {
     enum MAPTYPES
     {
@@ -28,10 +28,10 @@ namespace King_of_Thieves.Actors.Map
 
         public readonly MAPTYPES MAPETYPE;
 
-        abstract public void create(object sender);
-        abstract public void load(object sender);
-        abstract public void destroy(object sender);
-        abstract public void draw(object sender);
+        public abstract void create(object sender);
+        public abstract void load(object sender);
+        public abstract void destroy(object sender);
+        public abstract void draw(object sender);
 
         public CMrMap(string name, MAPTYPES type = MAPTYPES.ROOT)
         {
