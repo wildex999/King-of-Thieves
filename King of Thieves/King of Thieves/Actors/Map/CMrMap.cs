@@ -43,6 +43,22 @@ namespace King_of_Thieves.Map
             MAPETYPE = type;
         }
 
+        public string Name
+        {
+            get
+            {
+                return this._name;
+            }
+        }
+
+        public MAPTYPES Type
+        {
+            get
+            {
+                return this._type;
+            }
+        }
+
         ~CMrMap()
         {
             onCreate -= new createHandler(create);
