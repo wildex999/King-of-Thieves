@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework;
 
 namespace King_of_Thieves.Map
 {
-    enum MAPTYPES
+    public enum MAPTYPES
     {
         ROOT = 0,
         CHUNK = 1
@@ -15,9 +15,10 @@ namespace King_of_Thieves.Map
 
     abstract class CMrMap
     {
-        private CMrMapIO iocereal;
+        //private CMrMapIO iocereal;
         private string _name;
-        private int _type;
+        private MAPTYPES _type;
+        public CMap Map;
 
         public delegate void ioHandler(object sender);
 

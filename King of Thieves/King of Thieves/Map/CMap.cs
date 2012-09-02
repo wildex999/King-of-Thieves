@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Xml.Serialization;
 
-namespace King_of_Thieves.Actors.Map
+namespace King_of_Thieves.Map
 {
     /* Structure:
      *          MAP CHUNK STRUCTURE
@@ -53,39 +53,39 @@ namespace King_of_Thieves.Actors.Map
      *          </chunk>
      *          </map>
      */
-    [XmlRoot("Map")]
-    class CMap
+    [Serializable]
+    public class CMap
     {
         //<Version>
-        [XmlElement("version")]
+        [XmlElement(DataType="int",ElementName="version")]
         public int Version
         {
             get; set;
         }
 
         //<Name>
-        [XmlElement("name")]
+        [XmlElement(DataType="string", ElementName="name")]
         public string Name
         {
             get; set;
         }
 
         //<Type>
-        [XmlElement("type")]
-        public int Type
+        [XmlElement(ElementName="type")]
+        public MAPTYPES Type
         {
             get; set;
         }
 
         //<layerCount>
-        [XmlElement("layerCount")]
+        [XmlElement(DataType="int",ElementName="layerCount")]
         public int layerCount
         {
             get; set;
         }
 
         //<tileSet>
-        [XmlElement("tileSet")]
+        [XmlElement(DataType="string",ElementName="tileSet")]
         public string tileSet
         {
             get; set;
@@ -100,14 +100,14 @@ namespace King_of_Thieves.Actors.Map
         } */
 
         //<tileLayer>
-        [XmlElement("tileLayer")]
+        [XmlElement(ElementName="tileLayer")]
         public CTileLayer tileLayer
         {
             get; set;
         }
 
         //<hitBoxLayer>
-        [XmlElement("hitBoxLayer")]
+        [XmlElement(ElementName="hitBoxLayer")]
         public CHitBoxType hitBoxLayer
         {
             get; set;
@@ -121,7 +121,7 @@ namespace King_of_Thieves.Actors.Map
         }
     }
 
-    class CTileLayer
+    public class CTileLayer
     {
         [XmlElement("layer#")]
         public int layerNum;
@@ -129,7 +129,7 @@ namespace King_of_Thieves.Actors.Map
         public int[] tileData;
     }
 
-    class CObjectLayer
+    public class CObjectLayer
     {
         [XmlElement("layer#")]
         public int layerNum
@@ -143,7 +143,7 @@ namespace King_of_Thieves.Actors.Map
         }
     }
 
-    class CSpecialID
+    public class CSpecialID
     {
         [XmlElement("type")]
         public int Type
@@ -162,7 +162,7 @@ namespace King_of_Thieves.Actors.Map
         }
     }
 
-    class CHitBoxType
+    public class CHitBoxType
     {
         [XmlElement("layer#")]
         public int layerNum
@@ -182,7 +182,7 @@ namespace King_of_Thieves.Actors.Map
     }
 
     [XmlRoot("Root")]
-    class CMapRoot
+    public class CMapRoot
     {
         [XmlElement("version")]
         public int Version
@@ -199,7 +199,7 @@ namespace King_of_Thieves.Actors.Map
     }
 
     [XmlRoot("Chunk")]
-    class CMapChunk
+    public class CMapChunk
     {
         [XmlElement("file")]
         public string file
