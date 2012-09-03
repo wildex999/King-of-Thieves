@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.Serialization;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -54,6 +55,10 @@ namespace King_of_Thieves.Map
      *          </chunk>
      *          </map>
      */
+    [Serializable, XmlInclude(typeof(CMap))]
+    
+    
+    
     [XmlRoot("map")]
     public class CMap
     {
@@ -98,6 +103,7 @@ namespace King_of_Thieves.Map
         public CObjectLayer objectLayer;
     }
 
+    [Serializable, XmlInclude(typeof(CTileLayer))]
     public class CTileLayer
     {
         [XmlElement("layerNum")]
@@ -106,7 +112,7 @@ namespace King_of_Thieves.Map
         [XmlArray(ElementName="tile",IsNullable=true)]
         public int[] tileData;
     }
-
+    [Serializable, XmlInclude(typeof(CObjectLayer))]
     public class CObjectLayer
     {
         [XmlElement("layerNum")]
@@ -126,7 +132,7 @@ namespace King_of_Thieves.Map
         [XmlElement("callback")]
         public object Callback;
     }
-
+    [Serializable, XmlInclude(typeof(CHitBoxLayer))]
     public class CHitBoxLayer
     {
         [XmlElement("layerNum")]
