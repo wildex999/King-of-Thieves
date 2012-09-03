@@ -32,8 +32,10 @@ namespace King_of_Thieves.Map
             _map.objectLayer = _objectLayer;
             Input.CMrMapIO.Save(_map,"testmap.xml");
             _out = Input.CMrMapIO.Read(_map, "testmap.xml");
+#if DEBUG
             System.Diagnostics.Debug.WriteLine(_out.Name + "\n" + _out.tileLayer.tileData[3]);
             System.Diagnostics.Debugger.Break();
+#endif
         }
 
 

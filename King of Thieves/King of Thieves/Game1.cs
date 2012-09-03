@@ -72,8 +72,8 @@ namespace King_of_Thieves
             
 
             CMasterControl.audioPlayer.soundBank.Add("04_-_Phantom_Ganon", new Sound.CSound(Content.Load<Song>("04_-_Phantom_Ganon"), false, 0));
-            CMasterControl.audioPlayer.soundBank.Add("cursor", new Sound.CSound(Content.Load<SoundEffect>("cursor")));
-
+            CMasterControl.audioPlayer.soundBank.Add("cursor", new Sound.CSound(Content.Load<SoundEffect>("cursor"),true));
+            CMasterControl.audioPlayer.soundBank.Add("lttp_heart", new Sound.CSound(Content.Load<SoundEffect>("lttp_heart")));
 
             testMenu = new Actors.Menu.CMenu("MenuTest", new CSprite(CTextures.texture("menu")), 120, CMasterControl.audioPlayer.soundBank["04_-_Phantom_Ganon"], CMasterControl.audioPlayer.soundBank["cursor"]);
             menuComo.root = testMenu;
@@ -122,7 +122,7 @@ namespace King_of_Thieves
             menuComo.updateActors(gameTime);
 
             if (Input.CInput.getInputRelease(Microsoft.Xna.Framework.Input.Keys.Enter))
-                CMasterControl.audioPlayer.addSfx(new Sound.CSound(Content.Load<SoundEffect>("lttp_heart")));
+                CMasterControl.audioPlayer.addSfx(CMasterControl.audioPlayer.soundBank["lttp_heart"]);
 
             //CMasterControl.audioPlayer.Update();
             base.Update(gameTime);
