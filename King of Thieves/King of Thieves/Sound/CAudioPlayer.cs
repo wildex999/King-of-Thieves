@@ -66,21 +66,23 @@ namespace King_of_Thieves.Sound
 
         private void _play(CSound file)
         {
-                if (file != null)
-                    if (file.sfx != null)
-                        file.sfx.Play();
-                    else if (file.sfxInstance != null)
-                    {
-                        if ((file.track != false) && (file.sfxInstance.State != SoundState.Playing))
-                            file.sfxInstance.Play();
-                    }
-                    else if (file.song != null)
-                    {
-                        MediaPlayer.IsRepeating = file.loop;
-                        MediaPlayer.Play(file.song);
-                    }
-                    else
-                        throw new FormatException("The CSound passed did not contain any valid audio information.");
+            if (file != null)
+            {
+                if (file.sfx != null)
+                    file.sfx.Play();
+                else if (file.sfxInstance != null)
+                {
+                    if ((file.track != false) && (file.sfxInstance.State != SoundState.Playing))
+                        file.sfxInstance.Play();
+                }
+                else if (file.song != null)
+                {
+                    MediaPlayer.IsRepeating = file.loop;
+                    MediaPlayer.Play(file.song);
+                }
+            }
+            else
+                throw new FormatException("The CSound passed did not contain any valid audio information.");
         }
     }
 }
