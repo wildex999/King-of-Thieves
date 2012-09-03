@@ -55,10 +55,8 @@ namespace King_of_Thieves.Map
      *          </chunk>
      *          </map>
      */
+
     [Serializable, XmlInclude(typeof(CMap))]
-    
-    
-    
     [XmlRoot("map")]
     public class CMap
     {
