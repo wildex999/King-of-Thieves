@@ -22,6 +22,7 @@ namespace King_of_Thieves
         SpriteBatch spriteBatch;
         CSprite testSprite = null;
         CActorTest actorTest;
+        Actors.Player.CPlayer player;
         CComponent compTest = new CComponent();
         Actors.Menu.CMenu testMenu;
         CComponent menuComo = new CComponent();
@@ -67,7 +68,8 @@ namespace King_of_Thieves
             
 
             actorTest = new CActorTest("Test");
-            compTest.root = actorTest;
+            player = new Actors.Player.CPlayer();
+            compTest.root = player;
 
             
 
@@ -119,7 +121,7 @@ namespace King_of_Thieves
 
             //compTest.root.position = new Vector2(Input.CInput.mouseX, Input.CInput.mouseY);
             compTest.updateActors(gameTime);
-            menuComo.updateActors(gameTime);
+            //menuComo.updateActors(gameTime);
 
             if (Input.CInput.getInputRelease(Microsoft.Xna.Framework.Input.Keys.Enter))
                 CMasterControl.audioPlayer.addSfx(CMasterControl.audioPlayer.soundBank["lttp_heart"]);
@@ -141,7 +143,7 @@ namespace King_of_Thieves
             base.Draw(gameTime);
             spriteBatch.Begin();
             compTest.drawActors();
-            menuComo.drawActors();
+            //menuComo.drawActors();
             spriteBatch.End();
         }
     }

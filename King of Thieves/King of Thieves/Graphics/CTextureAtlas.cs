@@ -5,6 +5,7 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Windows.Forms;
+using System.Text.RegularExpressions;
 
 namespace King_of_Thieves.Graphics
 {
@@ -14,6 +15,8 @@ namespace King_of_Thieves.Graphics
         private Rectangle[,] _textureAtlas;
         private Texture2D _sourceImage;
         private int _fixedWidth = 0, _fixedHeight = 0;
+        private static Regex _cellFormat = new Regex("^[1-9]+:[0-9]+$");
+        private static Regex _cellSplitter = new Regex(":");
 
         public CTextureAtlas(Texture2D sourceImage, int _frameWidth, int _frameHeight, int _cellSpacing)
         {
@@ -42,6 +45,20 @@ namespace King_of_Thieves.Graphics
 
             _textureAtlas = new Rectangle[_fixedWidth, _fixedHeight];
             _assembleTextureAtlas(this);
+        }
+
+        public CTextureAtlas(Texture2D sourceImage, int _frameWidth, int _frameHeight, int _cellSpacing, int frameRate, string startCell, string endCell)
+        {
+            //parse out the cell ranges
+            if (!_cellFormat.IsMatch(startCell) || !_cellFormat.IsMatch(endCell))
+                throw new FormatException("Error in cell range format for " + sourceImage.Name + ".  Please use 99:99");
+
+            string[] start = _cellSplitter.Split(startCell);
+            string[] end = _cellSplitter.Split(endCell);
+            Vector2 startRange = new Vector2(Convert.ToInt32(start[0]), Convert.ToInt32(start[1]));
+            Vector2 endRange = new Vector2(Convert.ToInt32(end[0]), Convert.ToInt32(end[1]));
+           
+
         }
 
         public Texture2D sourceImage
@@ -83,14 +100,13 @@ namespace King_of_Thieves.Graphics
             {
                 for (int x = 0; x <= _fixedWidth - 1; x++)
                 {
+                    //NOW the math is completely fine! :)
                     //The math is completely fine. 
                     //this math seems a bit iffy due to the cellspacing, but we'll see how it goes! -Steve
                     textureAtlas._textureAtlas[x,y] = new Rectangle
-                        (textureAtlas.FrameWidth * x, textureAtlas.FrameHeight * y,
-                        textureAtlas.FrameWidth + textureAtlas.CellSpacing, 
-                        textureAtlas.FrameHeight + textureAtlas.CellSpacing);
-
-                    
+                        ((textureAtlas.FrameWidth + CellSpacing) * x, (textureAtlas.FrameHeight + CellSpacing) * y,
+                        textureAtlas.FrameWidth, 
+                        textureAtlas.FrameHeight);
                 }
             }
         }

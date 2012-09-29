@@ -38,6 +38,16 @@ namespace King_of_Thieves.Sound
             _audioThread.Abort();
         }
 
+        public void pause()
+        {
+            MediaPlayer.Pause();
+        }
+
+        public void resume()
+        {
+            MediaPlayer.Resume();
+        }
+
         public CSound song
         {
             get
@@ -79,8 +89,9 @@ namespace King_of_Thieves.Sound
                 }
                 else if (file.song != null)
                 {
+                    _song = file;
                     MediaPlayer.IsRepeating = file.loop;
-                    MediaPlayer.Play(file.song);
+                    MediaPlayer.Play(_song.song);
                 }
             }
             else

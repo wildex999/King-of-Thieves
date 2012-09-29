@@ -11,7 +11,7 @@ namespace King_of_Thieves.Actors.Player
         public CPlayer() :
             base("PLAYER", Vector2.Zero, ACTORTYPES.INTERACTABLE)
         {
-
+            image = new Graphics.CSprite(Graphics.CTextures.texture("PlayerIdleDown"));
         }
 
         public override void collide(object sender, object collider)
@@ -41,7 +41,7 @@ namespace King_of_Thieves.Actors.Player
 
         public override void frame(object sender)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
 
         public override void keyDown(object sender)

@@ -86,7 +86,12 @@ namespace King_of_Thieves.Actors
 
             _position = position;
 
-            onCreate(this);
+            try
+            {
+                onCreate(this);
+            }
+            catch (NotImplementedException)
+            { }
         }
 
         ~CActor()
