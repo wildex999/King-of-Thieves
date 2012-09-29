@@ -11,7 +11,7 @@ namespace King_of_Thieves.Actors.Player
         public CPlayer() :
             base("PLAYER", Vector2.Zero, ACTORTYPES.INTERACTABLE)
         {
-            image = new Graphics.CSprite(Graphics.CTextures.texture("PlayerIdleDown"));
+            image = new Graphics.CSprite(Graphics.CTextures.texture("PlayerWalkDown"));
         }
 
         public override void collide(object sender, object collider)
