@@ -11,7 +11,15 @@ namespace King_of_Thieves.Actors.Player
         public CPlayer() :
             base("PLAYER", Vector2.Zero, ACTORTYPES.INTERACTABLE)
         {
-            image = new Graphics.CSprite(Graphics.CTextures.texture("PlayerWalkDown"));
+           
+
+            //resource init
+
+            _imageIndex = new Dictionary<string, Graphics.CSprite>();
+            _imageIndex.Add("PlayerWalkDown", new Graphics.CSprite(Graphics.CTextures.texture("PlayerWalkDown")));
+            _imageIndex.Add("PlayerWalkLeft", new Graphics.CSprite(Graphics.CTextures.texture("PlayerWalkLeft")));
+
+            image = _imageIndex["PlayerWalkDown"];
         }
 
         public override void collide(object sender, object collider)
@@ -47,7 +55,10 @@ namespace King_of_Thieves.Actors.Player
         public override void keyDown(object sender)
         {
             if (Input.CInput.keysPressed.Contains(Microsoft.Xna.Framework.Input.Keys.A))
+            {
                 _position.X -= 1;
+                image = _imageIndex["PlayerWalkLeft"];
+            }
 
             if (Input.CInput.keysPressed.Contains(Microsoft.Xna.Framework.Input.Keys.D))
                 _position.X += 1;
@@ -56,7 +67,10 @@ namespace King_of_Thieves.Actors.Player
                 _position.Y -= 1;
 
             if (Input.CInput.keysPressed.Contains(Microsoft.Xna.Framework.Input.Keys.S))
+            {
                 _position.Y += 1;
+                image = _imageIndex["PlayerWalkDown"];
+            }
         }
 
         public override void keyRelease(object sender)

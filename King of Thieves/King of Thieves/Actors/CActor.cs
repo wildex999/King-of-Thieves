@@ -24,6 +24,7 @@ namespace King_of_Thieves.Actors
         protected CAnimation _sprite;
         
         public Graphics.CSprite image;
+        protected Dictionary<string, Graphics.CSprite> _imageIndex;
         //hitboxes will go here as well? What a terrible night for a curse...
         //event handlers will be added here
 
@@ -131,7 +132,7 @@ namespace King_of_Thieves.Actors
             catch (NotImplementedException)
             { ;}
 
-            image.draw();
+            image.draw((int)_position.X, (int)_position.Y);
         }
 
         public Vector2 position

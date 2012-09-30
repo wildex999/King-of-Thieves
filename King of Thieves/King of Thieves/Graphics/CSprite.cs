@@ -27,7 +27,7 @@ namespace King_of_Thieves.Graphics
             CMasterControl.drawList.AddLast(this);
         }
 
-        public override void draw()
+        public override void draw(int x, int y)
         {
             if (_imageAtlas == null)
                 throw new FormatException("Unable to draw sprite " + _name + ", may be the target of an animation.");
@@ -52,8 +52,10 @@ namespace King_of_Thieves.Graphics
                 _size = _imageAtlas.getTile(frameX, frameY);
             }
 
+            _position.X = x; _position.Y = y;
+            //CGraphics.spriteBatch.Draw(_imageAtlas.sourceImage, _position, _size, Color.White);
             CGraphics.spriteBatch.Draw(_imageAtlas.sourceImage, _position, _size, Color.White);
-            base.draw();
+            base.draw(x,y);
         }
 
         public int X

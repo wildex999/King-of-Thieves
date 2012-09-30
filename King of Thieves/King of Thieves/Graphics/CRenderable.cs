@@ -25,7 +25,7 @@ namespace King_of_Thieves.Graphics
             }
         }
 
-        public virtual void draw()
+        public virtual void draw(int x, int y)
         {
             if (isOffscreen != false)
                 renderOffScreen();

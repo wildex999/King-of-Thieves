@@ -49,8 +49,8 @@ namespace King_of_Thieves.Graphics
             Vector2 _startCell = new Vector2(Convert.ToInt32(start[0]), Convert.ToInt32(start[1]));
             Vector2 _endCell = new Vector2(Convert.ToInt32(end[0]), Convert.ToInt32(end[1]));
 
-            Rectangle fullRange = new Rectangle((int)(_startCell.X * _frameWidth +  _cellSpacing),
-                                                (int)(_startCell.Y * _frameHeight +  _cellSpacing),
+            Rectangle fullRange = new Rectangle((int)(_startCell.X * _frameWidth +  (_cellSpacing * _startCell.X)),
+                                                (int)(_startCell.Y * _frameHeight + (_cellSpacing * _startCell.Y)),
                                                 (int)((_frameWidth + _cellSpacing) * (_endCell.X - _startCell.X + 1)), 
                                                 (int)((_frameHeight + _cellSpacing) * (_endCell.Y - _startCell.Y + 1)));
 
