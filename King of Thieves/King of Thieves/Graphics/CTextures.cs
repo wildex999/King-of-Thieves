@@ -28,6 +28,8 @@ namespace King_of_Thieves.Graphics
             _textures.Add("Player:WalkLeft", new CTextureAtlas(_content.Load<Texture2D>("Player"), 32, 32, 1, "11:0", "15:1", 15));
             _textures.Add("Player:WalkUp", new CTextureAtlas(_content.Load<Texture2D>("Player"), 32, 32, 1, "17:0", "21:1", 15));
             _textures.Add("Player:IdleDown", new CTextureAtlas(_content.Load<Texture2D>("Player"), 32, 32, 1, "0:0", "0:0", 0));
+            _textures.Add("Player:IdleUp", new CTextureAtlas(_content.Load<Texture2D>("Player"), 32, 32, 1, "2:0", "2:0", 0));
+            _textures.Add("Player:IdleLeft", new CTextureAtlas(_content.Load<Texture2D>("Player"), 32, 32, 1, "1:0", "1:0", 0));
             
         }
 

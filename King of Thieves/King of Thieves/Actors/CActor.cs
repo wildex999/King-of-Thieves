@@ -31,6 +31,7 @@ namespace King_of_Thieves.Actors
         protected List<Type> _collidables;
         protected CAnimation _sprite;
         protected DIRECTION _direction = DIRECTION.UP;
+        protected Boolean _moving = false; //used for prioritized movement
         
         public Graphics.CSprite image;
         protected Dictionary<string, Graphics.CSprite> _imageIndex;
