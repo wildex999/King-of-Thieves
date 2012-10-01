@@ -14,6 +14,14 @@ namespace King_of_Thieves.Actors
         INTERACTABLE
     }
 
+    enum DIRECTION
+    {
+        UP = 0,
+        DOWN,
+        LEFT,
+        RIGHT
+    }
+
     abstract class CActor
     {
         protected Vector2 _position = Vector2.Zero;
@@ -22,6 +30,7 @@ namespace King_of_Thieves.Actors
         private string _name;
         protected List<Type> _collidables;
         protected CAnimation _sprite;
+        protected DIRECTION _direction = DIRECTION.UP;
         
         public Graphics.CSprite image;
         protected Dictionary<string, Graphics.CSprite> _imageIndex;
@@ -133,6 +142,21 @@ namespace King_of_Thieves.Actors
             { ;}
 
             image.draw((int)_position.X, (int)_position.Y);
+        }
+
+        protected virtual void _initializeResources()
+        {
+            //add sprites to image index by overloading this function.
+            //also add resources to the texture cache here.
+            _imageIndex = new Dictionary<string, CSprite>();
+        }
+
+        private void _closeResources()
+        {
+            _imageIndex.Clear();
+            _imageIndex = null;
+
+            
         }
 
         public Vector2 position

@@ -24,8 +24,28 @@ namespace King_of_Thieves.Graphics
             _textures.Add("test", new CTextureAtlas(_content.Load<Texture2D>("test"), 19, 23, 0));
             _textures.Add("mcDungeon2", new CTextureAtlas(_content.Load<Texture2D>("mcDungeon2"), 16, 16, 0, 1));
             _textures.Add("menu", new CTextureAtlas(_content.Load<Texture2D>("menu"), 288, 192, 0,0));
-            _textures.Add("PlayerWalkDown", new CTextureAtlas(_content.Load<Texture2D>("Player"), 32, 32, 1, "0:1", "9:1", 15));
-            _textures.Add("PlayerWalkLeft", new CTextureAtlas(_content.Load<Texture2D>("Player"), 32, 32, 1, "11:0", "15:1", 15));
+            _textures.Add("Player:WalkDown", new CTextureAtlas(_content.Load<Texture2D>("Player"), 32, 32, 1, "0:1", "9:1", 15));
+            _textures.Add("Player:WalkLeft", new CTextureAtlas(_content.Load<Texture2D>("Player"), 32, 32, 1, "11:0", "15:1", 15));
+            _textures.Add("Player:WalkUp", new CTextureAtlas(_content.Load<Texture2D>("Player"), 32, 32, 1, "17:0", "21:1", 15));
+            _textures.Add("Player:IdleDown", new CTextureAtlas(_content.Load<Texture2D>("Player"), 32, 32, 1, "0:0", "0:0", 0));
+            
+        }
+
+        public static void cleanUp(string nameSpace = "")
+        {
+            if (nameSpace == "")
+            {
+                _textures.Clear();
+                _textures = null;
+                return;
+            }
+
+            var resourcesToRemove = (from pair in _textures
+                                     where pair.Key.Contains(nameSpace)
+                                     select pair.Key).ToArray();
+
+            foreach (string key in resourcesToRemove)
+                _textures.Remove(key);
         }
 
         public static CTextureAtlas texture(string name)

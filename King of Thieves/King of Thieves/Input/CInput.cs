@@ -18,9 +18,8 @@ namespace King_of_Thieves.Input
         private static KeyboardState _keyStatePrevious;
         private static MouseState _mouseStatePrevious;
         public static keyEventArgs keyEvents = new keyEventArgs();
+        private static List<Keys> _temp = new List<Keys>();
         
-
-        //sanity test for git, don't mind me. -Steve
         public static bool getInputDown(Buttons button)
         {
             if (!_padStateCurrent.IsConnected)
@@ -98,6 +97,14 @@ namespace King_of_Thieves.Input
             }
         }
 
+        public static Keys[] keysReleased
+        {
+            get
+            {
+                return keyEvents.releasedKeys;
+            }
+        }
+
         public static Keys[] keysOld
         {
             get
@@ -117,15 +124,15 @@ namespace King_of_Thieves.Input
         //should be called once per frame
         public static void update()
         {
-            keyEvents.oldKeys = keyEvents.keys;
-            List<Keys> temp = new List<Keys>();
+            
+            _temp.Clear();
 
             if (keyEvents.oldKeys != null)
                 foreach (Keys key in keyEvents.oldKeys)
                     if (!keyEvents.keys.Contains(key))
-                        temp.Add(key);
+                        _temp.Add(key);
 
-            keyEvents.releasedKeys = temp.ToArray();
+            keyEvents.releasedKeys = _temp.ToArray();
             
             _padStatePrevious = _padStateCurrent;
             _keyStatePrevious = _keyStateCurrent;
@@ -136,7 +143,8 @@ namespace King_of_Thieves.Input
             _keyStateCurrent = Keyboard.GetState();
             _mouseStateCurrent = Mouse.GetState();
 
-            if (areKeysPressed)
+            //if (areKeysPressed)
+            keyEvents.oldKeys = keyEvents.keys;
                 keyEvents.keys = keysPressed;
         }  
     }

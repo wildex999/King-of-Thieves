@@ -9,17 +9,23 @@ namespace King_of_Thieves.Actors.Player
     class CPlayer : CActor
     {
         public CPlayer() :
-            base("PLAYER", Vector2.Zero, ACTORTYPES.INTERACTABLE)
+            base("Player", Vector2.Zero, ACTORTYPES.INTERACTABLE)
         {
            
 
             //resource init
 
-            _imageIndex = new Dictionary<string, Graphics.CSprite>();
-            _imageIndex.Add("PlayerWalkDown", new Graphics.CSprite(Graphics.CTextures.texture("PlayerWalkDown")));
-            _imageIndex.Add("PlayerWalkLeft", new Graphics.CSprite(Graphics.CTextures.texture("PlayerWalkLeft")));
-
+            _initializeResources();
             image = _imageIndex["PlayerWalkDown"];
+        }
+
+        protected override void _initializeResources()
+        {
+            base._initializeResources();
+            _imageIndex.Add("PlayerWalkDown", new Graphics.CSprite(Graphics.CTextures.texture("Player:WalkDown")));
+            _imageIndex.Add("PlayerWalkLeft", new Graphics.CSprite(Graphics.CTextures.texture("Player:WalkLeft")));
+            _imageIndex.Add("PlayerWalkUp", new Graphics.CSprite(Graphics.CTextures.texture("Player:WalkUp")));
+            _imageIndex.Add("PlayerIdleDown", new Graphics.CSprite(Graphics.CTextures.texture("Player:IdleDown")));
         }
 
         public override void collide(object sender, object collider)
@@ -64,7 +70,10 @@ namespace King_of_Thieves.Actors.Player
                 _position.X += 1;
 
             if (Input.CInput.keysPressed.Contains(Microsoft.Xna.Framework.Input.Keys.W))
+            {
                 _position.Y -= 1;
+                image = _imageIndex["PlayerWalkUp"];
+            }
 
             if (Input.CInput.keysPressed.Contains(Microsoft.Xna.Framework.Input.Keys.S))
             {
@@ -75,7 +84,7 @@ namespace King_of_Thieves.Actors.Player
 
         public override void keyRelease(object sender)
         {
-            throw new NotImplementedException();
+            image = _imageIndex["PlayerIdleDown"];
         }
 
         public override void update(GameTime gameTime)
