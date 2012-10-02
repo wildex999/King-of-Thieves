@@ -5,6 +5,7 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Windows.Forms;
+using System.Text.RegularExpressions;
 
 namespace King_of_Thieves.Graphics
 {
@@ -14,6 +15,8 @@ namespace King_of_Thieves.Graphics
         private Rectangle[,] _textureAtlas;
         private Texture2D _sourceImage;
         private int _fixedWidth = 0, _fixedHeight = 0;
+        private static Regex _cellFormat = new Regex("^[0-9]+:[0-9]+$");
+        private static Regex _cellSplitter = new Regex(":");
 
         public CTextureAtlas(Texture2D sourceImage, int _frameWidth, int _frameHeight, int _cellSpacing)
         {
@@ -30,6 +33,49 @@ namespace King_of_Thieves.Graphics
         }
 
         public CTextureAtlas(Texture2D sourceImage, int _frameWidth, int _frameHeight, int _cellSpacing, int frameRate)
+        {
+            _setup(sourceImage, _frameWidth, _frameHeight, _cellSpacing, frameRate);
+        }
+
+        public CTextureAtlas(Texture2D sourceImage, int _frameWidth, int _frameHeight, int _cellSpacing, string startCell, string endCell, int frameRate = 0)
+        {
+            //parse out the cell ranges
+            if (!_cellFormat.IsMatch(startCell) || !_cellFormat.IsMatch(endCell))
+                throw new FormatException("Error in cell range format for " + sourceImage.Name + ".  Please use 99:99");
+
+            
+            string[] start = _cellSplitter.Split(startCell);
+            string[] end = _cellSplitter.Split(endCell);
+            Vector2 _startCell = new Vector2(Convert.ToInt32(start[0]), Convert.ToInt32(start[1]));
+            Vector2 _endCell = new Vector2(Convert.ToInt32(end[0]), Convert.ToInt32(end[1]));
+            float cellsX = _endCell.X - _startCell.X;
+            float cellsY = _endCell.Y - _startCell.Y;
+
+
+            Rectangle fullRange = new Rectangle((int)(_startCell.X * _frameWidth +  (_cellSpacing * _startCell.X)),
+                                                (int)(_startCell.Y * _frameHeight + (_cellSpacing * _startCell.Y)),
+                                                (int)((_frameWidth + _cellSpacing) * (cellsX + 1)), 
+                                                (int)((_frameHeight + _cellSpacing) * (cellsY + 1)));
+
+            if (_startCell.X == 0)
+                fullRange.X = 0;
+            if (_startCell.Y == 0)
+                fullRange.Y = 0;
+
+
+            Color[] imageData = new Color[fullRange.Width* fullRange.Height];
+            sourceImage.GetData<Color>(0, fullRange, imageData, 0, imageData.Length);
+
+            Texture2D newImage = new Texture2D(CGraphics.GPU, fullRange.Width, fullRange.Height);
+            newImage.SetData<Color>(imageData);
+
+            //do everything else
+            _setup(newImage, _frameWidth, _frameHeight, _cellSpacing, frameRate);
+            
+
+        }
+
+        private void _setup(Texture2D sourceImage, int _frameWidth, int _frameHeight, int _cellSpacing, int frameRate)
         {
             FrameWidth = _frameWidth;
             FrameHeight = _frameHeight;
@@ -83,14 +129,13 @@ namespace King_of_Thieves.Graphics
             {
                 for (int x = 0; x <= _fixedWidth - 1; x++)
                 {
+                    //NOW the math is completely fine! :)
                     //The math is completely fine. 
                     //this math seems a bit iffy due to the cellspacing, but we'll see how it goes! -Steve
                     textureAtlas._textureAtlas[x,y] = new Rectangle
-                        (textureAtlas.FrameWidth * x, textureAtlas.FrameHeight * y,
-                        textureAtlas.FrameWidth + textureAtlas.CellSpacing, 
-                        textureAtlas.FrameHeight + textureAtlas.CellSpacing);
-
-                    
+                        ((textureAtlas.FrameWidth + CellSpacing) * x, (textureAtlas.FrameHeight + CellSpacing) * y,
+                        textureAtlas.FrameWidth, 
+                        textureAtlas.FrameHeight);
                 }
             }
         }

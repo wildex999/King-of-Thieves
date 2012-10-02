@@ -14,6 +14,14 @@ namespace King_of_Thieves.Actors
         INTERACTABLE
     }
 
+    enum DIRECTION
+    {
+        UP = 0,
+        DOWN,
+        LEFT,
+        RIGHT
+    }
+
     abstract class CActor
     {
         protected Vector2 _position = Vector2.Zero;
@@ -22,8 +30,11 @@ namespace King_of_Thieves.Actors
         private string _name;
         protected List<Type> _collidables;
         protected CAnimation _sprite;
+        protected DIRECTION _direction = DIRECTION.UP;
+        protected Boolean _moving = false; //used for prioritized movement
         
         public Graphics.CSprite image;
+        protected Dictionary<string, Graphics.CSprite> _imageIndex;
         //hitboxes will go here as well? What a terrible night for a curse...
         //event handlers will be added here
 
@@ -86,7 +97,12 @@ namespace King_of_Thieves.Actors
 
             _position = position;
 
-            onCreate(this);
+            try
+            {
+                onCreate(this);
+            }
+            catch (NotImplementedException)
+            { }
         }
 
         ~CActor()
@@ -126,7 +142,22 @@ namespace King_of_Thieves.Actors
             catch (NotImplementedException)
             { ;}
 
-            image.draw();
+            image.draw((int)_position.X, (int)_position.Y);
+        }
+
+        protected virtual void _initializeResources()
+        {
+            //add sprites to image index by overloading this function.
+            //also add resources to the texture cache here.
+            _imageIndex = new Dictionary<string, CSprite>();
+        }
+
+        private void _closeResources()
+        {
+            _imageIndex.Clear();
+            _imageIndex = null;
+
+            
         }
 
         public Vector2 position

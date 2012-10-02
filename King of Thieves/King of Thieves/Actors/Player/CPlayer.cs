@@ -9,9 +9,25 @@ namespace King_of_Thieves.Actors.Player
     class CPlayer : CActor
     {
         public CPlayer() :
-            base("PLAYER", Vector2.Zero, ACTORTYPES.INTERACTABLE)
+            base("Player", Vector2.Zero, ACTORTYPES.INTERACTABLE)
         {
+           
 
+            //resource init
+
+            _initializeResources();
+            image = _imageIndex["PlayerWalkDown"];
+        }
+
+        protected override void _initializeResources()
+        {
+            base._initializeResources();
+            _imageIndex.Add("PlayerWalkDown", new Graphics.CSprite(Graphics.CTextures.texture("Player:WalkDown")));
+            _imageIndex.Add("PlayerWalkLeft", new Graphics.CSprite(Graphics.CTextures.texture("Player:WalkLeft")));
+            _imageIndex.Add("PlayerWalkUp", new Graphics.CSprite(Graphics.CTextures.texture("Player:WalkUp")));
+            _imageIndex.Add("PlayerIdleDown", new Graphics.CSprite(Graphics.CTextures.texture("Player:IdleDown")));
+            _imageIndex.Add("PlayerIdleUp", new Graphics.CSprite(Graphics.CTextures.texture("Player:IdleUp")));
+            _imageIndex.Add("PlayerIdleLeft", new Graphics.CSprite(Graphics.CTextures.texture("Player:IdleLeft")));
         }
 
         public override void collide(object sender, object collider)
@@ -41,27 +57,73 @@ namespace King_of_Thieves.Actors.Player
 
         public override void frame(object sender)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
 
         public override void keyDown(object sender)
         {
+
+
             if (Input.CInput.keysPressed.Contains(Microsoft.Xna.Framework.Input.Keys.A))
+            {
                 _position.X -= 1;
+
+                if (!_moving)
+                {
+                    image = _imageIndex["PlayerWalkLeft"];
+                    _direction = DIRECTION.LEFT;
+                }
+                _moving = true;
+            }
 
             if (Input.CInput.keysPressed.Contains(Microsoft.Xna.Framework.Input.Keys.D))
                 _position.X += 1;
 
             if (Input.CInput.keysPressed.Contains(Microsoft.Xna.Framework.Input.Keys.W))
+            {
                 _position.Y -= 1;
 
+                if (!_moving)
+                {
+                    image = _imageIndex["PlayerWalkUp"];
+                    _direction = DIRECTION.UP;
+                }
+                _moving = true;
+            }
+
             if (Input.CInput.keysPressed.Contains(Microsoft.Xna.Framework.Input.Keys.S))
+            {
                 _position.Y += 1;
+
+                if (!_moving)
+                {
+                    image = _imageIndex["PlayerWalkDown"];
+                    _direction = DIRECTION.DOWN;
+                }
+                _moving = true;
+            }
         }
 
         public override void keyRelease(object sender)
         {
-            throw new NotImplementedException();
+            if (!Input.CInput.areKeysPressed)
+            {
+                _moving = false;
+                switch (_direction)
+                {
+                    case DIRECTION.DOWN:
+                        image = _imageIndex["PlayerIdleDown"];
+                        break;
+
+                    case DIRECTION.UP:
+                        image = _imageIndex["PlayerIdleUp"];
+                        break;
+
+                    case DIRECTION.LEFT:
+                        image = _imageIndex["PlayerIdleLeft"];
+                        break;
+                }
+            }
         }
 
         public override void update(GameTime gameTime)

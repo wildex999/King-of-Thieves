@@ -1,15 +1,13 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using King_of_Thieves.Graphics;
 using King_of_Thieves.Actors;
+
+using Gears.Cloud;
+using King_of_Thieves.usr.local;
 
 namespace King_of_Thieves
 {
@@ -22,20 +20,26 @@ namespace King_of_Thieves
         SpriteBatch spriteBatch;
         CSprite testSprite = null;
         CActorTest actorTest;
+        Actors.Player.CPlayer player;
         CComponent compTest = new CComponent();
         Actors.Menu.CMenu testMenu;
         CComponent menuComo = new CComponent();
 
+        //Screen Resolution defaults
+        private const int ScreenWidth = 320;
+        private const int ScreenHeight = 240;
+
         public Game1()
         {
-            graphics = new GraphicsDeviceManager(this);
-            graphics.PreferredBackBufferHeight = 240;
-            graphics.PreferredBackBufferWidth = 320;
-            graphics.SynchronizeWithVerticalRetrace = true;
-            graphics.ApplyChanges();
-            Graphics.CGraphics.acquireGraphics(ref graphics);
-            Content.RootDirectory = "Content";
-            this.IsFixedTimeStep = false;
+            graphics = new GraphicsDeviceManager(this); 
+            //graphics.PreferredBackBufferHeight = ScreenHeight
+            //graphics.PreferredBackBufferWidth = ScreenWidth;
+            //graphics.SynchronizeWithVerticalRetrace = true;
+            //graphics.ApplyChanges();
+            
+            Content.RootDirectory = @"Content";
+
+            IsFixedTimeStep = false;
         }
 
         /// <summary>
@@ -46,8 +50,24 @@ namespace King_of_Thieves
         /// </summary>
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
+            //Register our ContentManager
+            ContentButler.setGame(this);
+
+            //Setup screen display/graphics device
+            ViewportHandler.SetScreen(ScreenWidth, ScreenHeight);
+            graphics.PreferredBackBufferWidth = ViewportHandler.GetWidth();
+            graphics.PreferredBackBufferHeight = ViewportHandler.GetHeight();
+            graphics.SynchronizeWithVerticalRetrace = true;
+            graphics.IsFullScreen = false;
+            graphics.ApplyChanges();
+            Graphics.CGraphics.acquireGraphics(ref graphics);
+
+            King_of_Thieves.usr.local.master.SetClearColor(Color.CornflowerBlue);
+
             CTextures.init(Content);
+
+            King_of_Thieves.usr.local.master.Push(new Testbed(ref compTest, ref menuComo));
+
             base.Initialize();
         }
 
@@ -67,9 +87,8 @@ namespace King_of_Thieves
             
 
             actorTest = new CActorTest("Test");
-            compTest.root = actorTest;
-
-            
+            player = new Actors.Player.CPlayer();
+            compTest.root = player;
 
             CMasterControl.audioPlayer.soundBank.Add("04_-_Phantom_Ganon", new Sound.CSound(Content.Load<Song>("04_-_Phantom_Ganon"), false, 0));
             CMasterControl.audioPlayer.soundBank.Add("cursor", new Sound.CSound(Content.Load<SoundEffect>("cursor"),true));
@@ -84,6 +103,10 @@ namespace King_of_Thieves
             //Input.CMrMapIO.Save(CMasterControl.mapList["TestMap"].Map, "testmap.xml");
             //CMasterControl.audioPlayer.song = new Sound.CSound(Content.Load<Song>("04_-_Phantom_Ganon"), false, 0);
             //CMasterControl.audioPlayer.addSfx(new Sound.CSound(Content.Load<Song>("04_-_Phantom_Ganon"), false, 0));
+
+
+
+
         }
 
         /// <summary>
@@ -106,24 +129,13 @@ namespace King_of_Thieves
         {
             CMasterControl.gameTime = gameTime;
 
-
-
             // Allows the game to exit
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
 
-            // TODO: Add your update logic here
-            Input.CInput.update();
+             King_of_Thieves.usr.local.master.Update(gameTime);
 
             
-
-            //compTest.root.position = new Vector2(Input.CInput.mouseX, Input.CInput.mouseY);
-            compTest.updateActors(gameTime);
-            menuComo.updateActors(gameTime);
-
-            if (Input.CInput.getInputRelease(Microsoft.Xna.Framework.Input.Keys.Enter))
-                CMasterControl.audioPlayer.addSfx(CMasterControl.audioPlayer.soundBank["lttp_heart"]);
-
             //CMasterControl.audioPlayer.Update();
             base.Update(gameTime);
         }
@@ -134,15 +146,19 @@ namespace King_of_Thieves
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(King_of_Thieves.usr.local.master.GetClearColor());
 
-            // TODO: Add your drawing code here
+            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend);
+
+            
+
+            //menuComo.drawActors();
+
+            King_of_Thieves.usr.local.master.Draw(spriteBatch);
+
+            spriteBatch.End();
 
             base.Draw(gameTime);
-            spriteBatch.Begin();
-            compTest.drawActors();
-            menuComo.drawActors();
-            spriteBatch.End();
         }
     }
 }
