@@ -106,9 +106,10 @@ namespace King_of_Thieves.Actors.Player
 
         public override void keyRelease(object sender)
         {
+            _moving = false;
             if (!Input.CInput.areKeysPressed)
             {
-                _moving = false;
+                
                 switch (_direction)
                 {
                     case DIRECTION.DOWN:
