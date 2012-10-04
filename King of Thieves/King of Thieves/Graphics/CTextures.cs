@@ -26,10 +26,13 @@ namespace King_of_Thieves.Graphics
             _textures.Add("menu", new CTextureAtlas(_content.Load<Texture2D>("menu"), 288, 192, 0,0));
             _textures.Add("Player:WalkDown", new CTextureAtlas(_content.Load<Texture2D>("Player"), 32, 32, 1, "0:1", "9:1", 15));
             _textures.Add("Player:WalkLeft", new CTextureAtlas(_content.Load<Texture2D>("Player"), 32, 32, 1, "11:0", "15:1", 15));
+            _textures.Add("Player:WalkRight", new CTextureAtlas(_content.Load<Texture2D>("Player"), 32, 32, 1, "11:0", "15:1", 15, true));
             _textures.Add("Player:WalkUp", new CTextureAtlas(_content.Load<Texture2D>("Player"), 32, 32, 1, "17:0", "21:1", 15));
             _textures.Add("Player:IdleDown", new CTextureAtlas(_content.Load<Texture2D>("Player"), 32, 32, 1, "0:0", "0:0", 0));
             _textures.Add("Player:IdleUp", new CTextureAtlas(_content.Load<Texture2D>("Player"), 32, 32, 1, "2:0", "2:0", 0));
             _textures.Add("Player:IdleLeft", new CTextureAtlas(_content.Load<Texture2D>("Player"), 32, 32, 1, "1:0", "1:0", 0));
+            _textures.Add("Player:IdleRight", new CTextureAtlas(_content.Load<Texture2D>("Player"), 32, 32, 1, "1:0", "1:0", 0,true));
+
             
         }
 

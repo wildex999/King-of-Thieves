@@ -119,6 +119,7 @@
     <Compile Include="Actors\CActorTest.cs" />
     <Compile Include="Actors\CComponent.cs" />
     <Compile Include="Actors\Menu\CMenuCursor.cs" />
+    <Compile Include="Graphics\CTileSet.cs" />
     <Compile Include="Map\CMap.cs" />
     <Compile Include="Map\CMrMap.cs" />
     <Compile Include="Map\CTimeSys.cs" />

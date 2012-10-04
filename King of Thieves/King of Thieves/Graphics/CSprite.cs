@@ -27,26 +27,6 @@ namespace King_of_Thieves.Graphics
             CMasterControl.drawList.AddLast(this);
         }
 
-        //public void flipH()
-        //{
-        //    Texture2D flipped = new Texture2D(_imageAtlas.sourceImage.GraphicsDevice, _imageAtlas.sourceImage.Width, _imageAtlas.sourceImage.Height);
-        //    Color[] data = new Color[_imageAtlas.sourceImage.Width * _imageAtlas.sourceImage.Height];
-        //    Color[] flippedData = new Color[data.Length];
-
-        //    _imageAtlas.sourceImage.GetData<Color>(data);
-
-        //    for (int x = 0; x < _imageAtlas.sourceImage.Width; x++)
-        //        for (int y = 0; y < _imageAtlas.sourceImage.Height; y++)
-        //        {
-        //            int idx = (_imageAtlas.sourceImage.Width - 1 - x) + y * _imageAtlas.sourceImage.Width));
-        //            flippedData[x + y * _imageAtlas.sourceImage.Width] = data[idx];
-        //        }
-
-        //    flipped.SetData<Color>(flippedData);
-
-             
-        //}
-
         public override void draw(int x, int y)
         {
             if (_imageAtlas == null)

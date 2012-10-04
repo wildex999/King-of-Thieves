@@ -37,12 +37,11 @@ namespace King_of_Thieves.Graphics
             _setup(sourceImage, _frameWidth, _frameHeight, _cellSpacing, frameRate);
         }
 
-        public CTextureAtlas(Texture2D sourceImage, int _frameWidth, int _frameHeight, int _cellSpacing, string startCell, string endCell, int frameRate = 0)
+        public CTextureAtlas(Texture2D sourceImage, int _frameWidth, int _frameHeight, int _cellSpacing, string startCell, string endCell, int frameRate = 0, bool flipH = false, bool flipV = false)
         {
             //parse out the cell ranges
             if (!_cellFormat.IsMatch(startCell) || !_cellFormat.IsMatch(endCell))
                 throw new FormatException("Error in cell range format for " + sourceImage.Name + ".  Please use 99:99");
-
             
             string[] start = _cellSplitter.Split(startCell);
             string[] end = _cellSplitter.Split(endCell);
@@ -50,10 +49,13 @@ namespace King_of_Thieves.Graphics
             Vector2 _endCell = new Vector2(Convert.ToInt32(end[0]), Convert.ToInt32(end[1]));
             float cellsX = _endCell.X - _startCell.X;
             float cellsY = _endCell.Y - _startCell.Y;
+            int flipXOffSet = flipH ? 1 : 0;
+            int flipYOffSet = flipV ? 1 : 0;
 
 
-            Rectangle fullRange = new Rectangle((int)(_startCell.X * _frameWidth +  (_cellSpacing * _startCell.X)),
-                                                (int)(_startCell.Y * _frameHeight + (_cellSpacing * _startCell.Y)),
+
+            Rectangle fullRange = new Rectangle((int)((_startCell.X * _frameWidth +  (_cellSpacing * _startCell.X)) - flipXOffSet),
+                                                (int)((_startCell.Y * _frameHeight + (_cellSpacing * _startCell.Y)) - flipYOffSet),
                                                 (int)((_frameWidth + _cellSpacing) * (cellsX + 1)), 
                                                 (int)((_frameHeight + _cellSpacing) * (cellsY + 1)));
 
@@ -68,6 +70,14 @@ namespace King_of_Thieves.Graphics
 
             Texture2D newImage = new Texture2D(CGraphics.GPU, fullRange.Width, fullRange.Height);
             newImage.SetData<Color>(imageData);
+
+            if (flipH && flipV)
+                newImage = CGraphics.Flip(newImage, true, true);
+            else if (flipH)
+                newImage = CGraphics.Flip(newImage, false, true);
+            else if (flipV)
+                newImage = CGraphics.Flip(newImage, true, false);
+
 
             //do everything else
             _setup(newImage, _frameWidth, _frameHeight, _cellSpacing, frameRate);
