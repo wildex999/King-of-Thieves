@@ -24,10 +24,12 @@ namespace King_of_Thieves.Actors.Player
             base._initializeResources();
             _imageIndex.Add("PlayerWalkDown", new Graphics.CSprite(Graphics.CTextures.texture("Player:WalkDown")));
             _imageIndex.Add("PlayerWalkLeft", new Graphics.CSprite(Graphics.CTextures.texture("Player:WalkLeft")));
+            _imageIndex.Add("PlayerWalkRight", new Graphics.CSprite(Graphics.CTextures.texture("Player:WalkRight")));
             _imageIndex.Add("PlayerWalkUp", new Graphics.CSprite(Graphics.CTextures.texture("Player:WalkUp")));
             _imageIndex.Add("PlayerIdleDown", new Graphics.CSprite(Graphics.CTextures.texture("Player:IdleDown")));
             _imageIndex.Add("PlayerIdleUp", new Graphics.CSprite(Graphics.CTextures.texture("Player:IdleUp")));
             _imageIndex.Add("PlayerIdleLeft", new Graphics.CSprite(Graphics.CTextures.texture("Player:IdleLeft")));
+            _imageIndex.Add("PlayerIdleRight", new Graphics.CSprite(Graphics.CTextures.texture("Player:IdleRight")));
         }
 
         public override void collide(object sender, object collider)
@@ -77,7 +79,17 @@ namespace King_of_Thieves.Actors.Player
             }
 
             if (Input.CInput.keysPressed.Contains(Microsoft.Xna.Framework.Input.Keys.D))
+            {
                 _position.X += 1;
+
+                if (!_moving)
+                {
+                    image = _imageIndex["PlayerWalkRight"];
+                    _direction = DIRECTION.RIGHT;
+                }
+                _moving = true;
+            }
+
 
             if (Input.CInput.keysPressed.Contains(Microsoft.Xna.Framework.Input.Keys.W))
             {
@@ -122,6 +134,10 @@ namespace King_of_Thieves.Actors.Player
 
                     case DIRECTION.LEFT:
                         image = _imageIndex["PlayerIdleLeft"];
+                        break;
+
+                    case DIRECTION.RIGHT:
+                        image = _imageIndex["PlayerIdleRight"];
                         break;
                 }
             }
