@@ -142,15 +142,27 @@ namespace King_of_Thieves.Actors
             
             onFrame(this);
 
+            
             _oldPosition = _position;
-            image.X = (int)_position.X;
-            image.Y = (int)_position.Y;
+
+            if (image != null)
+            {
+                image.X = (int)_position.X;
+                image.Y = (int)_position.Y;
+            }
 
             if ((Master.GetInputManager().GetCurrentInputHandler() as CInput).areKeysPressed)
                 onKeyDown(this);
 
             if ((Master.GetInputManager().GetCurrentInputHandler() as CInput).areKeysReleased)
                 onKeyRelease(this);
+
+            foreach (uint ID in _userEventsToFire)
+            {
+                _userEvents[ID](this);
+            }
+
+            _userEventsToFire.Clear();
 
 
         }
@@ -164,7 +176,8 @@ namespace King_of_Thieves.Actors
             catch (NotImplementedException)
             { ;}
 
-            image.draw((int)_position.X, (int)_position.Y);
+            if (image != null)
+                image.draw((int)_position.X, (int)_position.Y);
         }
 
         protected virtual void _initializeResources()
@@ -235,7 +248,7 @@ namespace King_of_Thieves.Actors
 
         //this will go up to the component and trigger the specified user event in the specified actor
         //what this does is create a "packet" that will float around in some higher level scope for the component to pick up
-        private void triggerUserEvent(int eventNum, string actorName)
+        protected void _triggerUserEvent(int eventNum, string actorName)
         {
             CMasterControl.commNet[(int)_componentAddress].Add(new CActorPacket(eventNum, actorName));
         }

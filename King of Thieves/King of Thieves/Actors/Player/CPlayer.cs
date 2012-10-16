@@ -68,8 +68,7 @@ namespace King_of_Thieves.Actors.Player
         {
 
 
-            if ((Master.GetInputManager().GetCurrentInputHandler() as CInput).keysPressed.Contains(Microsoft.Xna.Framework.Input.Keys.Space))
-                image = _imageIndex["swordTestLeft"];
+            
 
             if ((Master.GetInputManager().GetCurrentInputHandler() as CInput).keysPressed.Contains(Microsoft.Xna.Framework.Input.Keys.A))
             {
@@ -118,6 +117,11 @@ namespace King_of_Thieves.Actors.Player
                     _direction = DIRECTION.DOWN;
                 }
                 _moving = true;
+            }
+
+            if ((Master.GetInputManager().GetCurrentInputHandler() as CInput).keysPressed.Contains(Microsoft.Xna.Framework.Input.Keys.Space))
+            {
+                _triggerUserEvent(0, "sword");
             }
         }
 

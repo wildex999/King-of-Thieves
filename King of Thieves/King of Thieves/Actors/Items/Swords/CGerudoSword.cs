@@ -31,15 +31,15 @@ namespace King_of_Thieves.Actors.Items.Swords
         {
             base._initializeResources();
             //use the gerudo sword for now
-            _imageIndex.Add("SwingDown", new Graphics.CSprite(Graphics.CTextures.texture("GerudoSword:SwingDown")));
-            _imageIndex.Add("SwingRight", new Graphics.CSprite(Graphics.CTextures.texture("GerudoSword:SwingRight")));
-            _imageIndex.Add("SwingLeft", new Graphics.CSprite(Graphics.CTextures.texture("GerudoSword:SwingRight"), null, true));
-            _imageIndex.Add("SwingUp", new Graphics.CSprite(Graphics.CTextures.texture("GerudoSword:SwingUp")));
+            _imageIndex.Add("swingDown", new Graphics.CSprite(Graphics.CTextures.texture("GerudoSword:SwingDown")));
+            _imageIndex.Add("swingRight", new Graphics.CSprite(Graphics.CTextures.texture("GerudoSword:SwingRight")));
+            _imageIndex.Add("swingLeft", new Graphics.CSprite(Graphics.CTextures.texture("GerudoSword:SwingRight"), null, true));
+            _imageIndex.Add("swingUp", new Graphics.CSprite(Graphics.CTextures.texture("GerudoSword:SwingUp")));
         }
 
         public void userEventSwing(object sender)
         {
-
+            image = _imageIndex["swingUp"];
         }
 
         public override void collide(object sender, object collider)
@@ -85,6 +85,8 @@ namespace King_of_Thieves.Actors.Items.Swords
         public override void update(GameTime gameTime)
         {
             base.update(gameTime);
+
+            
         }
 
         public override void drawMe()

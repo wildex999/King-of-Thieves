@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using King_of_Thieves.Graphics;
 using King_of_Thieves.Actors;
+using System.Collections.Generic;
 
 using Gears.Cloud;
 using King_of_Thieves.usr.local;
@@ -92,6 +93,7 @@ namespace King_of_Thieves
             actorTest = new CActorTest("Test");
             player = new Actors.Player.CPlayer();
             compTest.root = player;
+            compTest.actors.Add("sword", new Actors.Items.Swords.CSword("sword"));
 
             CMasterControl.audioPlayer.soundBank.Add("04_-_Phantom_Ganon", new Sound.CSound(Content.Load<Song>("04_-_Phantom_Ganon"), false, 0));
             CMasterControl.audioPlayer.soundBank.Add("cursor", new Sound.CSound(Content.Load<SoundEffect>("cursor"),true));
@@ -99,6 +101,10 @@ namespace King_of_Thieves
 
             testMenu = new Actors.Menu.CMenu("MenuTest", new CSprite(CTextures.texture("menu")), 120, CMasterControl.audioPlayer.soundBank["04_-_Phantom_Ganon"], CMasterControl.audioPlayer.soundBank["cursor"]);
             menuComo.root = testMenu;
+            
+
+            //when a component has been created, it must be added to the Comm Net.
+            CMasterControl.commNet.Add(0, new List<CActorPacket>());
 
             //We really, really need an object database to just do this shit automagically.
             //Right, this is just for test purposes for now. -Steve
