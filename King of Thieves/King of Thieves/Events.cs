@@ -17,5 +17,6 @@ namespace King_of_Thieves
     public delegate void roomEndHandler(object sender);
     public delegate void animationEndHandler(object sender);
     public delegate void timerHandler(object sender);
+    public delegate void userEventHandler(object sender);
     
 }

@@ -101,6 +101,7 @@ namespace King_of_Thieves
             menuComo.root = testMenu;
 
             //We really, really need an object database to just do this shit automagically.
+            //Right, this is just for test purposes for now. -Steve
             CMasterControl.mapList.Add("TestMap",new Map.MTestMap("TestMap", Map.MAPTYPES.ROOT));
             //CMasterControl.mapList.Add("TestMapPart1", new Map.MTestMap("TestMapPart1", Map.MAPTYPES.CHUNK));
             //Input.CMrMapIO.Save(CMasterControl.mapList["TestMap"].Map, "testmap.xml");

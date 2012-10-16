@@ -34,6 +34,9 @@ namespace King_of_Thieves.Actors
         protected CAnimation _sprite;
         protected DIRECTION _direction = DIRECTION.UP;
         protected Boolean _moving = false; //used for prioritized movement
+        private uint _componentAddress = 0;
+        protected Dictionary<uint, userEventHandler> _userEvents;
+        protected List<uint> _userEventsToFire;
         
         public Graphics.CSprite image;
         protected Dictionary<string, Graphics.CSprite> _imageIndex;
@@ -63,19 +66,9 @@ namespace King_of_Thieves.Actors
 
         protected abstract void _addCollidables(); //Use this guy to tell the Actor what kind of actors it can collide with
 
-        public CAnimation spriteIndex
-        {
-            get
-            {
-                return _sprite;
-            }
-            set
-            {
-                _sprite = value;
-            }
-        }
+        
 
-        public CActor(string name, Vector2 position, ACTORTYPES type = ACTORTYPES.INTERACTABLE )
+        public CActor(string name, Vector2 position, ACTORTYPES type = ACTORTYPES.INTERACTABLE, uint compAddress = 0 )
             
         {
             onCreate += new createHandler(create);
@@ -85,6 +78,7 @@ namespace King_of_Thieves.Actors
             onFrame += new frameHandler(frame);
             onDraw += new drawHandler(draw);
             onAnimationEnd += new animationEndHandler(animationEnd);
+            _componentAddress = compAddress;
 
             ACTORTYPE = type;
             _name = name;
@@ -106,6 +100,7 @@ namespace King_of_Thieves.Actors
             catch (NotImplementedException)
             { }
 
+            _registerUserEvents();
             _initializeResources();
         }
 
@@ -117,6 +112,29 @@ namespace King_of_Thieves.Actors
             onFrame -= new frameHandler(frame);
             onKeyRelease -= new keyReleaseHandler(keyRelease);
             onDraw -= new drawHandler(draw);
+        }
+
+        public void addFireTrigger(uint userEvent)
+        {
+            _userEventsToFire.Add(userEvent);
+        }
+
+        protected virtual void _registerUserEvents()
+        {
+            _userEvents = new Dictionary<uint, userEventHandler>();
+            _userEventsToFire = new List<uint>();
+        }
+
+        public CAnimation spriteIndex
+        {
+            get
+            {
+                return _sprite;
+            }
+            set
+            {
+                _sprite = value;
+            }
         }
 
         public virtual void update(GameTime gameTime)
@@ -213,6 +231,13 @@ namespace King_of_Thieves.Actors
             List<BoundingBox> myBoxes = CMasterControl.hitboxes[this.GetType()][_name];
             
            
+        }
+
+        //this will go up to the component and trigger the specified user event in the specified actor
+        //what this does is create a "packet" that will float around in some higher level scope for the component to pick up
+        private void triggerUserEvent(int eventNum, string actorName)
+        {
+            CMasterControl.commNet[(int)_componentAddress].Add(new CActorPacket(eventNum, actorName));
         }
     }
 }

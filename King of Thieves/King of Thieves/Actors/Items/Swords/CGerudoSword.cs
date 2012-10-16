@@ -10,9 +10,20 @@ namespace King_of_Thieves.Actors.Items.Swords
 {
     class CSword : CActor
     {
+        private event userEventHandler swingEvent;
+
         public CSword(string swordName) :
             base(swordName, Vector2.Zero, ACTORTYPES.INTERACTABLE)
         {
+
+        }
+
+        protected override void _registerUserEvents()
+        {
+            base._registerUserEvents();
+
+            _userEvents.Add(0, userEventSwing);
+            swingEvent += _userEvents[0];
 
         }
 
@@ -24,6 +35,11 @@ namespace King_of_Thieves.Actors.Items.Swords
             _imageIndex.Add("SwingRight", new Graphics.CSprite(Graphics.CTextures.texture("GerudoSword:SwingRight")));
             _imageIndex.Add("SwingLeft", new Graphics.CSprite(Graphics.CTextures.texture("GerudoSword:SwingRight"), null, true));
             _imageIndex.Add("SwingUp", new Graphics.CSprite(Graphics.CTextures.texture("GerudoSword:SwingUp")));
+        }
+
+        public void userEventSwing(object sender)
+        {
+
         }
 
         public override void collide(object sender, object collider)
@@ -82,7 +98,7 @@ namespace King_of_Thieves.Actors.Items.Swords
         }
     }
 
-    }
-
-
 }
+
+
+

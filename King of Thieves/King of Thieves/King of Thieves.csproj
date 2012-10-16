@@ -113,6 +113,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Actors\CActor.cs" />
+    <Compile Include="Actors\CActorPacket.cs" />
     <Compile Include="Actors\CActorTest.cs" />
     <Compile Include="Actors\CComponent.cs" />
     <Compile Include="Actors\Items\Swords\CGerudoSword.cs" />

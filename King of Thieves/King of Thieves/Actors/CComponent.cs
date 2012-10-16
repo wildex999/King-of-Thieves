@@ -13,10 +13,17 @@ namespace King_of_Thieves.Actors
         //actors can also rotate around the root.
         public CActor root;
         public Dictionary<string, CActor> actors;
+        private uint _address;
 
-        public CComponent()
+        public CComponent(uint address = 0)
         {
             actors = new Dictionary<string, CActor>();
+            _address = address;
+        }
+
+        private void passMessage(ref CActor actor, uint eventID)
+        {
+            actor.addFireTrigger(eventID);
         }
 
         //not 100% sure how these will work yet
@@ -26,6 +33,22 @@ namespace King_of_Thieves.Actors
 
             foreach (KeyValuePair<string, CActor> kvp in actors)
             {
+                //first get messages from the commNet
+                if (CMasterControl.commNet[(int)_address].Count() > 0)
+                {
+                    var group = from packets in CMasterControl.commNet[(int)_address]
+                                where kvp.Key == packets.actor
+                                select packets;
+
+                    foreach (var result in group)
+                    {
+                        //pass the message to the actor
+                        CActor temp = kvp.Value;
+                        passMessage(ref temp, (uint)result.userEventID);
+                    }
+          
+                }
+
                 //update position relative to the root
                 kvp.Value.position += root.distanceFromLastFrame;
 
