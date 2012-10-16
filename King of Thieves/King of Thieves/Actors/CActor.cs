@@ -105,6 +105,8 @@ namespace King_of_Thieves.Actors
             }
             catch (NotImplementedException)
             { }
+
+            _initializeResources();
         }
 
         ~CActor()

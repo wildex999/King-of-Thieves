@@ -115,6 +115,7 @@
     <Compile Include="Actors\CActor.cs" />
     <Compile Include="Actors\CActorTest.cs" />
     <Compile Include="Actors\CComponent.cs" />
+    <Compile Include="Actors\Items\Swords\CGerudoSword.cs" />
     <Compile Include="Actors\Menu\CMenuCursor.cs" />
     <Compile Include="Graphics\CTileSet.cs" />
     <Compile Include="Map\CMap.cs" />

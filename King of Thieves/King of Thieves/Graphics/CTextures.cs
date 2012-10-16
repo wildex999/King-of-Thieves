@@ -32,8 +32,10 @@ namespace King_of_Thieves.Graphics
             _textures.Add("Player:IdleUp", new CTextureAtlas(_content.Load<Texture2D>("Player"), 32, 32, 1, "2:0", "2:0", 0));
             _textures.Add("Player:IdleLeft", new CTextureAtlas(_content.Load<Texture2D>("Player"), 32, 32, 1, "1:0", "1:0", 0));
             _textures.Add("Player:IdleRight", new CTextureAtlas(_content.Load<Texture2D>("Player"), 32, 32, 1, "1:0", "1:0", 0,true));
-
-            
+            _textures.Add("GerudoSword:SwingDown", new CTextureAtlas(_content.Load<Texture2D>("Swords"), 64, 64, 1, "0:0", "7:0", 15));
+            _textures.Add("GerudoSword:SwingUp", new CTextureAtlas(_content.Load<Texture2D>("Swords"), 64, 64, 1, "0:1", "7:1", 15));
+            _textures.Add("GerudoSword:SwingRight", new CTextureAtlas(_content.Load<Texture2D>("Swords"), 64, 64, 1, "0:2", "7:2", 15));
+            _textures.Add("GerudoSword:SwingLeft", new CTextureAtlas(_content.Load<Texture2D>("Swords"), 64, 64, 1, "0:2", "7:2", 15,true));
         }
 
         public static void cleanUp(string nameSpace = "")

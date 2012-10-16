@@ -17,7 +17,7 @@ namespace King_of_Thieves.Actors.Player
 
             //resource init
 
-            _initializeResources();
+            
             image = _imageIndex["PlayerWalkDown"];
         }
 
@@ -67,6 +67,9 @@ namespace King_of_Thieves.Actors.Player
         public override void keyDown(object sender)
         {
 
+
+            if ((Master.GetInputManager().GetCurrentInputHandler() as CInput).keysPressed.Contains(Microsoft.Xna.Framework.Input.Keys.Space))
+                image = _imageIndex["swordTestLeft"];
 
             if ((Master.GetInputManager().GetCurrentInputHandler() as CInput).keysPressed.Contains(Microsoft.Xna.Framework.Input.Keys.A))
             {
