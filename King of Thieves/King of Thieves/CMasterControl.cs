@@ -13,7 +13,7 @@ namespace King_of_Thieves
         public static Sound.CAudioPlayer audioPlayer = new Sound.CAudioPlayer();
         public static Dictionary<Type, Dictionary<string, List<BoundingBox>>> hitboxes = new Dictionary<Type, Dictionary<string,List<BoundingBox>>>(); //jeez this is wacky
         public static GameTime gameTime;
-        public static Dictionary<string,Map.CMrMap>mapList = new Dictionary<string,Map.CMrMap>();
+        //public static Dictionary<string,Map.CMrMap>mapList = new Dictionary<string,Map.CMrMap>();
         public static Dictionary<int, List<Actors.CActorPacket>> commNet = new Dictionary<int, List<Actors.CActorPacket>>();  
     }
 }

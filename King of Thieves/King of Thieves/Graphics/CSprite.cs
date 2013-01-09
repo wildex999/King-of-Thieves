@@ -18,7 +18,8 @@ namespace King_of_Thieves.Graphics
         private int frameX = 0, frameY = 0;
         private bool _flipH = false;
         private bool _flipV = false;
-        
+        private int _totalFrames = 0;
+        private int _framesPassed = 0;
 
         public CSprite(CTextureAtlas atlas, Effect shader = null, bool flipH = false, bool flipV = false, params VertexPositionColor[] vertices)
             : base(shader, vertices)
@@ -28,13 +29,14 @@ namespace King_of_Thieves.Graphics
             _name = _imageAtlas.sourceImage.Name;
             _flipH = flipH;
             _flipV = flipV;
+            _totalFrames = atlas.tileXCount * atlas.tileYCount;
             CMasterControl.drawList.AddLast(this);
         }
 
-        public override void draw(int x, int y)
+        public override bool draw(int x, int y)
         {
             if (_imageAtlas == null)
-                throw new FormatException("Unable to draw sprite " + _name + ", may be the target of an animation.");
+                throw new FormatException("Unable to draw sprite " + _name);
             if (isOffscreen != false)
                 renderOffScreen();
 
@@ -44,6 +46,7 @@ namespace King_of_Thieves.Graphics
             {
                 _frameTracker = 0;
                 frameX++;
+                _framesPassed++;
 
                 if (frameX >= _imageAtlas.tileXCount)
                 {
@@ -66,6 +69,14 @@ namespace King_of_Thieves.Graphics
             else if(_flipH)
                 CGraphics.spriteBatch.Draw(_imageAtlas.sourceImage, _position, _size, Color.White, 0f, Vector2.Zero, 1.0f, SpriteEffects.FlipHorizontally, 0);
             base.draw(x,y);
+            if (_framesPassed == _totalFrames - 1)
+            {
+                _framesPassed = 0;
+                frameX = 0; frameY = 0;
+                return true; //this is used to determine if the animation ended
+            }
+            return false;
+            
         }
 
         public int X

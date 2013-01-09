@@ -10,12 +10,11 @@ namespace King_of_Thieves.Actors.Items.Swords
 {
     class CSword : CActor
     {
-        private event userEventHandler swingEvent;
 
-        public CSword(string swordName) :
+        public CSword(string swordName, Vector2 position) :
             base(swordName, Vector2.Zero, ACTORTYPES.INTERACTABLE)
         {
-
+            _position = position;
         }
 
         protected override void _registerUserEvents()
@@ -23,7 +22,7 @@ namespace King_of_Thieves.Actors.Items.Swords
             base._registerUserEvents();
 
             _userEvents.Add(0, userEventSwing);
-            swingEvent += _userEvents[0];
+
 
         }
 
@@ -39,7 +38,29 @@ namespace King_of_Thieves.Actors.Items.Swords
 
         public void userEventSwing(object sender)
         {
-            image = _imageIndex["swingUp"];
+            _position = new Vector2(Convert.ToInt32(userParams[1]), Convert.ToInt32(userParams[2]));
+            switch (userParams[0])
+            {
+                case "UP":
+                    image = _imageIndex["swingUp"];
+                    break;
+
+                case "DOWN":
+                    image = _imageIndex["swingDown"];
+                    break;
+
+                case "LEFT":
+                    image = _imageIndex["swingLeft"];
+                    break;
+
+                case "RIGHT":
+                    image = _imageIndex["swingRight"];
+                    break;
+
+                default:
+                    break;
+            }
+            
         }
 
         public override void collide(object sender, object collider)
@@ -64,7 +85,7 @@ namespace King_of_Thieves.Actors.Items.Swords
 
         public override void animationEnd(object sender)
         {
-            throw new NotImplementedException();
+            image = null;
         }
 
         public override void frame(object sender)

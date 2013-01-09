@@ -21,12 +21,12 @@ namespace King_of_Thieves.Actors
             _address = address;
         }
 
-        private void passMessage(ref CActor actor, uint eventID)
+        private void passMessage(ref CActor actor, uint eventID, params string[] param)
         {
             actor.addFireTrigger(eventID);
+            actor.userParams.AddRange(param);
         }
 
-        //not 100% sure how these will work yet
         public void updateActors(GameTime gameTime)
         {
             root.update(gameTime);
@@ -36,16 +36,20 @@ namespace King_of_Thieves.Actors
                 //first get messages from the commNet
                 if (CMasterControl.commNet[(int)_address].Count() > 0)
                 {
-                    var group = from packets in CMasterControl.commNet[(int)_address]
+                    CActorPacket[] packetData = new CActorPacket[CMasterControl.commNet[(int)_address].Count()];
+                    CMasterControl.commNet[(int)_address].CopyTo(packetData);
+
+                    var group = from packets in packetData
                                 where kvp.Key == packets.actor
                                 select packets;
 
                     foreach (var result in group)
                     {
+                        
                         //pass the message to the actor
                         CActor temp = kvp.Value;
-                        passMessage(ref temp, (uint)result.userEventID);
-
+                        passMessage(ref temp, (uint)result.userEventID, result.getParams());
+                        CMasterControl.commNet[(int)_address].Remove(result);
                         
                     }
           

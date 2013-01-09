@@ -93,22 +93,22 @@ namespace King_of_Thieves
             actorTest = new CActorTest("Test");
             player = new Actors.Player.CPlayer();
             compTest.root = player;
-            compTest.actors.Add("sword", new Actors.Items.Swords.CSword("sword"));
+            compTest.actors.Add("sword", new Actors.Items.Swords.CSword("sword", new Vector2(player.position.X - 13, player.position.Y - 13)));
 
-            CMasterControl.audioPlayer.soundBank.Add("04_-_Phantom_Ganon", new Sound.CSound(Content.Load<Song>("04_-_Phantom_Ganon"), false, 0));
+            //CMasterControl.audioPlayer.soundBank.Add("04_-_Phantom_Ganon", new Sound.CSound(Content.Load<Song>("04_-_Phantom_Ganon"), false, 0));
             CMasterControl.audioPlayer.soundBank.Add("cursor", new Sound.CSound(Content.Load<SoundEffect>("cursor"),true));
             CMasterControl.audioPlayer.soundBank.Add("lttp_heart", new Sound.CSound(Content.Load<SoundEffect>("lttp_heart")));
 
-            testMenu = new Actors.Menu.CMenu("MenuTest", new CSprite(CTextures.texture("menu")), 120, CMasterControl.audioPlayer.soundBank["04_-_Phantom_Ganon"], CMasterControl.audioPlayer.soundBank["cursor"]);
+            //testMenu = new Actors.Menu.CMenu("MenuTest", new CSprite(CTextures.texture("menu")), 120, CMasterControl.audioPlayer.soundBank["04_-_Phantom_Ganon"], CMasterControl.audioPlayer.soundBank["cursor"]);
             menuComo.root = testMenu;
             
 
             //when a component has been created, it must be added to the Comm Net.
             CMasterControl.commNet.Add(0, new List<CActorPacket>());
 
-            //We really, really need an object database to just do this shit automagically.
-            //Right, this is just for test purposes for now. -Steve
-            CMasterControl.mapList.Add("TestMap",new Map.MTestMap("TestMap", Map.MAPTYPES.ROOT));
+            Map.CMap testMap = new Map.CMap("testMap.xml");
+
+            //CMasterControl.mapList.Add("TestMap",new Map.MTestMap("TestMap", Map.MAPTYPES.ROOT));
             //CMasterControl.mapList.Add("TestMapPart1", new Map.MTestMap("TestMapPart1", Map.MAPTYPES.CHUNK));
             //Input.CMrMapIO.Save(CMasterControl.mapList["TestMap"].Map, "testmap.xml");
             //CMasterControl.audioPlayer.song = new Sound.CSound(Content.Load<Song>("04_-_Phantom_Ganon"), false, 0);
