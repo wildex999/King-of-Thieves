@@ -25,7 +25,7 @@ namespace King_of_Thieves.Graphics
             }
         }
 
-        public virtual void draw(int x, int y)
+        public virtual bool draw(int x, int y)
         {
             if (isOffscreen != false)
                 renderOffScreen();
@@ -36,6 +36,8 @@ namespace King_of_Thieves.Graphics
                     CGraphics.GPU.SetVertexBuffer(_vertexBuffer);
                     CGraphics.GPU.DrawIndexedPrimitives(PrimitiveType.LineList, 0, 0, vertices.Length, 0, 1);
                 }
+
+            return true;
         }
 
         public void swapTechnique(string name)

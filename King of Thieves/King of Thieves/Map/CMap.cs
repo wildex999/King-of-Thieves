@@ -4,10 +4,34 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Xml.Serialization;
+using System.Xml;
 
 namespace King_of_Thieves.Map
 {
+
+    class CMap
+    {
+        private string _name = "";
+
+        public CMap(string fileName)
+        {
+
+            XmlTextReader reader = new XmlTextReader(fileName);
+
+            reader.Read(); reader.Read(); reader.Read();
+            if (reader.Name != "map")
+                throw new FormatException("The xml file was not in the proper map format.");
+
+            reader.Read(); reader.Read(); reader.Read();
+            _name = reader.Value;
+
+            reader.Close();
+            reader = null;
+            
+        }
+ 
+    }
+
     /* Structure:
      *          MAP CHUNK STRUCTURE
      *          0.00 I WROTE THIS WHILE BEING HALF AWAKE FUCK ME.
@@ -40,147 +64,9 @@ namespace King_of_Thieves.Map
      *              <layer#>0</layer#>
      *              <objectData>0,0,0,0,...,</objectData>
      *          </objectLayer>
-     *          </map>
-     *          
-     *          MAP ROOT STRUCTURE
-     *          <map>
-     *          <version>written half awaken please dont sue me</version>
-     *          <name>testMap</name>
-     *          <chunkCount>0</chunkCount>
-     *          
-     *          <chunk number=0>
-     *              <file>testMapLeft</file>
-     *              <region>0,0,200,200</region> <!-- Possibly a selection defining what positions this chunk makes up? -->
-     *              <!-- Feels like we might need more for this chunk structure -->
-     *          </chunk>
-     *          </map>
+     *          </map>    
      */
 
-    [Serializable, XmlInclude(typeof(CMap))]
-    [XmlRoot("map")]
-    public class CMap
-    {
-        //<Version>
-        [XmlElement(DataType = "int", ElementName = "version")]
-        public int Version;
-
-        //<Name>
-        [XmlElement(DataType="string", ElementName="name")]
-        public string Name;
-
-        //<Type>
-        [XmlElement(ElementName="type")]
-        public MAPTYPES Type;
-
-        //<layerCount>
-        [XmlElement(DataType="int",ElementName="layerCount")]
-        public int layerCount;
-
-        //<tileSet>
-        [XmlElement(DataType="string",ElementName="tileSet")]
-        public string tileSet;
-
-        //<ID>
-        /*
-        [XmlElement("ID")]
-        public CSpecialID ID
-        {
-            get; set;
-        } */
-
-        //<tileLayer>
-        [XmlElement("tileLayer")]
-        public CTileLayer tileLayer;
-
-        //<hitBoxLayer>
-        [XmlElement("hitBoxLayer")]
-        public CHitBoxLayer hitBoxLayer;
-
-        //<objectLayer>
-        [XmlElement("objectLayer")]
-        public CObjectLayer objectLayer;
-    }
-
-    [Serializable, XmlInclude(typeof(CTileLayer))]
-    public class CTileLayer
-    {
-        [XmlElement("layerNum")]
-        public int layerNum;
-
-        [XmlArray(ElementName="tile",IsNullable=true)]
-        public int[] tileData;
-    }
-    [Serializable, XmlInclude(typeof(CObjectLayer))]
-    public class CObjectLayer
-    {
-        [XmlElement("layerNum")]
-        public int layerNum;
-        [XmlArray(ElementName="objectData",IsNullable=true)]
-        public int[] objectData;
-    }
-
-    public class CSpecialID
-    {
-        [XmlElement("type")]
-        public int Type;
-
-        [XmlElement("Position")]
-        public int[] Position;
-
-        [XmlElement("callback")]
-        public object Callback;
-    }
-    [Serializable, XmlInclude(typeof(CHitBoxLayer))]
-    public class CHitBoxLayer
-    {
-        [XmlElement("layerNum")]
-        public int layerNum
-        {
-            get; set;
-        }
-        [XmlElement("type")]
-        public int Type
-        {
-            get; set;
-        }
-        [XmlArray(ElementName = "hitBox",IsNullable=true)]
-        public int[] hitBox
-        {
-            get; set;
-        }
-    }
-
-    [XmlRoot("Root")]
-    public class CMapRoot
-    {
-        [XmlElement("version")]
-        public int Version
-        {
-            get; set;
-        }
-        [XmlElement("name")]
-        public string Name
-        {
-            get; set;
-        }
-        [XmlElement("chunkCount")]
-        public int chunkCount;
-    }
-
-    [XmlRoot("Chunk")]
-    public class CMapChunk
-    {
-        [XmlElement("file")]
-        public string file
-        {
-            get; set;
-        }
-
-        [XmlArray(ElementName = "region",IsNullable=true)]
-        public int[] Region
-        {
-            get; set;
-        }
-    }
+   
 
 }

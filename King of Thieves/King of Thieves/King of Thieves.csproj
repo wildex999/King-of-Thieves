@@ -13,7 +13,7 @@
     <TargetFrameworkProfile>Client</TargetFrameworkProfile>
     <XnaFrameworkVersion>v4.0</XnaFrameworkVersion>
     <XnaPlatform>Windows</XnaPlatform>
-    <XnaProfile>HiDef</XnaProfile>
+    <XnaProfile>Reach</XnaProfile>
     <XnaCrossPlatformGroupID>afde9746-a008-426a-9d25-36b298c8fc4e</XnaCrossPlatformGroupID>
     <XnaOutputType>Game</XnaOutputType>
     <ApplicationIcon>Game.ico</ApplicationIcon>
@@ -120,9 +120,6 @@
     <Compile Include="Actors\Menu\CMenuCursor.cs" />
     <Compile Include="Graphics\CTileSet.cs" />
     <Compile Include="Map\CMap.cs" />
-    <Compile Include="Map\CMrMap.cs" />
-    <Compile Include="Map\CTimeSys.cs" />
-    <Compile Include="Map\MTestMap.cs" />
     <Compile Include="Actors\Menu\CMenu.cs" />
     <Compile Include="Actors\Menu\CMenuItem.cs" />
     <Compile Include="Actors\Player\CPlayer.cs" />

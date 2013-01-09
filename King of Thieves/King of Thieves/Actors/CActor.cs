@@ -37,9 +37,11 @@ namespace King_of_Thieves.Actors
         private uint _componentAddress = 0;
         protected Dictionary<uint, userEventHandler> _userEvents;
         protected List<uint> _userEventsToFire;
-        
+        protected string _state = "Idle";
         public Graphics.CSprite image;
         protected Dictionary<string, Graphics.CSprite> _imageIndex;
+        private bool _animationHasEnded = false;
+        public List<string> userParams = new List<string>();
         //hitboxes will go here as well? What a terrible night for a curse...
         //event handlers will be added here
 
@@ -114,6 +116,24 @@ namespace King_of_Thieves.Actors
             onDraw -= new drawHandler(draw);
         }
 
+        public string state
+        {
+            get
+            {
+                return _state;
+            }
+        }
+
+        public void swapImage(string imageIndex, bool triggerAnimEnd = true)
+        {
+            image = _imageIndex[imageIndex];
+
+            if (triggerAnimEnd)
+            {
+                _animationHasEnded = true;
+            }
+        }
+
         public void addFireTrigger(uint userEvent)
         {
             _userEventsToFire.Add(userEvent);
@@ -142,6 +162,13 @@ namespace King_of_Thieves.Actors
             
             onFrame(this);
 
+            if (_animationHasEnded)
+                try
+                {
+                    onAnimationEnd(this);
+                }
+                catch (NotImplementedException) { ;}
+
             
             _oldPosition = _position;
 
@@ -164,6 +191,8 @@ namespace King_of_Thieves.Actors
 
             _userEventsToFire.Clear();
 
+            _animationHasEnded = false;
+            userParams.Clear();
 
         }
 
@@ -177,7 +206,8 @@ namespace King_of_Thieves.Actors
             { ;}
 
             if (image != null)
-                image.draw((int)_position.X, (int)_position.Y);
+                _animationHasEnded = image.draw((int)_position.X, (int)_position.Y);
+ 
         }
 
         protected virtual void _initializeResources()
@@ -248,9 +278,9 @@ namespace King_of_Thieves.Actors
 
         //this will go up to the component and trigger the specified user event in the specified actor
         //what this does is create a "packet" that will float around in some higher level scope for the component to pick up
-        protected void _triggerUserEvent(int eventNum, string actorName)
+        protected void _triggerUserEvent(int eventNum, string actorName, params string[] param)
         {
-            CMasterControl.commNet[(int)_componentAddress].Add(new CActorPacket(eventNum, actorName));
+            CMasterControl.commNet[(int)_componentAddress].Add(new CActorPacket(eventNum, actorName, param));
         }
     }
 }
