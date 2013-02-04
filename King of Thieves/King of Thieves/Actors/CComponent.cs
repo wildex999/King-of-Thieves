@@ -3,17 +3,23 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 namespace King_of_Thieves.Actors
 {
     //component is a series of actors.  Bongo Bongo for example would be 3 actors: 2 hands and a main body, main body being the root.
     //this is really a wrapper around CActor to group related CActors together.
-    class CComponent
+    class CComponent : Gears.Playable.Unit
     {
         //if the root moves, all children follow it.  Actors otherwise are free to move freely of each other.
         //actors can also rotate around the root.
         public CActor root;
         public Dictionary<string, CActor> actors;
         private uint _address;
+
+        protected override string TextureFileLocation
+        {
+            get { return ""; }
+        }
 
         public CComponent(uint address = 0)
         {
@@ -27,7 +33,7 @@ namespace King_of_Thieves.Actors
             actor.userParams.AddRange(param);
         }
 
-        public void updateActors(GameTime gameTime)
+        public override void Update(GameTime gameTime)
         {
             root.update(gameTime);
 
@@ -63,7 +69,7 @@ namespace King_of_Thieves.Actors
             }
         }
 
-        public void drawActors()
+        public override void Draw(SpriteBatch spriteBatch) //spritebatch not used
         {
             root.drawMe();
             foreach (KeyValuePair<string, CActor> kvp in actors)

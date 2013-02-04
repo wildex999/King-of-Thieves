@@ -24,14 +24,14 @@ namespace King_of_Thieves.usr.local
         }
         public override void Draw(Microsoft.Xna.Framework.Graphics.SpriteBatch spriteBatch)
         {
-            compTest.drawActors();
+            compTest.Draw(null);
         }
         public override void Update(Microsoft.Xna.Framework.GameTime gameTime)
         {
             //Input.CInput.update();
 
             //compTest.root.position = new Vector2(Input.CInput.mouseX, Input.CInput.mouseY);
-            compTest.updateActors(gameTime);
+            compTest.Update(gameTime);
             //menuComo.updateActors(gameTime);
 
             if ((Master.GetInputManager().GetCurrentInputHandler() as CInput).getInputRelease(Microsoft.Xna.Framework.Input.Keys.Enter))
