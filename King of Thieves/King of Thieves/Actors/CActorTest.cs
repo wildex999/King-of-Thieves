@@ -12,7 +12,7 @@ namespace King_of_Thieves.Actors
     {
 
         public CActorTest(string name) :
-            base(name, Vector2.Zero )
+            base()
         {
             image = new Graphics.CSprite(Graphics.CTextures.texture("mcDungeon2"));
         }

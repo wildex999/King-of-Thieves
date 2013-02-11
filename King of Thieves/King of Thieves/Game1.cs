@@ -106,8 +106,6 @@ namespace King_of_Thieves
             //when a component has been created, it must be added to the Comm Net.
             CMasterControl.commNet.Add(0, new List<CActorPacket>());
 
-            Map.CMap testMap = new Map.CMap("testMap.xml");
-
             //CMasterControl.mapList.Add("TestMap",new Map.MTestMap("TestMap", Map.MAPTYPES.ROOT));
             //CMasterControl.mapList.Add("TestMapPart1", new Map.MTestMap("TestMapPart1", Map.MAPTYPES.CHUNK));
             //Input.CMrMapIO.Save(CMasterControl.mapList["TestMap"].Map, "testmap.xml");

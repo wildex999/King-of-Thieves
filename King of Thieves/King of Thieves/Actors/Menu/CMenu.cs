@@ -21,14 +21,15 @@ namespace King_of_Thieves.Actors.Menu
         private int _menuIndex = 0;
         private int _numberOfItems = 0;
 
-        public CMenu(string name, Graphics.CSprite image, int displayTime, Sound.CSound BGM = null, Sound.CSound itemSwitch = null, Sound.CSound itemSelect = null):
-            base(name, new Vector2(18,18))
+        public CMenu(string name, Graphics.CSprite image, int displayTime, Sound.CSound BGM = null, Sound.CSound itemSwitch = null, Sound.CSound itemSelect = null):base()
         {
             base.image = image;
             _displayTime = displayTime;
             _bgm = BGM;
             _itemSelect = itemSelect;
             _itemSwitch = itemSwitch;
+            _position = new Vector2(18, 18);
+            _name = name;
 
             if (_bgm != null)
                 CMasterControl.audioPlayer.addSfx(_bgm);

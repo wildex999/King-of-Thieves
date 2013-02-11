@@ -12,9 +12,10 @@ namespace King_of_Thieves.Actors.Items.Swords
     {
 
         public CSword(string swordName, Vector2 position) :
-            base(swordName, Vector2.Zero, ACTORTYPES.INTERACTABLE)
+            base()
         {
             _position = position;
+            _name = swordName;
         }
 
         protected override void _registerUserEvents()

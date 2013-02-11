@@ -29,7 +29,7 @@ namespace King_of_Thieves.Actors
         protected Vector2 _position = Vector2.Zero;
         protected Vector2 _oldPosition = Vector2.Zero;
         public readonly ACTORTYPES ACTORTYPE;
-        private string _name;
+        protected string _name;
         protected List<Type> _collidables;
         protected CAnimation _sprite;
         protected DIRECTION _direction = DIRECTION.UP;
@@ -57,20 +57,20 @@ namespace King_of_Thieves.Actors
         public event timerHandler onTimer1;
         public event timerHandler onTimer2;
 
-        public abstract void create(object sender);
-        public abstract void destroy(object sender);
-        public abstract void keyDown(object sender);
-        public abstract void keyRelease(object sender);
-        public abstract void frame(object sender);
-        public abstract void draw(object sender);
-        public abstract void collide(object sender, object collider);
-        public abstract void animationEnd(object sender);
+        public virtual void create(object sender) { }
+        public virtual void destroy(object sender) { }
+        public virtual void keyDown(object sender) { }
+        public virtual void keyRelease(object sender) { }
+        public virtual void frame(object sender) { }
+        public virtual void draw(object sender) { }
+        public virtual void collide(object sender, object collider) { }
+        public virtual void animationEnd(object sender) { }
 
         protected abstract void _addCollidables(); //Use this guy to tell the Actor what kind of actors it can collide with
 
         
 
-        public CActor(string name, Vector2 position, ACTORTYPES type = ACTORTYPES.INTERACTABLE, uint compAddress = 0 )
+        public CActor()
             
         {
             onCreate += new createHandler(create);
@@ -80,9 +80,7 @@ namespace King_of_Thieves.Actors
             onFrame += new frameHandler(frame);
             onDraw += new drawHandler(draw);
             onAnimationEnd += new animationEndHandler(animationEnd);
-            _componentAddress = compAddress;
 
-            ACTORTYPE = type;
             _name = name;
             _collidables = new List<Type>();
 
@@ -114,6 +112,14 @@ namespace King_of_Thieves.Actors
             onFrame -= new frameHandler(frame);
             onKeyRelease -= new keyReleaseHandler(keyRelease);
             onDraw -= new drawHandler(draw);
+        }
+
+        //overload this and call the base to process your own parameters
+        public virtual void init(string name, Vector2 position, uint compAddress, params string[] additional)
+        {
+            _name = name;
+            _position = position;
+            _componentAddress = compAddress;
         }
 
         public string state
@@ -271,7 +277,7 @@ namespace King_of_Thieves.Actors
         {
             //This shit is WEIRD.
             //fetch my hitboxes
-            List<BoundingBox> myBoxes = CMasterControl.hitboxes[this.GetType()][_name];
+            //List<BoundingBox> myBoxes = CMasterControl.hitboxes[this.GetType()][_name];
             
            
         }

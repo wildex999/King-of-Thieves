@@ -13,10 +13,11 @@ namespace King_of_Thieves.Actors.Player
         private bool _swordReleased = true;
 
         public CPlayer() :
-            base("Player", Vector2.Zero, ACTORTYPES.INTERACTABLE)
+            base()
         {
-           
 
+            _name = "Player";
+            _position = Vector2.Zero;
             //resource init
 
             

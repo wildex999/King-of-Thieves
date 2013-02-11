@@ -118,8 +118,7 @@
     <Compile Include="Actors\CComponent.cs" />
     <Compile Include="Actors\Items\Swords\CGerudoSword.cs" />
     <Compile Include="Actors\Menu\CMenuCursor.cs" />
-    <Compile Include="Graphics\CTileSet.cs" />
-    <Compile Include="Map\CMap.cs" />
+    <Compile Include="Graphics\CTexAtlasControl.cs" />
     <Compile Include="Actors\Menu\CMenu.cs" />
     <Compile Include="Actors\Menu\CMenuItem.cs" />
     <Compile Include="Actors\Player\CPlayer.cs" />
@@ -142,6 +141,13 @@
     <Compile Include="Input\CInput.cs" />
     <Compile Include="Input\CXMLSerializer.cs" />
     <Compile Include="Input\Map\CMrMapIO.cs" />
+    <Compile Include="Map\CLayer.cs" />
+    <Compile Include="Map\CMap.cs" />
+    <Compile Include="Map\CMapManager.cs" />
+    <Compile Include="Map\ComponentFactory.cs" />
+    <Compile Include="Map\ComponentManager.cs" />
+    <Compile Include="Map\CTile.cs" />
+    <Compile Include="Map\CTileGenerator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Game1.cs" />

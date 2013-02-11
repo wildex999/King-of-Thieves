@@ -30,7 +30,6 @@ namespace King_of_Thieves.Graphics
             _flipH = flipH;
             _flipV = flipV;
             _totalFrames = atlas.tileXCount * atlas.tileYCount;
-            CMasterControl.drawList.AddLast(this);
         }
 
         public override bool draw(int x, int y)
