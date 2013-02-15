@@ -32,9 +32,9 @@ namespace King_of_Thieves.Map
                 //=======================================================================
                 //Tiles
                 //=======================================================================
-                CTile[] tiles = new CTile[layer.TILES.Count()];
+                CTile[] tiles = new CTile[layer.TILE.Count()];
                 int tileCounter = 0;
-                foreach (Gears.Cartography.tile tile in layer.TILES)
+                foreach (Gears.Cartography.tile tile in layer.TILE)
                 {
                     if (!_coordFormat.IsMatch(tile.COORDS))
                         throw new FormatException("The coordinate format provided was not valid.\n" + "Tile: " + tile.COORDS);

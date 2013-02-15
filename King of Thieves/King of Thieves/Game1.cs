@@ -112,22 +112,7 @@ namespace King_of_Thieves
             //CMasterControl.audioPlayer.song = new Sound.CSound(Content.Load<Song>("04_-_Phantom_Ganon"), false, 0);
             //CMasterControl.audioPlayer.addSfx(new Sound.CSound(Content.Load<Song>("04_-_Phantom_Ganon"), false, 0));
 
-            //map test
-            Gears.Cartography.Map testMap = new Gears.Cartography.Map();
-
-            testMap.VERSION = "1.0";
-            testMap.BG_IMAGE_FILE_LOC = "who cares";
-            testMap.BGM_FILE_LOC = "idgaf.jpg";
-            testMap.FADE_IN_FILE_LOC = "nope.avi";
-            testMap.FADE_OUT_FILE_LOC = "WHAT 9000?!";
-            testMap.LAYER_HEIGHT_TILES = 10;
-            testMap.LAYER_WIDTH_TILES = 10;
-            testMap.NUM_LAYERS = 1;
-            testMap.LAYERS = new List<Gears.Cartography.layer>();
-
-            testMap.LAYERS.Add(new Gears.Cartography.layer());
-
-            testMap.serializeToXml("C:\temp\test.xml");
+           
 
 
 
