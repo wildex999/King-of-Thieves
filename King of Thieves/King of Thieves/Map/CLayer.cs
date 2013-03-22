@@ -19,7 +19,7 @@ namespace King_of_Thieves.Map
             NAME = name;
             _tiles = tiles;
             _components = new ComponentManager(new ComponentFactory[]{ new ComponentFactory(components) } );
-            _image = CMasterControl.atlasControl.generateLayerImage(this, tiles);
+            _image = Graphics.CTextures.generateLayerImage(this, tiles);
         }
 
         ~CLayer()

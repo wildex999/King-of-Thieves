@@ -12,6 +12,8 @@ namespace King_of_Thieves.Graphics
     {
         private static Dictionary<string, CTextureAtlas> _textures;
         private static ContentManager _content;
+        private static RenderTarget2D _tileMapGen = null;
+        private static SpriteBatch _tileBatch = null;
 
         public static void init(ContentManager content)
         {
@@ -20,6 +22,8 @@ namespace King_of_Thieves.Graphics
 
             //Core textures should go here.  Things that are ALWAYS used (or small enough to not hog up memory)
             //other textures should only be loaded when they're needed and should be removed from memory asap.
+
+            _tileBatch = new SpriteBatch(CGraphics.GPU);
 
             _textures.Add("test", new CTextureAtlas(_content.Load<Texture2D>("test"), 19, 23, 0));
             _textures.Add("mcDungeon2", new CTextureAtlas(_content.Load<Texture2D>("mcDungeon2"), 16, 16, 0, 1));
@@ -53,11 +57,30 @@ namespace King_of_Thieves.Graphics
 
             foreach (string key in resourcesToRemove)
                 _textures.Remove(key);
+
+            _tileBatch.Dispose();
+            _tileBatch = null;
         }
 
         public static CTextureAtlas texture(string name)
         {
             return _textures[name];
+        }
+
+        public static Texture2D generateLayerImage(Map.CLayer layerToRender, Map.CTile[] tileStrip)
+        {
+            _tileMapGen = new RenderTarget2D(CGraphics.GPU, layerToRender.width, layerToRender.height);
+
+            CGraphics.GPU.SetRenderTarget(_tileMapGen);
+            _tileBatch.Begin();
+
+            foreach (Map.CTile tile in tileStrip)
+                _tileBatch.Draw(_textures[tile.tileSet].sourceImage, tile.tileCoords, _textures[tile.tileSet].getTile((int)tile.atlasCoords.X, (int)tile.atlasCoords.Y), Color.White);
+
+            _tileBatch.End();
+            CGraphics.GPU.SetRenderTarget(null);
+
+            return (_tileMapGen);
         }
 
 

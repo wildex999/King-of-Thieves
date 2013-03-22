@@ -273,7 +273,7 @@ namespace King_of_Thieves.Actors
             }
         }
 
-        private void checkCollisions()
+        private void _checkCollisions()
         {
             //This shit is WEIRD.
             //fetch my hitboxes
