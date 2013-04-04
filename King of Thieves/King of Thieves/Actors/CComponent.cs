@@ -64,7 +64,7 @@ namespace King_of_Thieves.Actors
                 //update position relative to the root
                 kvp.Value.position += root.distanceFromLastFrame;
 
-                //update the faggot
+                //update
                 kvp.Value.update(gameTime);
             }
         }
