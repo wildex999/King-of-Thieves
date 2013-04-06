@@ -40,6 +40,7 @@ namespace King_of_Thieves.Actors
         protected string _state = "Idle";
         public Graphics.CSprite image;
         protected Dictionary<string, Graphics.CSprite> _imageIndex;
+        protected Dictionary<string, Sound.CSound> _soundIndex;
         private bool _animationHasEnded = false;
         public List<string> userParams = new List<string>();
         //hitboxes will go here as well? What a terrible night for a curse...
@@ -221,6 +222,7 @@ namespace King_of_Thieves.Actors
             //add sprites to image index by overloading this function.
             //also add resources to the texture cache here.
             _imageIndex = new Dictionary<string, CSprite>();
+            _soundIndex = new Dictionary<string, Sound.CSound>();
         }
 
         private void _closeResources()

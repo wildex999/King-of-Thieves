@@ -118,6 +118,8 @@
     <Compile Include="Actors\CComponent.cs" />
     <Compile Include="Actors\Items\Swords\CGerudoSword.cs" />
     <Compile Include="Actors\Menu\CMenuCursor.cs" />
+    <Compile Include="Actors\NPC\Enemies\CBaseEnemy.cs" />
+    <Compile Include="Actors\NPC\Enemies\Chuchus\CBaseChuChu.cs" />
     <Compile Include="Graphics\CTexAtlasControl.cs" />
     <Compile Include="Actors\Menu\CMenu.cs" />
     <Compile Include="Actors\Menu\CMenuItem.cs" />

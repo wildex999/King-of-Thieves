@@ -82,15 +82,15 @@ namespace King_of_Thieves
         protected override void LoadContent()
         {
             // Create a new SpriteBatch, which can be used to draw textures.
+            CMasterControl.glblContent = Content;
             spriteBatch = new SpriteBatch(GraphicsDevice);
             Graphics.CGraphics.spriteBatch = spriteBatch;
+            CMasterControl.audioPlayer = new Sound.CAudioPlayer();
 
             // TODO: use this.Content to load your game content here
            // Graphics.CTextureDict.init(Content);
             testSprite = new CSprite(new CTextureAtlas(Content.Load<Texture2D>("test"), 19, 23, 0));
             
-
-            actorTest = new CActorTest("Test");
             player = new Actors.Player.CPlayer();
             compTest.root = player;
             compTest.actors.Add("sword", new Actors.Items.Swords.CSword("sword", new Vector2(player.position.X - 13, player.position.Y - 13)));

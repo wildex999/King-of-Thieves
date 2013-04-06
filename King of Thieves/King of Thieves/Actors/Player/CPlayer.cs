@@ -41,6 +41,8 @@ namespace King_of_Thieves.Actors.Player
             _imageIndex.Add("PlayerSwingDown", new Graphics.CSprite(Graphics.CTextures.texture("Player:SwingDown")));
             _imageIndex.Add("PlayerSwingRight", new Graphics.CSprite(Graphics.CTextures.texture("Player:SwingLeft"),null, true));
             _imageIndex.Add("PlayerSwingLeft", new Graphics.CSprite(Graphics.CTextures.texture("Player:SwingLeft")));
+
+
         }
 
         public override void collide(object sender, object collider)
@@ -124,6 +126,20 @@ namespace King_of_Thieves.Actors.Player
                     
                     _state = "Swinging";
                     _swordReleased = false;
+
+                    Random random = new Random();
+                    int attackSound = random.Next(0, 3);
+
+                    Sound.CSound[] temp = new Sound.CSound[4];
+
+                    temp[0] = CMasterControl.audioPlayer.soundBank["Player:Attack1"];
+                    temp[1] = CMasterControl.audioPlayer.soundBank["Player:Attack2"];
+                    temp[2] = CMasterControl.audioPlayer.soundBank["Player:Attack3"];
+                    temp[3] = CMasterControl.audioPlayer.soundBank["Player:Attack4"];
+
+                    CMasterControl.audioPlayer.addSfx(temp[attackSound]);
+                    CMasterControl.audioPlayer.addSfx(CMasterControl.audioPlayer.soundBank["Player:SwordSlash"]);
+
                     switch (_direction)
                     {
                         case DIRECTION.UP:

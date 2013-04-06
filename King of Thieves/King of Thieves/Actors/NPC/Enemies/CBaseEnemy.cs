@@ -16,7 +16,7 @@ namespace King_of_Thieves.Actors.NPC.Enemies
         protected Dictionary<object,float> _itemDrop; //leave this as object until we have classes for items ready
         
 
-        protected abstract void _addCollidables();
+        //protected abstract void _addCollidables();
 
         public override void destroy(object sender)
         {
