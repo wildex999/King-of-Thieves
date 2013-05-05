@@ -30,6 +30,17 @@ namespace King_of_Thieves.Map
             _image = null;
         }
 
+        public void updateLayer(Microsoft.Xna.Framework.GameTime gameTime)
+        {
+            //components
+            _components.Update(gameTime);
+        }
+
+        public void drawLayer()
+        {
+            _components.Draw(null);
+        }
+
         public int width
         {
             get

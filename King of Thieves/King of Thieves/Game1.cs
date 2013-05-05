@@ -33,15 +33,17 @@ namespace King_of_Thieves
 
         public Game1()
         {
-            graphics = new GraphicsDeviceManager(this); 
+            this.IsFixedTimeStep = false;
+            
+            graphics = new GraphicsDeviceManager(this);
+            graphics.SynchronizeWithVerticalRetrace = false;
+            GraphicsAdapter.UseReferenceDevice = false;
             //graphics.PreferredBackBufferHeight = ScreenHeight
             //graphics.PreferredBackBufferWidth = ScreenWidth;
             //graphics.SynchronizeWithVerticalRetrace = true;
             //graphics.ApplyChanges();
             
             Content.RootDirectory = @"Content";
-
-            IsFixedTimeStep = false;
         }
 
         /// <summary>
@@ -84,14 +86,21 @@ namespace King_of_Thieves
             // Create a new SpriteBatch, which can be used to draw textures.
             CMasterControl.glblContent = Content;
             spriteBatch = new SpriteBatch(GraphicsDevice);
+            
             Graphics.CGraphics.spriteBatch = spriteBatch;
             CMasterControl.audioPlayer = new Sound.CAudioPlayer();
 
             // TODO: use this.Content to load your game content here
            // Graphics.CTextureDict.init(Content);
-            testSprite = new CSprite(new CTextureAtlas(Content.Load<Texture2D>("test"), 19, 23, 0));
+            testSprite = new CSprite("test",new CTextureAtlas(Content.Load<Texture2D>("test"), "test", 19, 23, 0));
             
             player = new Actors.Player.CPlayer();
+
+            
+            
+                
+            
+
             compTest.root = player;
             compTest.actors.Add("sword", new Actors.Items.Swords.CSword("sword", new Vector2(player.position.X - 13, player.position.Y - 13)));
 
@@ -105,6 +114,7 @@ namespace King_of_Thieves
 
             //when a component has been created, it must be added to the Comm Net.
             CMasterControl.commNet.Add(0, new List<CActorPacket>());
+            CMasterControl.commNet.Add(1, new List<CActorPacket>());
 
             //CMasterControl.mapList.Add("TestMap",new Map.MTestMap("TestMap", Map.MAPTYPES.ROOT));
             //CMasterControl.mapList.Add("TestMapPart1", new Map.MTestMap("TestMapPart1", Map.MAPTYPES.CHUNK));
@@ -160,6 +170,7 @@ namespace King_of_Thieves
             GraphicsDevice.Clear(Master.GetClearColor());
 
             spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend);
+            //spriteBatch.Begin(SpriteSortMode.Immediate, null, null, null, RasterizerState.CullNone, null, globalTransformation);
 
             Master.Draw(spriteBatch);
 

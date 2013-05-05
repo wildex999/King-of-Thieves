@@ -9,6 +9,8 @@ namespace King_of_Thieves.usr.local
     {
         private CComponent compTest;
         private CComponent menuComo;
+        Actors.Player.CPlayer[] perfTest;
+        CComponent perfComp = new CComponent();
         //private Zone testingzone;
         public Testbed(ref CComponent comp, ref CComponent menu)
         {
@@ -21,10 +23,20 @@ namespace King_of_Thieves.usr.local
         private void Initialize()
         {
             //testingzone = new Zone();
+            //perfTest = new Actors.Player.CPlayer[700];
+            //for (int i = 0; i < 700; i++)
+            //    perfTest[i] = new Actors.Player.CPlayer();
+
+            //perfComp.root = perfTest[0];
+            //for (int i = 1; i < 700; i++)
+            //    perfComp.actors.Add("performance" + i, perfTest[i]);
+
+            
         }
         public override void Draw(Microsoft.Xna.Framework.Graphics.SpriteBatch spriteBatch)
         {
             compTest.Draw(null);
+            //perfComp.Draw(null);
         }
         public override void Update(Microsoft.Xna.Framework.GameTime gameTime)
         {
@@ -32,12 +44,15 @@ namespace King_of_Thieves.usr.local
 
             //compTest.root.position = new Vector2(Input.CInput.mouseX, Input.CInput.mouseY);
             compTest.Update(gameTime);
+
+            //perfComp.Update(gameTime);
             //menuComo.updateActors(gameTime);
 
             if ((Master.GetInputManager().GetCurrentInputHandler() as CInput).getInputRelease(Microsoft.Xna.Framework.Input.Keys.Enter))
             {
                 CMasterControl.audioPlayer.addSfx(CMasterControl.audioPlayer.soundBank["lttp_heart"]);
             }
+
         }
 
         /// <summary>

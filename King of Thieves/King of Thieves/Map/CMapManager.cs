@@ -23,6 +23,8 @@ namespace King_of_Thieves.Map
             clear();
         }
 
+        
+
         public void swapMap(string mapName)
         {
             _currentMap = mapPool[mapName];
@@ -32,6 +34,8 @@ namespace King_of_Thieves.Map
         {
             if (clearMaps)
                 clear();
+
+            
 
             foreach (string file in maps)
                 mapPool.Add(file, new CMap(file)); //temporary

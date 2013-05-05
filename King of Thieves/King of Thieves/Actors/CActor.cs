@@ -167,7 +167,7 @@ namespace King_of_Thieves.Actors
         public virtual void update(GameTime gameTime)
         {
             
-            onFrame(this);
+            //onFrame(this);
 
             if (_animationHasEnded)
                 try
