@@ -11,6 +11,7 @@ namespace King_of_Thieves.Actors.Player
     class CPlayer : CActor
     {
         private bool _swordReleased = true;
+        private static Vector2 _readableCoords = new Vector2();
 
         public CPlayer() :
             base()
@@ -214,6 +215,7 @@ namespace King_of_Thieves.Actors.Player
 
                     break;
             }
+            _readableCoords = _position;
         }
 
         public override void drawMe()
@@ -221,7 +223,21 @@ namespace King_of_Thieves.Actors.Player
             base.drawMe();
         }
 
+        public static float glblX
+        {
+            get
+            {
+                return _readableCoords.X;
+            }
+        }
 
+        public static float glblY
+        {
+            get
+            {
+                return _readableCoords.Y;
+            }
+        }
 
         protected override void _addCollidables()
         {

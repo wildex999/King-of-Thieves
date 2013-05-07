@@ -7,9 +7,12 @@ using Microsoft.Xna.Framework.Graphics;
 using King_of_Thieves.Graphics;
 using Gears.Cloud;
 using King_of_Thieves.Input;
+using System.Timers;
 
 namespace King_of_Thieves.Actors
 {
+    //Actor states
+    //idle: Not doing anything
     enum ACTORTYPES
     {
         MANAGER = 0,
@@ -66,9 +69,12 @@ namespace King_of_Thieves.Actors
         public virtual void draw(object sender) { }
         public virtual void collide(object sender, object collider) { }
         public virtual void animationEnd(object sender) { }
+        public virtual void timer0(object sender) { _timer0.Stop(); _timer0 = null; }
 
         protected abstract void _addCollidables(); //Use this guy to tell the Actor what kind of actors it can collide with
+        protected Random _randNum = new Random();
 
+        private Timer _timer0;
         
 
         public CActor()
@@ -81,7 +87,6 @@ namespace King_of_Thieves.Actors
             onFrame += new frameHandler(frame);
             onDraw += new drawHandler(draw);
             onAnimationEnd += new animationEndHandler(animationEnd);
-
             _name = name;
             _collidables = new List<Type>();
 
@@ -115,6 +120,14 @@ namespace King_of_Thieves.Actors
             onDraw -= new drawHandler(draw);
         }
 
+        public void startTimer0(int ticks)
+        {
+            _timer0 = new Timer(ticks * 100);
+
+            _timer0.Enabled = true;
+            _timer0.Start();
+        }
+
         //overload this and call the base to process your own parameters
         public virtual void init(string name, Vector2 position, uint compAddress, params string[] additional)
         {
@@ -129,6 +142,21 @@ namespace King_of_Thieves.Actors
             {
                 return _state;
             }
+        }
+
+        public void moveToPoint(int x, int y, int speed)
+        {
+            int distX = 0, distY = 0;
+
+            distX = (int)(x - _position.X);
+            distY = (int)(y - _position.Y);
+
+            distX = Math.Sign(distX);
+            distY = Math.Sign(distY);
+
+            _position.X += speed * distX;
+            _position.Y += speed * distY;
+
         }
 
         public void swapImage(string imageIndex, bool triggerAnimEnd = true)

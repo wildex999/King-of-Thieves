@@ -21,7 +21,9 @@ namespace King_of_Thieves.Actors.NPC.Enemies
     {
         protected Dictionary<object,float> _itemDrop; //leave this as object until we have classes for items ready
         protected int _lineOfSight;
+        protected int _fovMagnitude;
         protected float _visionRange; //this is an angle
+        protected float _visionSlope;
         protected int _hearingRadius; //how far away they can hear you from
 
         //protected abstract void _addCollidables();
@@ -29,6 +31,10 @@ namespace King_of_Thieves.Actors.NPC.Enemies
         {
             foreach (dropRate x in drops)
                 _itemDrop.Add(x.item, x.rate);
+
+            //calculate field of view
+            _fovMagnitude = (int)Math.Cos(_visionRange * (Math.PI / 180.0));
+            _visionSlope = (int)Math.Tan(_visionRange * (Math.PI/180.0));
         }
 
         //just chill there
@@ -40,7 +46,16 @@ namespace King_of_Thieves.Actors.NPC.Enemies
         //look for the player while idling
         private void hunt()
         {
+            //check if the player is within the line of sight
+            switch (_direction)
+            {
+                case DIRECTION.UP:
+                    if (Actors.Player.CPlayer.glblY <= _position.Y && Actors.Player.CPlayer.glblY >= (_position.Y - _lineOfSight))
+                    {
 
+                    }
+                    break;
+            }
         }
 
         //chase the player
@@ -72,8 +87,21 @@ namespace King_of_Thieves.Actors.NPC.Enemies
                     break;
                 }
             }
+        }
+
+        protected bool _checkLineofSight(float x, float y)
+        {
+            //return _visionSlope * (x - _position.X) + (y - _position.Y);
+
+            switch (_direction)
+            {
+                case DIRECTION.UP:
+                    //return 
+                    break;
+            }
 
 
+            return false;
         }
     }
 }
