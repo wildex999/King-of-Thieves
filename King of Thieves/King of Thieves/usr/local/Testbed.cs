@@ -13,6 +13,7 @@ namespace King_of_Thieves.usr.local
         CComponent perfComp = new CComponent();
         CComponent npcTester = new CComponent();
         Actors.NPC.Enemies.Chuchus.CGreenChuChu green = new Actors.NPC.Enemies.Chuchus.CGreenChuChu(10, 45.0f, 120);
+        Actors.NPC.Enemies.Chuchus.CGreenChuChu[] greenAr = new Actors.NPC.Enemies.Chuchus.CGreenChuChu[3000];
         //private Zone testingzone;
         public Testbed(ref CComponent comp, ref CComponent menu)
         {
@@ -24,14 +25,13 @@ namespace King_of_Thieves.usr.local
         }
         private void Initialize()
         {
-            //testingzone = new Zone();
-            //perfTest = new Actors.Player.CPlayer[700];
-            //for (int i = 0; i < 700; i++)
-            //    perfTest[i] = new Actors.Player.CPlayer();
 
-            //perfComp.root = perfTest[0];
-            //for (int i = 1; i < 700; i++)
-            //    perfComp.actors.Add("performance" + i, perfTest[i]);
+
+            for (int i = 0; i < 3000; i++)
+            {
+                greenAr[i] = new Actors.NPC.Enemies.Chuchus.CGreenChuChu(10, 45.0f, 120);
+                npcTester.actors.Add("green" + i, greenAr[i]);
+            }
 
             npcTester.root = green;
             

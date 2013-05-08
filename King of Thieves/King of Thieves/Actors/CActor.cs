@@ -123,7 +123,7 @@ namespace King_of_Thieves.Actors
 
         public void startTimer0(int ticks)
         {
-            _timer0 = new Timer(ticks * 100);
+            _timer0 = new Timer(ticks * 1000);
             _timer0.Elapsed += new ElapsedEventHandler(timer0);
 
             _timer0.Enabled = true;

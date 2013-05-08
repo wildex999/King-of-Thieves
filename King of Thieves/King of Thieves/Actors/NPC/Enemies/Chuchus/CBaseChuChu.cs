@@ -18,6 +18,7 @@ namespace King_of_Thieves.Actors.NPC.Enemies.Chuchus
         //popup: come out of the goo pile and start wobbling towards the player
         //attack: jump at the player
 
+        private Vector2 _jumpTo;
 
         public CBaseChuChu(int sight, float fov, int foh, params dropRate[] drops)
             : base(drops)
@@ -43,11 +44,11 @@ namespace King_of_Thieves.Actors.NPC.Enemies.Chuchus
 
 
             //70% chance of the chu chu popping up to chase the player
-            //if (_randNum.NextDouble() <= .7)
-            //{
+            if (_randNum.Next(0, 1000000) <= 10000)
+            {
                 swapImage("chuChuPopUp");
                 _state = "popup";
-            //}
+            }
         }
         public override void animationEnd(object sender)
         {
@@ -62,31 +63,41 @@ namespace King_of_Thieves.Actors.NPC.Enemies.Chuchus
                     _state = "wobble";
                     swapImage("chuChuWobble", false);
                     break;
+
+                case "popdown":
+                    _state = "idle";
+                    swapImage("chuChuIdle", false);
+                    break;
             }
         }
 
         public override void timer0(object sender, System.Timers.ElapsedEventArgs e)
         {
             base.timer0(sender, e);
-            swapImage("chuChuIdle", false);
-            _state = "idle";
+            _state = "popdown";
+            swapImage("chuChuPopDown", false);
+
         }
 
         protected override void chase()
         {
             //moveToPoint((int)Player.CPlayer.glblX, (int)Player.CPlayer.glblY, 3);
             moveToPoint((int)Player.CPlayer.glblX, (int)Player.CPlayer.glblY, .25);
+
+            if (_randNum.Next(0,100000) <= 250)
+            {
+                _jumpTo = new Vector2(Player.CPlayer.glblX, Player.CPlayer.glblY);
+                _state = "attack";
+                swapImage("chuChuHop", false);
+            }
+
             if (MathExt.MathExt.distance(_position, new Vector2(Player.CPlayer.glblX, Player.CPlayer.glblY)) > _hearingRadius)
             {
                 _state = "idle";
-                swapImage("chuChuIdle");
+                startTimer0(1);
 
-                //80% chance of attacking
-                    if (_randNum.NextDouble() <= .8)
-                    {
-                       _state = "attack";
-                       swapImage("chuChuHop", false);
-                    }
+                
+                    
 
             }
 
@@ -97,7 +108,7 @@ namespace King_of_Thieves.Actors.NPC.Enemies.Chuchus
         //override this in the child classes if other functionality is needed
         protected virtual void attack()
         {
-            moveToPoint((int)Player.CPlayer.glblX, (int)Player.CPlayer.glblY, 1);
+            moveToPoint((int)_jumpTo.X, (int)_jumpTo.Y, 1);
         }
 
         public override void update(GameTime gameTime)
@@ -119,6 +130,9 @@ namespace King_of_Thieves.Actors.NPC.Enemies.Chuchus
 
                 case "idle":
                     idle();
+                    break;
+
+                case "popdown":
                     break;
 
             }

@@ -11,8 +11,8 @@ namespace King_of_Thieves.Actors.NPC.Enemies.Chuchus
         public CGreenChuChu(int sight, float fov, int foh, params dropRate[] drops)
             : base(sight, fov, foh, drops)
         {
-            _position.X = 200;
-            _position.Y = 200;
+            _position.X = _randNum.Next(0,200);
+            _position.Y = _randNum.Next(0, 200);
         }
 
         protected override void _initializeResources()
@@ -22,6 +22,7 @@ namespace King_of_Thieves.Actors.NPC.Enemies.Chuchus
             _imageIndex.Add("chuChuPopUp", new Graphics.CSprite("chuChu:PopUp", Graphics.CTextures.textures["chuChu:PopUp"]));
             _imageIndex.Add("chuChuIdle", new Graphics.CSprite("chuChu:Idle", Graphics.CTextures.textures["chuChu:Idle"]));
             _imageIndex.Add("chuChuHop", new Graphics.CSprite("chuChu:Hop", Graphics.CTextures.textures["chuChu:Hop"]));
+            _imageIndex.Add("chuChuPopDown", new Graphics.CSprite("chuChu:PopDown", Graphics.CTextures.textures["chuChu:PopDown"]));
         }
 
         protected override void _addCollidables()
