@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework;
 
 namespace King_of_Thieves.MathExt
 {
-    static class MathExt : Math
+    public class MathExt
     {
         public static double distance(Vector2 point1, Vector2 point2)
         {

@@ -13,13 +13,13 @@ namespace King_of_Thieves.Actors
 {
     //Actor states
     //idle: Not doing anything
-    enum ACTORTYPES
+    public enum ACTORTYPES
     {
         MANAGER = 0,
         INTERACTABLE
     }
 
-    enum DIRECTION
+    public enum DIRECTION
     {
         UP = 0,
         DOWN,
@@ -27,7 +27,7 @@ namespace King_of_Thieves.Actors
         RIGHT
     }
 
-    abstract class CActor
+    public abstract class CActor
     {
         protected Vector2 _position = Vector2.Zero;
         protected Vector2 _oldPosition = Vector2.Zero;
@@ -69,7 +69,7 @@ namespace King_of_Thieves.Actors
         public virtual void draw(object sender) { }
         public virtual void collide(object sender, object collider) { }
         public virtual void animationEnd(object sender) { }
-        public virtual void timer0(object sender) { _timer0.Stop(); _timer0 = null; }
+        public virtual void timer0(object sender, ElapsedEventArgs e) { if (_timer0 != null) { _timer0.Stop(); _timer0 = null; } }
 
         protected abstract void _addCollidables(); //Use this guy to tell the Actor what kind of actors it can collide with
         protected Random _randNum = new Random();
@@ -87,6 +87,7 @@ namespace King_of_Thieves.Actors
             onFrame += new frameHandler(frame);
             onDraw += new drawHandler(draw);
             onAnimationEnd += new animationEndHandler(animationEnd);
+
             _name = name;
             _collidables = new List<Type>();
 
@@ -123,6 +124,7 @@ namespace King_of_Thieves.Actors
         public void startTimer0(int ticks)
         {
             _timer0 = new Timer(ticks * 100);
+            _timer0.Elapsed += new ElapsedEventHandler(timer0);
 
             _timer0.Enabled = true;
             _timer0.Start();
@@ -144,7 +146,7 @@ namespace King_of_Thieves.Actors
             }
         }
 
-        public void moveToPoint(int x, int y, int speed)
+        public void moveToPoint(int x, int y, double speed)
         {
             int distX = 0, distY = 0;
 
@@ -154,8 +156,8 @@ namespace King_of_Thieves.Actors
             distX = Math.Sign(distX);
             distY = Math.Sign(distY);
 
-            _position.X += speed * distX;
-            _position.Y += speed * distY;
+            _position.X += (float)(speed * distX);
+            _position.Y += (float)(speed * distY);
 
         }
 
@@ -218,6 +220,9 @@ namespace King_of_Thieves.Actors
 
             if ((Master.GetInputManager().GetCurrentInputHandler() as CInput).areKeysReleased)
                 onKeyRelease(this);
+
+            //do timer events
+            
 
             foreach (uint ID in _userEventsToFire)
             {

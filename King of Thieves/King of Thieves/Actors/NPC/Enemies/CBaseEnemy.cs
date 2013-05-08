@@ -17,7 +17,7 @@ namespace King_of_Thieves.Actors.NPC.Enemies
         public float rate;
     }
 
-    abstract class CBaseEnemy : CActor
+    public abstract class CBaseEnemy : CActor
     {
         protected Dictionary<object,float> _itemDrop; //leave this as object until we have classes for items ready
         protected int _lineOfSight;
@@ -25,9 +25,11 @@ namespace King_of_Thieves.Actors.NPC.Enemies
         protected float _visionRange; //this is an angle
         protected float _visionSlope;
         protected int _hearingRadius; //how far away they can hear you from
+        protected bool _huntPlayer = false;
 
         //protected abstract void _addCollidables();
-        public CBaseEnemy(params dropRate[] drops)
+        public CBaseEnemy(params dropRate[] drops) 
+            :  base()
         {
             foreach (dropRate x in drops)
                 _itemDrop.Add(x.item, x.rate);
@@ -37,25 +39,37 @@ namespace King_of_Thieves.Actors.NPC.Enemies
             _visionSlope = (int)Math.Tan(_visionRange * (Math.PI/180.0));
         }
 
+        protected override void _initializeResources()
+        {
+            base._initializeResources();
+        }
+
         //just chill there
         protected virtual void idle()
         {
-            hunt();
+            _huntPlayer = hunt();
         }
 
         //look for the player while idling
-        private void hunt()
+        private bool hunt()
         {
             //check if the player is within the line of sight
-            switch (_direction)
-            {
-                case DIRECTION.UP:
-                    if (Actors.Player.CPlayer.glblY <= _position.Y && Actors.Player.CPlayer.glblY >= (_position.Y - _lineOfSight))
-                    {
+            //switch (_direction)
+            //{
+            //    case DIRECTION.UP:
+            //        if (Actors.Player.CPlayer.glblY <= _position.Y && Actors.Player.CPlayer.glblY >= (_position.Y - _lineOfSight))
+            //        {
 
-                    }
-                    break;
-            }
+            //        }
+            //        break;
+            //}
+            
+            //check hearing field
+            if (MathExt.MathExt.distance(_position, new Vector2(Player.CPlayer.glblX, Player.CPlayer.glblY)) <= _hearingRadius)
+                return true;
+
+            return false;
+
         }
 
         //chase the player

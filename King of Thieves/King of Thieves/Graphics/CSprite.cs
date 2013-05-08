@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace King_of_Thieves.Graphics
 { 
-    class CSprite : CRenderable
+    public class CSprite : CRenderable
     {
         private Texture2D _shaderTex = null; 
         private Rectangle _size;

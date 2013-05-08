@@ -5,12 +5,14 @@ using King_of_Thieves.Input;
 
 namespace King_of_Thieves.usr.local
 {
-    class Testbed : MenuReadyGameState
+    public class Testbed : MenuReadyGameState
     {
         private CComponent compTest;
         private CComponent menuComo;
         Actors.Player.CPlayer[] perfTest;
         CComponent perfComp = new CComponent();
+        CComponent npcTester = new CComponent();
+        Actors.NPC.Enemies.Chuchus.CGreenChuChu green = new Actors.NPC.Enemies.Chuchus.CGreenChuChu(10, 45.0f, 120);
         //private Zone testingzone;
         public Testbed(ref CComponent comp, ref CComponent menu)
         {
@@ -31,11 +33,14 @@ namespace King_of_Thieves.usr.local
             //for (int i = 1; i < 700; i++)
             //    perfComp.actors.Add("performance" + i, perfTest[i]);
 
+            npcTester.root = green;
+            
             
         }
         public override void Draw(Microsoft.Xna.Framework.Graphics.SpriteBatch spriteBatch)
         {
             compTest.Draw(null);
+            npcTester.Draw(null);
             //perfComp.Draw(null);
         }
         public override void Update(Microsoft.Xna.Framework.GameTime gameTime)
@@ -44,6 +49,7 @@ namespace King_of_Thieves.usr.local
 
             //compTest.root.position = new Vector2(Input.CInput.mouseX, Input.CInput.mouseY);
             compTest.Update(gameTime);
+            npcTester.Update(gameTime);
 
             //perfComp.Update(gameTime);
             //menuComo.updateActors(gameTime);
