@@ -78,6 +78,25 @@ namespace King_of_Thieves.Graphics
             
         }
 
+        public bool draw(int x, int y, int frameX, int frameY)
+        {
+            if (_imageAtlas == null)
+                throw new FormatException("Unable to draw sprite " + _name);
+
+            _size = _imageAtlas.getTile(frameX, frameY);
+            _position.X = x; _position.Y = y;
+
+            if (!(_flipV || _flipH))
+                CGraphics.spriteBatch.Draw(CTextures.rawTextures[CTextures.textures[_atlasName].source], _position, _size, Color.White);
+            else if (_flipV)
+                CGraphics.spriteBatch.Draw(CTextures.rawTextures[CTextures.textures[_atlasName].source], _position, _size, Color.White, 0f, Vector2.Zero, 1.0f, SpriteEffects.FlipVertically, 0);
+            else if (_flipH)
+                CGraphics.spriteBatch.Draw(CTextures.rawTextures[CTextures.textures[_atlasName].source], _position, _size, Color.White, 0f, Vector2.Zero, 1.0f, SpriteEffects.FlipHorizontally, 0);
+            base.draw(x, y);
+
+            return false;
+        }
+
         public int X
         {
             get

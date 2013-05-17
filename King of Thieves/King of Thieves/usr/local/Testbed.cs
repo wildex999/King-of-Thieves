@@ -13,7 +13,8 @@ namespace King_of_Thieves.usr.local
         CComponent perfComp = new CComponent();
         CComponent npcTester = new CComponent();
         Actors.NPC.Enemies.Chuchus.CGreenChuChu green = new Actors.NPC.Enemies.Chuchus.CGreenChuChu(10, 45.0f, 120);
-        Actors.NPC.Enemies.Chuchus.CGreenChuChu[] greenAr = new Actors.NPC.Enemies.Chuchus.CGreenChuChu[3000];
+        Actors.NPC.Enemies.Chuchus.CGreenChuChu[] greenAr = new Actors.NPC.Enemies.Chuchus.CGreenChuChu[2000];
+        Actors.NPC.Enemies.Keese.CKeese[] keeseAr = new Actors.NPC.Enemies.Keese.CKeese[2000];
         //private Zone testingzone;
         public Testbed(ref CComponent comp, ref CComponent menu)
         {
@@ -26,14 +27,16 @@ namespace King_of_Thieves.usr.local
         private void Initialize()
         {
 
-
-            for (int i = 0; i < 3000; i++)
+            keeseAr[0] = new Actors.NPC.Enemies.Keese.CKeese(0, 0, 120);
+            for (int i = 1; i < 2000; i++)
             {
-                greenAr[i] = new Actors.NPC.Enemies.Chuchus.CGreenChuChu(10, 45.0f, 120);
-                npcTester.actors.Add("green" + i, greenAr[i]);
+                //greenAr[i] = new Actors.NPC.Enemies.Chuchus.CGreenChuChu(10, 45.0f, 120);
+                keeseAr[i] = new Actors.NPC.Enemies.Keese.CKeese(0, 0, 150);
+                //npcTester.actors.Add("green" + i, greenAr[i]);
+                npcTester.actors.Add("keese" + i, keeseAr[i]);
             }
 
-            npcTester.root = green;
+            npcTester.root = keeseAr[0];
             
             
         }

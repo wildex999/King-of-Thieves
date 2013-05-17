@@ -10,6 +10,11 @@ namespace King_of_Thieves.Actors.Items.Swords
 {
     class CSword : CActor
     {
+        public CSword() :
+            base()
+        {
+
+        }
 
         public CSword(string swordName, Vector2 position) :
             base()
@@ -40,7 +45,7 @@ namespace King_of_Thieves.Actors.Items.Swords
         public void userEventSwing(object sender)
         {
             _position = new Vector2(Convert.ToInt32(userParams[1]), Convert.ToInt32(userParams[2]));
-            switch (userParams[0])
+            switch (userParams[0].ToString())
             {
                 case "UP":
                     image = _imageIndex["swingUp"];

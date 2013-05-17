@@ -62,7 +62,8 @@ namespace King_of_Thieves.Actors
                 }
 
                 //update position relative to the root
-                kvp.Value.position += root.distanceFromLastFrame;
+                if (kvp.Value._followRoot)
+                    kvp.Value.position += root.distanceFromLastFrame;
 
                 //update
                 kvp.Value.update(gameTime);

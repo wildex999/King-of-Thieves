@@ -48,7 +48,7 @@ namespace King_of_Thieves.Actors.Player
 
         public override void collide(object sender, object collider)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
 
         public override void create(object sender)
@@ -241,7 +241,7 @@ namespace King_of_Thieves.Actors.Player
 
         protected override void _addCollidables()
         {
-            throw new NotImplementedException();
+            _collidables.Add(typeof(Actors.NPC.Enemies.Keese.CKeese));
         }
     }
 }

@@ -47,6 +47,11 @@ namespace King_of_Thieves.Graphics
             textures.Add("chuChu:PopUp", new CTextureAtlas("chuchuGreen", 32, 32, 1, "8:1", "10:1", 5));
             textures.Add("chuChu:Hop", new CTextureAtlas("chuchuGreen", 32, 32, 1, "0:2", "6:2", 7));
             textures.Add("chuChu:PopDown", new CTextureAtlas("chuchuGreen", 32, 32, 1, "7:2", "9:2", 5));
+            textures.Add("keese:Idle", new CTextureAtlas("keese", 32, 32, 1, "0:0", "0:0"));
+            textures.Add("keese:Fly", new CTextureAtlas("keese", 32, 32, 1, "1:0", "5:0",15));
+
+            //tilesets
+            textures.Add("tileset:test", new CTextureAtlas("test", 16, 16, 0, "0:0", "15:15"));
         }
 
         private static void _prepareTextures()
@@ -54,6 +59,8 @@ namespace King_of_Thieves.Graphics
             rawTextures.Add("Player", _content.Load<Texture2D>("Player"));
             rawTextures.Add("Swords", _content.Load<Texture2D>("Swords"));
             rawTextures.Add("chuchuGreen", _content.Load<Texture2D>("chuchuGreen"));
+            rawTextures.Add("keese", _content.Load<Texture2D>("keese"));
+            rawTextures.Add("test", _content.Load<Texture2D>("tiletest"));
         }
 
         public static void cleanUp(string nameSpace = "")
