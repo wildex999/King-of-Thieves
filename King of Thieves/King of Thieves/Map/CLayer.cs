@@ -19,7 +19,7 @@ namespace King_of_Thieves.Map
             NAME = name;
             _tiles = tiles;
             _image = image;
-            //_components = new ComponentManager(new ComponentFactory[]{ new ComponentFactory(components) } );
+            _components = new ComponentManager(new ComponentFactory[]{ new ComponentFactory(components) } );
             //_image = Graphics.CTextures.generateLayerImage(this, tiles);
         }
 
@@ -31,14 +31,17 @@ namespace King_of_Thieves.Map
         public void updateLayer(Microsoft.Xna.Framework.GameTime gameTime)
         {
             //components
-            //_components.Update(gameTime);
+            _components.Update(gameTime);
             
         }
 
         public void drawLayer()
         {
             foreach (CTile tile in _tiles)
-                _image.draw((int)tile.tileCoords.X, (int)tile.tileCoords.Y, (int)tile.atlasCoords.X, (int)tile.atlasCoords.Y);
+                _image.draw((int)tile.tileCoords.X, (int)tile.tileCoords.Y, (int)tile.atlasCoords.X, (int)tile.atlasCoords.Y, 16, 16);
+
+            _components.Draw(Graphics.CGraphics.spriteBatch);
+
 
         }
 

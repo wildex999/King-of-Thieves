@@ -7,43 +7,43 @@ namespace King_of_Thieves.usr.local
 {
     public class Testbed : MenuReadyGameState
     {
-        private CComponent compTest;
-        private CComponent menuComo;
-        Actors.Player.CPlayer[] perfTest;
-        CComponent perfComp = new CComponent();
-        CComponent npcTester = new CComponent();
-        Actors.NPC.Enemies.Chuchus.CGreenChuChu green = new Actors.NPC.Enemies.Chuchus.CGreenChuChu(10, 45.0f, 120);
-        Actors.NPC.Enemies.Chuchus.CGreenChuChu[] greenAr = new Actors.NPC.Enemies.Chuchus.CGreenChuChu[2000];
-        Actors.NPC.Enemies.Keese.CKeese[] keeseAr = new Actors.NPC.Enemies.Keese.CKeese[2000];
+        //private CComponent compTest;
+        //private CComponent menuComo;
+        //Actors.Player.CPlayer[] perfTest;
+        //CComponent perfComp = new CComponent();
+        //CComponent npcTester = new CComponent();
+        //Actors.NPC.Enemies.Chuchus.CGreenChuChu green = new Actors.NPC.Enemies.Chuchus.CGreenChuChu(10, 45.0f, 120);
+        //Actors.NPC.Enemies.Chuchus.CGreenChuChu[] greenAr = new Actors.NPC.Enemies.Chuchus.CGreenChuChu[2000];
+        //Actors.NPC.Enemies.Keese.CKeese[] keeseAr = new Actors.NPC.Enemies.Keese.CKeese[2000];
         //private Zone testingzone;
         public Testbed(ref CComponent comp, ref CComponent menu)
         {
             MenuText = "KoT Testbed";
-            compTest = comp;
-            menuComo = menu;
+            //compTest = comp;
+            //menuComo = menu;
 
             Initialize();
         }
         private void Initialize()
         {
 
-            keeseAr[0] = new Actors.NPC.Enemies.Keese.CKeese(0, 0, 120);
-            for (int i = 1; i < 2000; i++)
-            {
-                //greenAr[i] = new Actors.NPC.Enemies.Chuchus.CGreenChuChu(10, 45.0f, 120);
-                keeseAr[i] = new Actors.NPC.Enemies.Keese.CKeese(0, 0, 150);
-                //npcTester.actors.Add("green" + i, greenAr[i]);
-                npcTester.actors.Add("keese" + i, keeseAr[i]);
-            }
+            //keeseAr[0] = new Actors.NPC.Enemies.Keese.CKeese(0, 0, 120);
+            //for (int i = 1; i < 2000; i++)
+            //{
+            //    //greenAr[i] = new Actors.NPC.Enemies.Chuchus.CGreenChuChu(10, 45.0f, 120);
+            //    keeseAr[i] = new Actors.NPC.Enemies.Keese.CKeese(0, 0, 150);
+            //    //npcTester.actors.Add("green" + i, greenAr[i]);
+            //    npcTester.actors.Add("keese" + i, keeseAr[i]);
+            //}
 
-            npcTester.root = keeseAr[0];
+            //npcTester.root = keeseAr[0];
             
             
         }
         public override void Draw(Microsoft.Xna.Framework.Graphics.SpriteBatch spriteBatch)
         {
-            compTest.Draw(null);
-            npcTester.Draw(null);
+            //compTest.Draw(null);
+            //npcTester.Draw(null);
             //perfComp.Draw(null);
         }
         public override void Update(Microsoft.Xna.Framework.GameTime gameTime)
@@ -51,8 +51,8 @@ namespace King_of_Thieves.usr.local
             //Input.CInput.update();
 
             //compTest.root.position = new Vector2(Input.CInput.mouseX, Input.CInput.mouseY);
-            compTest.Update(gameTime);
-            npcTester.Update(gameTime);
+            //compTest.Update(gameTime);
+            //npcTester.Update(gameTime);
 
             //perfComp.Update(gameTime);
             //menuComo.updateActors(gameTime);

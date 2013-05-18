@@ -32,7 +32,7 @@ namespace King_of_Thieves.Map
             {
                 
                 uint componentAddresses = 0;
-                uint componentCount = 0;
+                int componentCount = 0;
                 Actors.CComponent[] compList = new CComponent[layer.COMPONENTS == null ? 0 : layer.COMPONENTS.Count()];
 
                 //=======================================================================
@@ -63,8 +63,8 @@ namespace King_of_Thieves.Map
                     //=======================================================================
                     foreach (Gears.Cartography.component component in layer.COMPONENTS)
                     {
-                        CComponent tempComp = new CComponent(componentAddresses++);
-
+                        CComponent tempComp = new CComponent(componentAddresses);
+                        bool root = true;
                         foreach (Gears.Cartography.actors actor in component.ACTORS)
                         {
                             Type actorType = Type.GetType(actor.TYPE);
@@ -78,13 +78,20 @@ namespace King_of_Thieves.Map
                             coordinates.X = (float)Convert.ToDouble(_valSplitter.Split(actor.COORDS)[0]);
                             coordinates.Y = (float)Convert.ToDouble(_valSplitter.Split(actor.COORDS)[1]);
 
-                            tempActor.init(actor.NAME, coordinates, componentAddresses - 1, actor.param == null ? null : actor.param.Split(','));
+                            tempActor.init(actor.NAME, coordinates, componentAddresses, actor.param == null ? null : actor.param.Split(','));
                             tempActor.layer = layerCount;
 
-                            tempComp.actors.Add(actor.NAME, tempActor);
+                            if (root)
+                                tempComp.root = tempActor;
+                            else
+                                tempComp.actors.Add(actor.NAME, tempActor);
+
+                            root = false;
                             _actorRegistry.Add(tempActor);
 
                         }
+                        //register component
+                        CMasterControl.commNet.Add((int)componentAddresses++, new List<CActorPacket>());
                         compList[componentCount++] = tempComp;
 
                     }
@@ -101,6 +108,12 @@ namespace King_of_Thieves.Map
             {
                 layer.drawLayer();
             }
+        }
+
+        public void update(GameTime gameTime)
+        {
+            foreach (CLayer layer in _layers)
+                layer.updateLayer(gameTime);
         }
 
         public Actors.CActor[] queryActorRegistry(Type type, int layer)

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Gears.Cartography;
 using Gears.Playable;
+using Microsoft.Xna.Framework;
 
 namespace King_of_Thieves.Map
 {
@@ -27,6 +28,12 @@ namespace King_of_Thieves.Map
         {
             if (_currentMap != null)
                 _currentMap.draw();
+        }
+
+        public void updateMap(GameTime gameTime)
+        {
+            if (_currentMap != null)
+                _currentMap.update(gameTime);
         }
 
         public static Actors.CActor[] queryActorRegistry(Type type, int layer)

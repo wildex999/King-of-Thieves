@@ -37,7 +37,7 @@ namespace King_of_Thieves.Actors
         protected CAnimation _sprite;
         protected DIRECTION _direction = DIRECTION.UP;
         protected Boolean _moving = false; //used for prioritized movement
-        private uint _componentAddress = 0;
+        private int _componentAddress = 0;
         protected Dictionary<uint, userEventHandler> _userEvents;
         protected List<uint> _userEventsToFire;
         protected string _state = "Idle";
@@ -150,7 +150,7 @@ namespace King_of_Thieves.Actors
         {
             _name = name;
             _position = position;
-            _componentAddress = compAddress;
+            _componentAddress = (int)compAddress;
         }
 
         public string state
@@ -354,7 +354,7 @@ namespace King_of_Thieves.Actors
         //what this does is create a "packet" that will float around in some higher level scope for the component to pick up
         protected void _triggerUserEvent(int eventNum, string actorName, params string[] param)
         {
-            CMasterControl.commNet[(int)_componentAddress].Add(new CActorPacket(eventNum, actorName, param));
+            CMasterControl.commNet[_componentAddress].Add(new CActorPacket(eventNum, actorName, param));
         }
     }
 }
