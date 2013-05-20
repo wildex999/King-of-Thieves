@@ -59,7 +59,7 @@ namespace King_of_Thieves.usr.local
                 //((Actors.Controllers.CEditorInputController)_controlManager.root).dropTile = false;
                 //Map.CTile temp = new Map.CTile(new Vector2(
                 //temp.COORDS
-                layers[0].addTile(temp);
+                //layers[0].addTile(temp);
             }
             
         }
