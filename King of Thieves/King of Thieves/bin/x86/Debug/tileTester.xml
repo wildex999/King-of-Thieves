@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<map>
+  <version>1.0</version>
+  <name>test</name>
+  <layerCount>1</layerCount>
+  <tileset name = "test">tileset:test</tileset>
+  <layers>
+	<layer width = "1" height = "1" name = "bleh">
+		<layerNum>0</layerNum>
+		<tiles>
+			<tile coordinates = "0:0" selection = "4:2"></tile>
+			<tile coordinates = "1:0" selection = "0:11"></tile>
+			<tile coordinates = "2:0" selection = "0:11"></tile>
+			<tile coordinates = "3:0" selection = "0:11"></tile>
+			<tile coordinates = "4:0" selection = "0:11"></tile>
+			<tile coordinates = "5:0" selection = "0:11"></tile>
+			<tile coordinates = "6:0" selection = "0:11"></tile>
+			<tile coordinates = "7:0" selection = "0:11"></tile>
+			<tile coordinates = "8:0" selection = "0:11"></tile>
+		</tiles>
+		<components>
+			<component>
+				<actors>
+					<actor name = "player" type = "King_of_Thieves.Actors.Player.CPlayer" coordinates = "0:0"></actor>
+					<actor name = "sword" type = "King_of_Thieves.Actors.Items.Swords.CSword" coordinates = "0:0"></actor>
+				</actors>
+			</component>
+		</components>
+	</layer>
+  </layers>
+</map>

@@ -14,7 +14,7 @@ namespace King_of_Thieves.usr.local
         private Actors.CComponent _controlManager = new Actors.CComponent();
         private Rectangle[] _selectedTiles = new Rectangle[4];
 
-        Gears.Cartography.layer[] layers;
+        Map.CLayer[] layers = new Map.CLayer[1];
 
         public EditorMode()
         {
@@ -23,14 +23,17 @@ namespace King_of_Thieves.usr.local
 
             _controlManager.root = new Actors.Controllers.CEditorInputController();
 
-            layers = new Gears.Cartography.layer[1];
-            layers[0] = new Gears.Cartography.layer();
+            layers = new Map.CLayer[1];
+            //layers[0] = new Map.CLayer();
         }
 
         public override void Draw(Microsoft.Xna.Framework.Graphics.SpriteBatch spriteBatch)
         {
             //draw the selected rectangle in the top left for now
             spriteBatch.Draw(_tileEditor.sourceSet, Vector2.Zero, _selectedTiles[0], Color.White);
+
+            //draw the tiles
+            //layers[0].drawLayer();
         }
 
         public override void Update(Microsoft.Xna.Framework.GameTime gameTime)
@@ -45,6 +48,19 @@ namespace King_of_Thieves.usr.local
             }
 
             _selectedTiles[0] = _tileEditor.tileRect;
+
+            if (((Actors.Controllers.CEditorInputController)_controlManager.root).dropTile)
+            {
+                
+                Vector2 mouseCoords = new Vector2((Gears.Cloud.Master.GetInputManager().GetCurrentInputHandler() as Input.CInput).mouseX,
+                                                  (Gears.Cloud.Master.GetInputManager().GetCurrentInputHandler() as Input.CInput).mouseY);
+
+                Map.CTile temp = new Map.CTile(new Vector2(_selectedTiles[0].X, _selectedTiles[0].Y), mouseCoords, _tileEditor.Controls["cmbTexture"].Text);
+                //((Actors.Controllers.CEditorInputController)_controlManager.root).dropTile = false;
+                //Map.CTile temp = new Map.CTile(new Vector2(
+                //temp.COORDS
+                layers[0].addTile(temp);
+            }
             
         }
     }

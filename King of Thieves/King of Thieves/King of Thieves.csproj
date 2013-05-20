@@ -159,8 +159,6 @@
     <Compile Include="Graphics\CTextureAtlas.cs" />
     <Compile Include="Graphics\CTextures.cs" />
     <Compile Include="Input\CInput.cs" />
-    <Compile Include="Input\CXMLSerializer.cs" />
-    <Compile Include="Input\Map\CMrMapIO.cs" />
     <Compile Include="Map\CLayer.cs" />
     <Compile Include="Map\CMap.cs" />
     <Compile Include="Map\CMapManager.cs" />

@@ -33,10 +33,10 @@ namespace King_of_Thieves.Forms.Map_Editor
             foreach (KeyValuePair<string, Graphics.CTextureAtlas> kvp in Graphics.CTextures.textures)
             {
                 if (kvp.Value.isTileSet)
-                    comboBox1.Items.Add(kvp.Key);
+                    cmbTexture.Items.Add(kvp.Key);
             }
 
-            comboBox1.SelectedIndex = 0;
+            cmbTexture.SelectedIndex = 0;
 
             MemoryStream imageStream = new MemoryStream();
             Texture2D source = CMasterControl.glblContent.Load<Texture2D>("cursorIcon");
@@ -51,13 +51,13 @@ namespace King_of_Thieves.Forms.Map_Editor
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             MemoryStream imageStream = new MemoryStream();
-            sourceTileSet = Graphics.CTextures.textures[comboBox1.Text].sourceImage;
+            sourceTileSet = Graphics.CTextures.textures[cmbTexture.Text].sourceImage;
 
             //set spacing
-            cellSpacing = Graphics.CTextures.textures[comboBox1.Text].CellSpacing;
-            txtSpacing.Text = Graphics.CTextures.textures[comboBox1.Text].CellSpacing.ToString();
-            txtCellSize.Text = Graphics.CTextures.textures[comboBox1.Text].FrameWidth + "," + Graphics.CTextures.textures[comboBox1.Text].FrameHeight;
-            cellSize = new Vector2(Graphics.CTextures.textures[comboBox1.Text].FrameWidth, Graphics.CTextures.textures[comboBox1.Text].FrameHeight);
+            cellSpacing = Graphics.CTextures.textures[cmbTexture.Text].CellSpacing;
+            txtSpacing.Text = Graphics.CTextures.textures[cmbTexture.Text].CellSpacing.ToString();
+            txtCellSize.Text = Graphics.CTextures.textures[cmbTexture.Text].FrameWidth + "," + Graphics.CTextures.textures[cmbTexture.Text].FrameHeight;
+            cellSize = new Vector2(Graphics.CTextures.textures[cmbTexture.Text].FrameWidth, Graphics.CTextures.textures[cmbTexture.Text].FrameHeight);
 
             if (sourceTileSet.Width > 240)
             {

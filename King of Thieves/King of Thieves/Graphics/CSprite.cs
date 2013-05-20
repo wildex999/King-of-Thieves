@@ -138,6 +138,14 @@ namespace King_of_Thieves.Graphics
             }
         }
 
+        public string atlasName
+        {
+            get
+            {
+                return _atlasName;
+            }
+        }
+
         
     }
 }

@@ -3,21 +3,27 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework;
 
 namespace King_of_Thieves.Map
 {
     class CLayer
     {
         private ComponentManager _components;
-        public readonly string NAME;
+        public string NAME;
         private int _width, _height; //PIXELS!!!
         private Graphics.CSprite _image; //key refers to the image depth
-        private CTile[] _tiles; //raw tile data
+        private List<CTile> _tiles = new List<CTile>(); //raw tile data
+
+        public CLayer(ref Graphics.CSprite image)
+        {
+            _image = image;
+        }
 
         public CLayer(string name, Actors.CComponent[] components, CTile[] tiles, ref Graphics.CSprite image)
         {
             NAME = name;
-            _tiles = tiles;
+            _tiles.AddRange(tiles);
             _image = image;
             _components = new ComponentManager(new ComponentFactory[]{ new ComponentFactory(components) } );
             //_image = Graphics.CTextures.generateLayerImage(this, tiles);
@@ -26,6 +32,16 @@ namespace King_of_Thieves.Map
         ~CLayer()
         {
              _image = null;
+        }
+
+        public void setName(string name)
+        {
+            NAME = name;
+        }
+
+        public void addTile(CTile tile)
+        {
+            _tiles.Add(tile);
         }
 
         public void updateLayer(Microsoft.Xna.Framework.GameTime gameTime)
@@ -38,9 +54,22 @@ namespace King_of_Thieves.Map
         public void drawLayer()
         {
             foreach (CTile tile in _tiles)
-                _image.draw((int)tile.tileCoords.X, (int)tile.tileCoords.Y, (int)tile.atlasCoords.X, (int)tile.atlasCoords.Y, 16, 16);
+            {
+                Vector2 dimensions = Vector2.Zero;
 
-            _components.Draw(Graphics.CGraphics.spriteBatch);
+                //get tileset info
+                if (string.IsNullOrEmpty(tile.tileSet))
+                    dimensions = new Vector2(Graphics.CTextures.textures[_image.atlasName].FrameWidth, Graphics.CTextures.textures[_image.atlasName].FrameHeight);
+                else
+                    dimensions = new Vector2(Graphics.CTextures.textures[tile.tileSet].FrameWidth, Graphics.CTextures.textures[tile.tileSet].FrameHeight);
+
+
+                if (_image != null)
+                    _image.draw((int)tile.tileCoords.X, (int)tile.tileCoords.Y, (int)tile.atlasCoords.X, (int)tile.atlasCoords.Y, (int)dimensions.X, (int)dimensions.Y);
+            }
+
+            if (_components != null)
+                _components.Draw(Graphics.CGraphics.spriteBatch);
 
 
         }

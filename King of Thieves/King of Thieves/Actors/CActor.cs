@@ -48,7 +48,6 @@ namespace King_of_Thieves.Actors
         public List<object> userParams = new List<object>();
         public bool _followRoot = true;
         public int layer;
-        //hitboxes will go here as well? What a terrible night for a curse...
         //event handlers will be added here
 
         public event createHandler onCreate;
@@ -62,6 +61,7 @@ namespace King_of_Thieves.Actors
         public event timerHandler onTimer0;
         public event timerHandler onTimer1;
         public event timerHandler onTimer2;
+        public event mouseLeftClickHandler onMouseClick;
         protected Collision.CHitBox _hitBox;
 
         public virtual void create(object sender) { }
@@ -74,6 +74,7 @@ namespace King_of_Thieves.Actors
         public virtual void animationEnd(object sender) { }
         public virtual void timer0(object sender, ElapsedEventArgs e) { if (_timer0 != null) { _timer0.Stop(); _timer0 = null; } }
         public virtual void timer1(object sender, ElapsedEventArgs e) { if (_timer1 != null) { _timer1.Stop(); _timer1 = null; } }
+        public virtual void mouseClick(object sender) { }
 
         protected abstract void _addCollidables(); //Use this guy to tell the Actor what kind of actors it can collide with
         protected Random _randNum = new Random();
@@ -93,6 +94,7 @@ namespace King_of_Thieves.Actors
             onDraw += new drawHandler(draw);
             onAnimationEnd += new animationEndHandler(animationEnd);
             onCollide += new collideHandler(collide);
+            onMouseClick += new mouseLeftClickHandler(mouseClick);
 
             _name = name;
             _collidables = new List<Type>();
@@ -253,6 +255,9 @@ namespace King_of_Thieves.Actors
 
             if ((Master.GetInputManager().GetCurrentInputHandler() as CInput).areKeysReleased)
                 onKeyRelease(this);
+
+            if ((Master.GetInputManager().GetCurrentInputHandler() as CInput).mouseLeftClick)
+                onMouseClick(this);
 
             //do timer events
             

@@ -84,6 +84,7 @@ namespace King_of_Thieves.Input
             }
         }
 
+
         public int scrollWheel
         {
             get
@@ -132,6 +133,14 @@ namespace King_of_Thieves.Input
             }
         }
 
+        public bool mouseLeftClick
+        {
+            get
+            {
+                return _mouseStateCurrent.LeftButton == ButtonState.Pressed;
+            }    
+        }
+
 
         public override void Update(GameTime gameTime)
         {
@@ -156,6 +165,8 @@ namespace King_of_Thieves.Input
             //if (areKeysPressed)
             keyEvents.oldKeys = keyEvents.keys;
             keyEvents.keys = keysPressed;
+            keyEvents.mouseLeftClick = mouseLeftClick;
+            keyEvents.mouseCoords = new Vector2(mouseX, mouseY);
 
             //pass the states to Gears
             if (Master.Peek().GetType() == typeof(Gears.Navigation.MenuState))
@@ -174,6 +185,9 @@ namespace King_of_Thieves.Input
         public Keys[] tappedKeys;
         public Keys[] oldKeys;
         public Keys[] releasedKeys;
+        public bool mouseLeftClick;
+        public Vector2 mouseCoords;
+
     }
 
 

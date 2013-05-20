@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.cmbTexture = new System.Windows.Forms.ComboBox();
             this.hScrollBar1 = new System.Windows.Forms.HScrollBar();
             this.vScrollBar1 = new System.Windows.Forms.VScrollBar();
             this.txtSpacing = new System.Windows.Forms.TextBox();
@@ -49,14 +49,14 @@
             this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
             this.pictureBox1.Paint += new System.Windows.Forms.PaintEventHandler(this.pictureBox1_Paint);
             // 
-            // comboBox1
+            // cmbTexture
             // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(0, 0);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(240, 21);
-            this.comboBox1.TabIndex = 2;
-            this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
+            this.cmbTexture.FormattingEnabled = true;
+            this.cmbTexture.Location = new System.Drawing.Point(0, 0);
+            this.cmbTexture.Name = "cmbTexture";
+            this.cmbTexture.Size = new System.Drawing.Size(240, 21);
+            this.cmbTexture.TabIndex = 2;
+            this.cmbTexture.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             // 
             // hScrollBar1
             // 
@@ -122,7 +122,7 @@
             this.Controls.Add(this.txtSpacing);
             this.Controls.Add(this.vScrollBar1);
             this.Controls.Add(this.hScrollBar1);
-            this.Controls.Add(this.comboBox1);
+            this.Controls.Add(this.cmbTexture);
             this.Controls.Add(this.pictureBox1);
             this.Name = "EditorTiles";
             this.Text = "EditorControl";
@@ -136,7 +136,7 @@
         #endregion
 
         private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ComboBox cmbTexture;
         private System.Windows.Forms.HScrollBar hScrollBar1;
         private System.Windows.Forms.VScrollBar vScrollBar1;
         private System.Windows.Forms.TextBox txtSpacing;
