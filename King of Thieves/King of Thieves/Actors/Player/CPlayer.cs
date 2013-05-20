@@ -87,7 +87,9 @@ namespace King_of_Thieves.Actors.Player
         {
             if (_state == "Idle" || _state == "Moving")
             {
-                
+
+                if ((Master.GetInputManager().GetCurrentInputHandler() as CInput).keysPressed.Contains(Microsoft.Xna.Framework.Input.Keys.End))
+                    Master.Pop();
 
                 if ((Master.GetInputManager().GetCurrentInputHandler() as CInput).keysPressed.Contains(Microsoft.Xna.Framework.Input.Keys.A))
                 {

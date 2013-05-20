@@ -2,7 +2,8 @@
 using King_of_Thieves.Actors;
 using Gears.Cloud;
 using King_of_Thieves.Input;
-using King_of_Thieves.Menu;
+using System.Collections.Generic;
+using Microsoft.Xna.Framework;
 
 namespace King_of_Thieves.usr.local
 {
@@ -12,21 +13,63 @@ namespace King_of_Thieves.usr.local
 
         public DevMenu()
         {
-            MenuUserControl[] menuItems = new MenuUserControl[2];
+            MenuElement titleMenuElement = new MenuElement();
+            titleMenuElement.MenuText = "Transmission Debug";
+            titleMenuElement.Selectable = false;
+            titleMenuElement.Hidden = false;
+            titleMenuElement.ActiveArea = new Rectangle(10, 30, 30, 30);
+            titleMenuElement.ForegroundColor = new Color(225, 225, 225);
+            titleMenuElement.ActiveForegroundColor = new Color(100, 100, 100);
+            titleMenuElement.SpriteFont = @"Fonts\MenuFont";
 
-            menuItems[0] = new GameTestMenuOption();
-            menuItems[1] = new MapEditorMenuOption();
-            _menu = new Gears.Navigation.Menu("Transmission Development Menu", menuItems);
+            MenuElement playTestElement = new MenuElement();
+            playTestElement.MenuText = "Play Test";
+            playTestElement.Selectable = true;
+            playTestElement.Hidden = false;
+            playTestElement.ActiveArea = new Rectangle(10, 70, 600, 100);
+            playTestElement.ForegroundColor = new Color(225, 225, 225);
+            playTestElement.ActiveForegroundColor = new Color(255, 200, 200);
+            playTestElement.SpriteFont = @"Fonts\MenuFont";
+            playTestElement.SetThrowPushEvent(new System.Action(() =>
+            {
+                Master.Push(new PlayableState());
+            }));
+
+            MenuElement mapToolElement = new MenuElement();
+            mapToolElement.MenuText = "Map Editor";
+            mapToolElement.Selectable = true;
+            mapToolElement.Hidden = false;
+            mapToolElement.ActiveArea = new Rectangle(10, 50, 600, 100);
+            mapToolElement.ForegroundColor = new Color(225, 225, 225);
+            mapToolElement.ActiveForegroundColor = new Color(255, 200, 200);
+            mapToolElement.SpriteFont = @"Fonts\MenuFont";
+            mapToolElement.SetThrowPushEvent(new System.Action(() =>
+            {
+                Master.Push(new EditorMode());
+
+            }));
+
+            _menu = new Gears.Navigation.Menu();
+
+            //_menu.AddMenuElements(new MenuElement[] { titleMenuElement, playTestElement, mapToolElement });
+
+            _menu.AddMenuElement(titleMenuElement);
+            _menu.AddMenuElement(mapToolElement);
+            _menu.AddMenuElement(playTestElement);
+            
+            
+            
         }
 
-        public override void Update(Microsoft.Xna.Framework.GameTime gameTime)
+        public override void Update(GameTime gameTime)
         {
-            _menu.Update(gameTime);
+            //throw new System.NotImplementedException();
+            Master.Push(new MenuState(_menu));
         }
 
         public override void Draw(Microsoft.Xna.Framework.Graphics.SpriteBatch spriteBatch)
         {
-            _menu.Draw(spriteBatch);
+            //throw new System.NotImplementedException();
         }
     }
 }

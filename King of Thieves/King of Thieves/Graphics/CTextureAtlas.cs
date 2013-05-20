@@ -18,6 +18,7 @@ namespace King_of_Thieves.Graphics
         private int _fixedWidth = 0, _fixedHeight = 0;
         private static Regex _cellFormat = new Regex("^[0-9]+:[0-9]+$");
         private static Regex _cellSplitter = new Regex(":");
+        private bool _isTileSet;
 
         public CTextureAtlas(Texture2D sourceImage, string source, int _frameWidth, int _frameHeight, int _cellSpacing)
         {
@@ -38,7 +39,7 @@ namespace King_of_Thieves.Graphics
             _setup(ref sourceImage, _frameWidth, _frameHeight, _cellSpacing, frameRate);
         }
 
-        public CTextureAtlas(string sourceImage, int _frameWidth, int _frameHeight, int _cellSpacing, string startCell, string endCell, int frameRate = 0, bool flipH = false, bool flipV = false)
+        public CTextureAtlas(string sourceImage, int _frameWidth, int _frameHeight, int _cellSpacing, string startCell, string endCell, int frameRate = 0, bool flipH = false, bool flipV = false, bool isTileSet = false)
         {
             //parse out the cell ranges
             if (!_cellFormat.IsMatch(startCell) || !_cellFormat.IsMatch(endCell))
@@ -53,6 +54,7 @@ namespace King_of_Thieves.Graphics
             int flipXOffSet = flipH ? 1 : 0;
             int flipYOffSet = flipV ? 1 : 0;
             _atlasName = sourceImage;
+            _isTileSet = isTileSet;
 
 
 
@@ -97,6 +99,14 @@ namespace King_of_Thieves.Graphics
 
             _textureAtlas = new Rectangle[_fixedWidth, _fixedHeight];
             _assembleTextureAtlas(this);
+        }
+
+        public bool isTileSet
+        {
+            get
+            {
+                return _isTileSet;
+            }
         }
 
         public Texture2D sourceImage

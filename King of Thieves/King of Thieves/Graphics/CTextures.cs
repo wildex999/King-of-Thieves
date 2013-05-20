@@ -51,7 +51,7 @@ namespace King_of_Thieves.Graphics
             textures.Add("keese:Fly", new CTextureAtlas("keese", 32, 32, 1, "1:0", "5:0",15));
 
             //tilesets
-            textures.Add("tileset:test", new CTextureAtlas("test", 16, 16, 0, "0:0", "15:15"));
+            textures.Add("tileset:test", new CTextureAtlas("test", 16, 16, 0, "0:0", "15:15",0,false,false,true));
         }
 
         private static void _prepareTextures()

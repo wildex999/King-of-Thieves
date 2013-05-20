@@ -55,7 +55,8 @@ namespace King_of_Thieves
         protected override void Initialize()
         {
             //Register our ContentManager
-            ContentButler.setGame(this);
+            //ContentButler.setGame(this);
+            Master.Initialize(this);
 
             //Setup screen display/graphics device
             ViewportHandler.SetScreen(ScreenWidth, ScreenHeight);
@@ -73,6 +74,7 @@ namespace King_of_Thieves
             CTextures.init(Content);
 
             Master.Push(new DevMenu());
+            //Master.Push(new PlayableState());
 
             Master.GetInputManager().AddInputHandler(new CInput());
 
