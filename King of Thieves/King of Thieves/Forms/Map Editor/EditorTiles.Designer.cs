@@ -36,6 +36,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.txtCellSize = new System.Windows.Forms.TextBox();
+            this.btnSetMain = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -78,7 +79,7 @@
             // 
             // txtSpacing
             // 
-            this.txtSpacing.Location = new System.Drawing.Point(7, 314);
+            this.txtSpacing.Location = new System.Drawing.Point(8, 328);
             this.txtSpacing.Name = "txtSpacing";
             this.txtSpacing.ReadOnly = true;
             this.txtSpacing.Size = new System.Drawing.Size(30, 20);
@@ -87,7 +88,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(4, 298);
+            this.label1.Location = new System.Drawing.Point(5, 312);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(63, 13);
             this.label1.TabIndex = 6;
@@ -96,7 +97,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(72, 298);
+            this.label2.Location = new System.Drawing.Point(73, 312);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(47, 13);
             this.label2.TabIndex = 8;
@@ -104,11 +105,21 @@
             // 
             // txtCellSize
             // 
-            this.txtCellSize.Location = new System.Drawing.Point(75, 314);
+            this.txtCellSize.Location = new System.Drawing.Point(76, 328);
             this.txtCellSize.Name = "txtCellSize";
             this.txtCellSize.ReadOnly = true;
             this.txtCellSize.Size = new System.Drawing.Size(44, 20);
             this.txtCellSize.TabIndex = 7;
+            // 
+            // btnSetMain
+            // 
+            this.btnSetMain.Location = new System.Drawing.Point(7, 286);
+            this.btnSetMain.Name = "btnSetMain";
+            this.btnSetMain.Size = new System.Drawing.Size(240, 23);
+            this.btnSetMain.TabIndex = 9;
+            this.btnSetMain.Text = "Make Main Tileset";
+            this.btnSetMain.UseVisualStyleBackColor = true;
+            this.btnSetMain.Click += new System.EventHandler(this.btnSetMain_Click);
             // 
             // EditorTiles
             // 
@@ -116,6 +127,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(259, 407);
             this.ControlBox = false;
+            this.Controls.Add(this.btnSetMain);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.txtCellSize);
             this.Controls.Add(this.label1);
@@ -143,5 +155,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox txtCellSize;
+        private System.Windows.Forms.Button btnSetMain;
     }
 }

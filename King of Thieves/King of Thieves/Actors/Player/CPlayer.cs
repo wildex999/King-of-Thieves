@@ -89,7 +89,10 @@ namespace King_of_Thieves.Actors.Player
             {
 
                 if ((Master.GetInputManager().GetCurrentInputHandler() as CInput).keysPressed.Contains(Microsoft.Xna.Framework.Input.Keys.End))
+                {
+                    Graphics.CGraphics.changeResolution(320, 240);
                     Master.Pop();
+                }
 
                 if ((Master.GetInputManager().GetCurrentInputHandler() as CInput).keysPressed.Contains(Microsoft.Xna.Framework.Input.Keys.A))
                 {

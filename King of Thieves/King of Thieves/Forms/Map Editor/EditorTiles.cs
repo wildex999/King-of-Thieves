@@ -21,6 +21,7 @@ namespace King_of_Thieves.Forms.Map_Editor
         static Image cursor;
         Vector2 cursorCoords = Vector2.Zero;
         Microsoft.Xna.Framework.Rectangle selectedTile;
+        string mainTileSet = "";
 
         public EditorTiles()
         {
@@ -37,7 +38,7 @@ namespace King_of_Thieves.Forms.Map_Editor
             }
 
             cmbTexture.SelectedIndex = 0;
-
+            mainTileSet = cmbTexture.Text;
             MemoryStream imageStream = new MemoryStream();
             Texture2D source = CMasterControl.glblContent.Load<Texture2D>("cursorIcon");
 
@@ -46,6 +47,14 @@ namespace King_of_Thieves.Forms.Map_Editor
             cursor = Image.FromStream(imageStream);
 
             imageStream.Close();
+        }
+
+        public string defaultTileSet
+        {
+            get
+            {
+                return mainTileSet;
+            }
         }
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
@@ -139,6 +148,11 @@ namespace King_of_Thieves.Forms.Map_Editor
             {
                 return sourceTileSet;
             }
+        }
+
+        private void btnSetMain_Click(object sender, EventArgs e)
+        {
+            mainTileSet = cmbTexture.Text;
         }
     }
 }

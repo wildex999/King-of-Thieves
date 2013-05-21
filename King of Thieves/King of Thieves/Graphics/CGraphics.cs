@@ -25,6 +25,14 @@ namespace King_of_Thieves.Graphics
             _graphicsInfo = manager;
         }
 
+        public static void changeResolution(int width, int height)
+        {
+            Gears.Cloud.ViewportHandler.SetScreen(width, height);
+            _graphicsInfo.PreferredBackBufferWidth = width;
+            _graphicsInfo.PreferredBackBufferHeight = height;
+            _graphicsInfo.ApplyChanges();
+        }
+
         public static void spawnRenderTarget(ref RenderTarget2D offScreenBuffer)
         {
             _rtar2D = offScreenBuffer;

@@ -11,10 +11,12 @@ namespace King_of_Thieves.Actors.Collision
         private Vector2 _halfSize;
         private Vector2 _center;
 
-        public CHitBox(float width, float height)
+        public CHitBox(float x, float y, float width, float height)
         {
             _halfSize = new Vector2(width * .5f, height * .5f);
             _center = new Vector2(_halfSize.X, _halfSize.Y);
+
+            _position = new Vector2(x, y);
         }
 
         public override void update(GameTime gameTime)
@@ -43,6 +45,25 @@ namespace King_of_Thieves.Actors.Collision
             {
                 distance = Math.Abs((_position.Y + _center.Y) - (otherBox.position.Y + otherBox._center.Y));
                 length = _halfSize.Y + otherBox._halfSize.Y;
+
+                return distance < length;
+            }
+
+            return false;
+        }
+
+        public bool checkCollision(Vector2 point)
+        {
+            float distance = 0;
+            float length = 0;
+
+            distance = Math.Abs((_position.X + _center.X) - (point.X));
+            length = _halfSize.X * 2;
+
+            if (distance < length)
+            {
+                distance = Math.Abs((_position.Y + _center.Y) - (point.Y));
+                length = _halfSize.Y * 2;
 
                 return distance < length;
             }

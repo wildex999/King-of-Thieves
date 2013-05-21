@@ -65,7 +65,7 @@ namespace King_of_Thieves.Map
 
 
                 if (_image != null)
-                    _image.draw((int)tile.tileCoords.X, (int)tile.tileCoords.Y, (int)tile.atlasCoords.X, (int)tile.atlasCoords.Y, (int)dimensions.X, (int)dimensions.Y);
+                    _image.draw((int)(tile.tileCoords.X / dimensions.X), (int)(tile.tileCoords.Y/dimensions.Y), (int)(tile.atlasCoords.X / dimensions.X), (int)(tile.atlasCoords.Y / dimensions.Y), (int)dimensions.X, (int)dimensions.Y);
             }
 
             if (_components != null)

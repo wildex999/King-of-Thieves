@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Windows.Forms;
+using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework;
 
 namespace King_of_Thieves.Actors.Controllers
 {
@@ -9,11 +12,18 @@ namespace King_of_Thieves.Actors.Controllers
     {
         public bool _shutDown = false;
         private bool _dropTile = false;
+        private Texture2D _panel;
+
+        public CEditorInputController()
+        {
+            _panel = CMasterControl.glblContent.Load<Texture2D>("whiteBox");
+        }
 
         public override void keyDown(object sender)
         {
             if ((Gears.Cloud.Master.GetInputManager().GetCurrentInputHandler() as Input.CInput).keysPressed.Contains(Microsoft.Xna.Framework.Input.Keys.Back))
             {
+                Graphics.CGraphics.changeResolution(320, 240);
                 _shutDown = true;
             }
 
@@ -21,7 +31,10 @@ namespace King_of_Thieves.Actors.Controllers
 
         public override void mouseClick(object sender)
         {
-            _dropTile = true;
+            if (System.Windows.Forms.Form.ActiveForm ==
+                (System.Windows.Forms.Control.FromHandle(Gears.Cloud.Master.GetGame().Window.Handle) as System.Windows.Forms.Form))
+                _dropTile = true;
+                
         }
 
         protected override void _addCollidables()
@@ -37,6 +50,15 @@ namespace King_of_Thieves.Actors.Controllers
                 _dropTile = false;
                 return temp;
             }
+        }
+
+        public override void drawMe()
+        {
+            base.drawMe();
+
+            Graphics.CGraphics.spriteBatch.Draw(_panel, new Rectangle(0, 0, 800, 64), Color.Wheat);
+            Graphics.CGraphics.spriteBatch.Draw(Graphics.CTextures.rawTextures["pointer"], new Rectangle((Gears.Cloud.Master.GetInputManager().GetCurrentInputHandler() as Input.CInput).mouseX,
+                                                                        (Gears.Cloud.Master.GetInputManager().GetCurrentInputHandler() as Input.CInput).mouseY, 32,32), Color.White);
         }
     }
 }

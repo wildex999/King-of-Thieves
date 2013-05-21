@@ -19,5 +19,6 @@ namespace King_of_Thieves
     public delegate void timerHandler(object sender);
     public delegate void userEventHandler(object sender);
     public delegate void mouseLeftClickHandler(object sender);
+    public delegate void clickHandler(object sender);
     
 }

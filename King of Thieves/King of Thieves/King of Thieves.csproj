@@ -118,6 +118,9 @@
     <Compile Include="Actors\CComponent.cs" />
     <Compile Include="Actors\Collision\CHitBox.cs" />
     <Compile Include="Actors\Controllers\CEditorInputController.cs" />
+    <Compile Include="Actors\Controllers\CEditorNew.cs" />
+    <Compile Include="Actors\Controllers\CEditorOpen.cs" />
+    <Compile Include="Actors\Controllers\CEditorSave.cs" />
     <Compile Include="Actors\Items\Swords\CGerudoSword.cs" />
     <Compile Include="Actors\Menu\CMenuCursor.cs" />
     <Compile Include="Actors\NPC\Enemies\CBaseEnemy.cs" />

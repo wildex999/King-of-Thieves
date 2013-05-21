@@ -45,6 +45,7 @@ namespace King_of_Thieves.usr.local
             mapToolElement.SpriteFont = @"Fonts\MenuFont";
             mapToolElement.SetThrowPushEvent(new System.Action(() =>
             {
+                Graphics.CGraphics.changeResolution(800, 600);
                 Master.Push(new EditorMode());
 
             }));
