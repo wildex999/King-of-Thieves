@@ -11,7 +11,7 @@ namespace King_of_Thieves.Map
     {
         private Vector2 _tileBounds;
         public readonly Vector2 tileCoords;
-        public readonly string tileSet;
+        public string tileSet;
 
 
         public CTile(Vector2 atlasCoords, Vector2 mapCoords, string tileSet)

@@ -22,6 +22,9 @@ namespace King_of_Thieves.Forms.Map_Editor
         Vector2 cursorCoords = Vector2.Zero;
         Microsoft.Xna.Framework.Rectangle selectedTile;
         string mainTileSet = "";
+        bool changedTileSet = false;
+        string previousTileSet = "";
+        bool selectorChanged = false;
 
         public EditorTiles()
         {
@@ -59,6 +62,7 @@ namespace King_of_Thieves.Forms.Map_Editor
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
+            selectorChanged = true;
             MemoryStream imageStream = new MemoryStream();
             sourceTileSet = Graphics.CTextures.textures[cmbTexture.Text].sourceImage;
 
@@ -152,7 +156,38 @@ namespace King_of_Thieves.Forms.Map_Editor
 
         private void btnSetMain_Click(object sender, EventArgs e)
         {
+            previousTileSet = mainTileSet;
             mainTileSet = cmbTexture.Text;
+            changedTileSet = true;
+        }
+
+        public bool tileSetChanged
+        {
+            get
+            {
+                bool temp = changedTileSet;
+                changedTileSet = false;
+                return temp;
+            }
+        }
+
+        public string previousDefaultTileSet
+        {
+            get
+            {
+                return previousTileSet;
+            }
+        }
+
+        public bool selectorChange
+        {
+            get
+            {
+                bool temp = selectorChanged;
+                selectorChanged = false;
+                return temp;
+            }
+
         }
     }
 }
