@@ -3,47 +3,50 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using King_of_Thieves.Graphics;
 
 namespace King_of_Thieves.Actors.Collision
 {
-    public class CHitBox : CActor
+    public class CHitBox
     {
         private Vector2 _halfSize;
         private Vector2 _center;
+        private CActor actor; //Actor for this hitbox 
 
-        public CHitBox(float x, float y, float width, float height)
+        //Texture for drawing hitbox
+        Texture2D texture;
+
+        public CHitBox(CActor actor, float offsetx, float offsety, float width, float height)
         {
             _halfSize = new Vector2(width * .5f, height * .5f);
-            _center = new Vector2(_halfSize.X, _halfSize.Y);
+            _center = new Vector2(offsetx+_halfSize.X, offsety+_halfSize.Y);
+            this.actor = actor;
 
-            _position = new Vector2(x, y);
+            //Prepare texture for rendering hitbox when needed(Only done for the first hitbox, as they share the texture)
+            if (texture == null)
+            {
+                //Make a single pixel with transparency that we later stretch to the size of our hitbox
+                texture = new Texture2D(CGraphics.GPU, 1, 1, false, SurfaceFormat.Color);
+                Color[] c = new Color[1];
+                c[0] = Color.FromNonPremultiplied(255, 255, 255, 200);
+                texture.SetData<Color>(c);
+            }
         }
 
-        public override void update(GameTime gameTime)
-        {
-            _center.X = _position.X + _halfSize.X;
-            _center.Y = _position.Y + _halfSize.Y;
-            base.update(gameTime);
-        }
-
-        protected override void _addCollidables()
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool checkCollision(CHitBox sender)
+        public bool checkCollision(CActor sender)
         {
             
             float distance = 0;
             float length = 0;
-            CHitBox otherBox = sender;
+            CHitBox otherBox = sender.hitBox;
 
-            distance = Math.Abs((_position.X + _center.X) - (otherBox.position.X + otherBox._center.X));
+            distance = Math.Abs((actor.position.X + _center.X) - (sender.position.X + otherBox._center.X));
             length = _halfSize.X + otherBox._halfSize.X;
 
             if (distance < length)
             {
-                distance = Math.Abs((_position.Y + _center.Y) - (otherBox.position.Y + otherBox._center.Y));
+                distance = Math.Abs((actor.position.Y + _center.Y) - (sender.position.Y + otherBox._center.Y));
                 length = _halfSize.Y + otherBox._halfSize.Y;
 
                 return distance < length;
@@ -57,12 +60,12 @@ namespace King_of_Thieves.Actors.Collision
             float distance = 0;
             float length = 0;
 
-            distance = Math.Abs((_position.X + _center.X) - (point.X));
+            distance = Math.Abs((actor.position.X + _center.X) - (point.X));
             length = _halfSize.X * 2;
 
             if (distance < length)
             {
-                distance = Math.Abs((_position.Y + _center.Y) - (point.Y));
+                distance = Math.Abs((actor.position.Y + _center.Y) - (point.Y));
                 length = _halfSize.Y * 2;
 
                 return distance < length;
@@ -71,9 +74,14 @@ namespace King_of_Thieves.Actors.Collision
             return false;
         }
 
-        public override void draw(object sender)
+        public void draw()
         {
-            return;
+            if (texture != null)
+            {
+                System.Console.WriteLine("DRAW BBOX: " + (offset+actor.position) + " | " + _halfSize);
+                CGraphics.spriteBatch.Draw(texture, new Rectangle((int)(offset.X+actor.position.X), (int)(offset.Y+actor.position.Y),
+                                            (int)_halfSize.X*2, (int)_halfSize.Y*2), null, Color.White);
+            }
         }
 
         public float halfWidth
@@ -97,6 +105,34 @@ namespace King_of_Thieves.Actors.Collision
             get
             {
                 return _center;
+            }
+        }
+
+        public Vector2 size
+        {
+            get
+            {
+                return _halfSize * 2;
+            }
+            set
+            {
+                //center - halfsize = offset
+                _center.X = (_center.X - _halfSize.X) + value.X;
+                _center.Y = (_center.Y - _halfSize.Y) + value.Y;
+                _halfSize = value * .5f;
+            }
+        }
+
+        public Vector2 offset
+        {
+            get
+            {
+                return new Vector2(_center.X-_halfSize.X, _center.Y-_halfSize.Y);
+            }
+            set
+            {
+                _center.X = _halfSize.X + value.X;
+                _center.Y = _halfSize.Y + value.Y;
             }
         }
     }

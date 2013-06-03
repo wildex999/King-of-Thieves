@@ -5,6 +5,7 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Gears.Cloud;
 using King_of_Thieves.Input;
+using Microsoft.Xna.Framework.Input;
 
 namespace King_of_Thieves.Actors.Player
 {
@@ -20,6 +21,7 @@ namespace King_of_Thieves.Actors.Player
             _name = "Player";
             _position = Vector2.Zero;
             //resource init
+            _hitBox = new Collision.CHitBox(this, 10, 18, 12, 15);
 
             
             image = _imageIndex["PlayerWalkDown"];
@@ -86,14 +88,15 @@ namespace King_of_Thieves.Actors.Player
         {
             if (_state == "Idle" || _state == "Moving")
             {
-
-                if ((Master.GetInputManager().GetCurrentInputHandler() as CInput).keysPressed.Contains(Microsoft.Xna.Framework.Input.Keys.End))
+                //Store this so we can type less
+                CInput input = Master.GetInputManager().GetCurrentInputHandler() as CInput;
+                if (input.keysPressed.Contains(Keys.End))
                 {
                     Graphics.CGraphics.changeResolution(320, 240);
                     Master.Pop();
                 }
 
-                if ((Master.GetInputManager().GetCurrentInputHandler() as CInput).keysPressed.Contains(Microsoft.Xna.Framework.Input.Keys.A))
+                if (input.keysPressed.Contains(Keys.A))
                 {
                     _position.X -= 1;
                     image = _imageIndex["PlayerWalkLeft"];
@@ -101,7 +104,7 @@ namespace King_of_Thieves.Actors.Player
                     _state = "Moving";
                 }
 
-                if ((Master.GetInputManager().GetCurrentInputHandler() as CInput).keysPressed.Contains(Microsoft.Xna.Framework.Input.Keys.D))
+                if (input.keysPressed.Contains(Keys.D))
                 {
                     _position.X += 1;
                     image = _imageIndex["PlayerWalkRight"];
@@ -109,7 +112,7 @@ namespace King_of_Thieves.Actors.Player
                     _state = "Moving";
                 }
 
-                if ((Master.GetInputManager().GetCurrentInputHandler() as CInput).keysPressed.Contains(Microsoft.Xna.Framework.Input.Keys.W))
+                if (input.keysPressed.Contains(Keys.W))
                 {
                     _position.Y -= 1;
                     image = _imageIndex["PlayerWalkUp"];
@@ -117,7 +120,7 @@ namespace King_of_Thieves.Actors.Player
                     _state = "Moving";
                 }
 
-                if ((Master.GetInputManager().GetCurrentInputHandler() as CInput).keysPressed.Contains(Microsoft.Xna.Framework.Input.Keys.S))
+                if (input.keysPressed.Contains(Keys.S))
                 {
                     _position.Y += 1;
                     image = _imageIndex["PlayerWalkDown"];
@@ -125,7 +128,7 @@ namespace King_of_Thieves.Actors.Player
                     _state = "Moving";
                 }
 
-                if ((Master.GetInputManager().GetCurrentInputHandler() as CInput).keysPressed.Contains(Microsoft.Xna.Framework.Input.Keys.Space))
+                if (input.keysPressed.Contains(Keys.Space))
                 {
                     _state = "Swinging";
                     _swordReleased = false;
