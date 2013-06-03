@@ -63,7 +63,6 @@ namespace King_of_Thieves.Actors.Player
 
         public override void draw(object sender)
         {
-            throw new NotImplementedException();
         }
 
         public override void animationEnd(object sender)
