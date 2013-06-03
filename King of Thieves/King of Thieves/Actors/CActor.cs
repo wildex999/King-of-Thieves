@@ -287,12 +287,7 @@ namespace King_of_Thieves.Actors
 
         public virtual void drawMe()
         {
-            try
-            {
-                onDraw(this);
-            }
-            catch (NotImplementedException)
-            { ;}
+            onDraw(this);
 
             if (image != null)
                 _animationHasEnded = image.draw((int)_position.X, (int)_position.Y);
