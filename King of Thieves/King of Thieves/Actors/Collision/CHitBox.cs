@@ -78,7 +78,6 @@ namespace King_of_Thieves.Actors.Collision
         {
             if (texture != null)
             {
-                System.Console.WriteLine("DRAW BBOX: " + (offset+actor.position) + " | " + _halfSize);
                 CGraphics.spriteBatch.Draw(texture, new Rectangle((int)(offset.X+actor.position.X), (int)(offset.Y+actor.position.Y),
                                             (int)_halfSize.X*2, (int)_halfSize.Y*2), null, Color.White);
             }

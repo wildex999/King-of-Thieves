@@ -81,7 +81,7 @@ namespace King_of_Thieves.Actors
         public virtual void mouseClick(object sender) { }
         public virtual void click(object sender) { }
 
-        protected abstract void _addCollidables(); //Use this guy to tell the Actor what kind of actors it can collide with
+        protected virtual void _addCollidables() { } //Use this guy to tell the Actor what kind of actors it can collide with
         protected Random _randNum = new Random();
 
         private Timer _timer0;
