@@ -71,11 +71,32 @@ namespace King_of_Thieves.Map
                 Vector2 dimensions = Vector2.Zero;
                 float dividerX, dividerY;
 
+
                 //get tileset info
                 if (string.IsNullOrEmpty(tile.tileSet))
                     dimensions = new Vector2(Graphics.CTextures.textures[_image.atlasName].FrameWidth, Graphics.CTextures.textures[_image.atlasName].FrameHeight);
                 else
                     dimensions = new Vector2(Graphics.CTextures.textures[tile.tileSet].FrameWidth, Graphics.CTextures.textures[tile.tileSet].FrameHeight);
+
+                if (editor)
+                {
+                    dividerX = dimensions.X;
+                    dividerY = dimensions.Y;
+                }
+                else
+                {
+                    dividerX = 1;
+                    dividerY = 1;
+                }
+
+                if (string.IsNullOrEmpty(tile.tileSet) && _image != null)
+                {
+                    _image.draw((int)(tile.tileCoords.X / dividerX), (int)(tile.tileCoords.Y / dividerY), (int)(tile.atlasCoords.X / dividerX), (int)(tile.atlasCoords.Y / dividerY), (int)dimensions.X, (int)dimensions.Y);
+                }
+                else
+                    otherImages[tile.tileSet].draw((int)(tile.tileCoords.X / dividerX), (int)(tile.tileCoords.Y / dividerY), (int)(tile.atlasCoords.X / dividerX), (int)(tile.atlasCoords.Y / dividerY), (int)dimensions.X, (int)dimensions.Y);
+
+                //_image.draw((int)tile.tileCoords.X, (int)tile.tileCoords.Y, (int)tile.atlasCoords.X, (int)tile.atlasCoords.Y, (int)dimensions.X, (int)dimensions.Y);
             }
 
             if (_components != null)
