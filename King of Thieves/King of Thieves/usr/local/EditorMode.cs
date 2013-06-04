@@ -13,6 +13,7 @@ namespace King_of_Thieves.usr.local
         private Forms.Map_Editor.EditorTiles _tileEditor = new Forms.Map_Editor.EditorTiles();
         private Actors.CComponent _controlManager = new Actors.CComponent();
         private Rectangle[] _selectedTiles = new Rectangle[4];
+        private Graphics.CSprite _currentTileSet = null;
 
         Map.CLayer[] layers = new Map.CLayer[1];
 
@@ -50,12 +51,15 @@ namespace King_of_Thieves.usr.local
             
 
             //draw the tiles
-            layers[0].drawLayer();
+            layers[0].drawLayer(true);
         }
 
         public override void Update(Microsoft.Xna.Framework.GameTime gameTime)
         {
             _controlManager.Update(gameTime);
+
+            if (_tileEditor.selectorChange)
+                _currentTileSet = new Graphics.CSprite(_tileEditor.Controls["cmbTexture"].Text, Graphics.CTextures.textures[_tileEditor.Controls["cmbTexture"].Text]);
 
             if (((Actors.Controllers.CEditorInputController)_controlManager.root)._shutDown)
             {
@@ -72,16 +76,35 @@ namespace King_of_Thieves.usr.local
                 layers = new Map.CLayer[1];
             }
 
+            if (_tileEditor.tileSetChanged)
+            {
+                //apply the current tileSet to all tiles that use it
+                foreach (Map.CLayer layer in layers)
+                {
+                    layer.updateTileSet(_currentTileSet);
+                }
+            }
+
             if (((Actors.Controllers.CEditorInputController)_controlManager.root).dropTile)
             {
                 
                 Vector2 mouseCoords = new Vector2((Gears.Cloud.Master.GetInputManager().GetCurrentInputHandler() as Input.CInput).mouseX,
                                                   (Gears.Cloud.Master.GetInputManager().GetCurrentInputHandler() as Input.CInput).mouseY);
+                string tileSet = "";
 
                 if (mouseCoords.Y <= 64)
                     return;
 
-                Map.CTile temp = new Map.CTile(new Vector2(_selectedTiles[0].X, _selectedTiles[0].Y), mouseCoords, _tileEditor.Controls["cmbTexture"].Text);
+                if (_tileEditor.Controls["cmbTexture"].Text == _tileEditor.defaultTileSet)
+                    tileSet = null;
+                else
+                    tileSet = _tileEditor.Controls["cmbTexture"].Text;
+
+                Map.CTile temp = new Map.CTile(new Vector2(_selectedTiles[0].X, _selectedTiles[0].Y), mouseCoords, tileSet);
+
+                if (!layers[0].otherImages.ContainsKey(_currentTileSet.atlasName))
+                    layers[0].otherImages.Add(_currentTileSet.atlasName, _currentTileSet);
+
                 layers[0].addTile(temp);
             }
             

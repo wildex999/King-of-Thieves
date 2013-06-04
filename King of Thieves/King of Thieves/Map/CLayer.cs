@@ -12,7 +12,9 @@ namespace King_of_Thieves.Map
         private ComponentManager _components;
         public string NAME;
         private int _width, _height; //PIXELS!!!
-        private Graphics.CSprite _image; //key refers to the image depth
+        private Graphics.CSprite _image;
+        public Dictionary<string, Graphics.CSprite> otherImages = new Dictionary<string, Graphics.CSprite>();
+
         private List<CTile> _tiles = new List<CTile>(); //raw tile data
 
         public CLayer(ref Graphics.CSprite image)
@@ -34,6 +36,17 @@ namespace King_of_Thieves.Map
              _image = null;
         }
 
+        public void updateTileSet(Graphics.CSprite newSet)
+        {
+            foreach (CTile tile in _tiles)
+            {
+                if (string.IsNullOrEmpty(tile.tileSet))
+                    tile.tileSet = _image.atlasName;
+            }
+
+            _image = newSet;
+        }
+
         public void setName(string name)
         {
             NAME = name;
@@ -51,21 +64,18 @@ namespace King_of_Thieves.Map
             
         }
 
-        public void drawLayer()
+        public void drawLayer(bool editor = false)
         {
             foreach (CTile tile in _tiles)
             {
                 Vector2 dimensions = Vector2.Zero;
+                float dividerX, dividerY;
 
                 //get tileset info
                 if (string.IsNullOrEmpty(tile.tileSet))
                     dimensions = new Vector2(Graphics.CTextures.textures[_image.atlasName].FrameWidth, Graphics.CTextures.textures[_image.atlasName].FrameHeight);
                 else
                     dimensions = new Vector2(Graphics.CTextures.textures[tile.tileSet].FrameWidth, Graphics.CTextures.textures[tile.tileSet].FrameHeight);
-
-
-                if (_image != null)
-                    _image.draw((int)tile.tileCoords.X, (int)tile.tileCoords.Y, (int)tile.atlasCoords.X, (int)tile.atlasCoords.Y, (int)dimensions.X, (int)dimensions.Y);
             }
 
             if (_components != null)

@@ -52,6 +52,7 @@ namespace King_of_Thieves.Graphics
 
             //tilesets
             textures.Add("tileset:test", new CTextureAtlas("test", 16, 16, 0, "0:0", "15:15",0,false,false,true));
+            textures.Add("tileset:ages", new CTextureAtlas("ages", 16, 16, 0, "0:0", "15:15", 0, false, false, true));
 
             //editor icons
             textures.Add("editor:icons", new CTextureAtlas("icons", 16, 16, 0, "0:0", "0:0"));
@@ -66,6 +67,7 @@ namespace King_of_Thieves.Graphics
             rawTextures.Add("chuchuGreen", _content.Load<Texture2D>("chuchuGreen"));
             rawTextures.Add("keese", _content.Load<Texture2D>("keese"));
             rawTextures.Add("test", _content.Load<Texture2D>("tiletest"));
+            rawTextures.Add("ages", _content.Load<Texture2D>("AGES_TILESET_1F"));
             rawTextures.Add("icons", _content.Load<Texture2D>("icons"));
             rawTextures.Add("pointer", _content.Load<Texture2D>("pointer"));
         }
