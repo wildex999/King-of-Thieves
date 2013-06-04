@@ -5,6 +5,8 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Gears.Cloud;
 using King_of_Thieves.Input;
+using Microsoft.Xna.Framework.Input;
+using King_of_Thieves.Actors.Collision;
 
 namespace King_of_Thieves.Actors.Player
 {
@@ -20,6 +22,7 @@ namespace King_of_Thieves.Actors.Player
             _name = "Player";
             _position = Vector2.Zero;
             //resource init
+            _hitBox = new Collision.CHitBox(this, 10, 18, 12, 15);
 
             
             image = _imageIndex["PlayerWalkDown"];
@@ -48,7 +51,48 @@ namespace King_of_Thieves.Actors.Player
 
         public override void collide(object sender, object collider)
         {
-            //throw new NotImplementedException();
+            if (collider.GetType() == typeof(CSolidTile))
+            {
+                solidCollide(collider as CActor);
+            }
+        }
+
+        private void solidCollide(CActor collider)
+        {
+            //Calculate How much to move to get out of collision moving towards last collisionless point
+			CHitBox otherbox = collider.hitBox;
+			
+			//Calculate how far in we went
+			float distx = (collider.position.X + otherbox.center.X) - (position.X + hitBox.center.X);
+			distx = (float)Math.Sqrt(distx * distx);
+			float disty = (position.Y + hitBox.center.Y) - (collider.position.Y + otherbox.center.Y);
+			disty = (float)Math.Sqrt(disty * disty);
+			
+			float lenx = hitBox.halfWidth + otherbox.halfWidth;
+			float leny = hitBox.halfHeight + otherbox.halfHeight;
+			
+			int px = 1;
+			int py = 1;
+			
+			if (collider.position.X < position.X)
+				px = -1;
+			if (collider.position.Y < position.Y+(hitBox.halfHeight*2))
+				py = -1;
+			
+			float penx = px*(distx - lenx);
+			float peny = py*(disty - leny);
+			//Resolve closest to previous position
+			float diffx = (position.X + penx) - _oldPosition.X;
+			diffx *= diffx;
+			float diffy = (position.Y + peny) - _oldPosition.Y;
+			diffy *= diffy;
+
+            if (diffx < diffy)
+                position = new Vector2(position.X + penx, position.Y); //TODO: dont make a new vector every time
+            else if (diffx > diffy)
+                position = new Vector2(position.X, position.Y + peny); //Same here
+            else
+                position = new Vector2(position.X + penx, position.Y + peny); //Corner cases
         }
 
         public override void create(object sender)
@@ -86,14 +130,15 @@ namespace King_of_Thieves.Actors.Player
         {
             if (_state == "Idle" || _state == "Moving")
             {
-
-                if ((Master.GetInputManager().GetCurrentInputHandler() as CInput).keysPressed.Contains(Microsoft.Xna.Framework.Input.Keys.End))
+                //Store this so we can type less
+                CInput input = Master.GetInputManager().GetCurrentInputHandler() as CInput;
+                if (input.keysPressed.Contains(Keys.End))
                 {
                     Graphics.CGraphics.changeResolution(320, 240);
                     Master.Pop();
                 }
 
-                if ((Master.GetInputManager().GetCurrentInputHandler() as CInput).keysPressed.Contains(Microsoft.Xna.Framework.Input.Keys.A))
+                if (input.keysPressed.Contains(Keys.A))
                 {
                     _position.X -= 1;
                     image = _imageIndex["PlayerWalkLeft"];
@@ -101,7 +146,7 @@ namespace King_of_Thieves.Actors.Player
                     _state = "Moving";
                 }
 
-                if ((Master.GetInputManager().GetCurrentInputHandler() as CInput).keysPressed.Contains(Microsoft.Xna.Framework.Input.Keys.D))
+                if (input.keysPressed.Contains(Keys.D))
                 {
                     _position.X += 1;
                     image = _imageIndex["PlayerWalkRight"];
@@ -109,7 +154,7 @@ namespace King_of_Thieves.Actors.Player
                     _state = "Moving";
                 }
 
-                if ((Master.GetInputManager().GetCurrentInputHandler() as CInput).keysPressed.Contains(Microsoft.Xna.Framework.Input.Keys.W))
+                if (input.keysPressed.Contains(Keys.W))
                 {
                     _position.Y -= 1;
                     image = _imageIndex["PlayerWalkUp"];
@@ -117,7 +162,7 @@ namespace King_of_Thieves.Actors.Player
                     _state = "Moving";
                 }
 
-                if ((Master.GetInputManager().GetCurrentInputHandler() as CInput).keysPressed.Contains(Microsoft.Xna.Framework.Input.Keys.S))
+                if (input.keysPressed.Contains(Keys.S))
                 {
                     _position.Y += 1;
                     image = _imageIndex["PlayerWalkDown"];
@@ -125,7 +170,7 @@ namespace King_of_Thieves.Actors.Player
                     _state = "Moving";
                 }
 
-                if ((Master.GetInputManager().GetCurrentInputHandler() as CInput).keysPressed.Contains(Microsoft.Xna.Framework.Input.Keys.Space))
+                if (input.keysPressed.Contains(Keys.Space))
                 {
                     _state = "Swinging";
                     _swordReleased = false;
@@ -246,6 +291,7 @@ namespace King_of_Thieves.Actors.Player
         protected override void _addCollidables()
         {
             _collidables.Add(typeof(Actors.NPC.Enemies.Keese.CKeese));
+            _collidables.Add(typeof(Actors.Collision.CSolidTile));
         }
     }
 }

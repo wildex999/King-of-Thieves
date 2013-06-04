@@ -33,7 +33,6 @@ namespace King_of_Thieves.Actors
         protected Vector2 _oldPosition = Vector2.Zero;
         public readonly ACTORTYPES ACTORTYPE;
         protected string _name;
-        protected List<Type> _collidables;
         protected CAnimation _sprite;
         protected DIRECTION _direction = DIRECTION.UP;
         protected Boolean _moving = false; //used for prioritized movement
@@ -48,8 +47,13 @@ namespace King_of_Thieves.Actors
         public List<object> userParams = new List<object>();
         public bool _followRoot = true;
         public int layer;
-        //event handlers will be added here
 
+        protected Collision.CHitBox _hitBox;
+        protected List<Type> _collidables;
+        public static bool showHitBox = false; //Draw hitboxes over actor if this is true
+
+
+        //event handlers will be added here
         public event createHandler onCreate;
         public event destroyHandler onDestroy;
         public event keyDownHandler onKeyDown;
@@ -63,7 +67,6 @@ namespace King_of_Thieves.Actors
         public event timerHandler onTimer2;
         public event mouseLeftClickHandler onMouseClick;
         public event clickHandler onClick;
-        protected Collision.CHitBox _hitBox;
 
         public virtual void create(object sender) { }
         public virtual void destroy(object sender) { }
@@ -78,7 +81,7 @@ namespace King_of_Thieves.Actors
         public virtual void mouseClick(object sender) { }
         public virtual void click(object sender) { }
 
-        protected abstract void _addCollidables(); //Use this guy to tell the Actor what kind of actors it can collide with
+        protected virtual void _addCollidables() { } //Use this guy to tell the Actor what kind of actors it can collide with
         protected Random _randNum = new Random();
 
         private Timer _timer0;
@@ -218,7 +221,7 @@ namespace King_of_Thieves.Actors
             
             //onFrame(this);
 
-            //check collisions
+            //check collisions(This should realy be done after all objects have updated. As it is now two objects can be colliding, be drawn and THEN acted on for their collision)
             foreach (Type actor in _collidables)
             {
                 //fetch all actors of this type and check them for collisions
@@ -228,7 +231,7 @@ namespace King_of_Thieves.Actors
                 
                 foreach (CActor x in collideCheck)
                 {
-                    if (_hitBox.checkCollision(x._hitBox))
+                    if (_hitBox.checkCollision(x))
                     {
                         //trigger collision event
                         onCollide(this, x);
@@ -291,7 +294,10 @@ namespace King_of_Thieves.Actors
 
             if (image != null)
                 _animationHasEnded = image.draw((int)_position.X, (int)_position.Y);
- 
+
+            if (showHitBox && _hitBox != null)
+                _hitBox.draw();
+
         }
 
         protected virtual void _initializeResources()
@@ -306,8 +312,6 @@ namespace King_of_Thieves.Actors
         {
             _imageIndex.Clear();
             _imageIndex = null;
-
-            
         }
 
         public Vector2 position
@@ -331,6 +335,14 @@ namespace King_of_Thieves.Actors
             
         }
 
+        public King_of_Thieves.Actors.Collision.CHitBox hitBox
+        {
+            get
+            {
+                return _hitBox;
+            }
+        }
+
         public Vector2 distanceFromLastFrame
         {
             get
@@ -350,15 +362,6 @@ namespace King_of_Thieves.Actors
             {
                 return _name;
             }
-        }
-
-        private void _checkCollisions()
-        {
-            //This shit is WEIRD.
-            //fetch my hitboxes
-            //List<BoundingBox> myBoxes = CMasterControl.hitboxes[this.GetType()][_name];
-            
-           
         }
 
         //this will go up to the component and trigger the specified user event in the specified actor

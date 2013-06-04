@@ -23,6 +23,7 @@
 /King of Thieves/King of ThievesContent/bin
 /King of Thieves/King of Thieves/King of Thieves.csproj.user
 *.cachefile
+/gearsvge
 /GearsVGE/GearsVGE.suo
 /GearsVGE/GearsVGE/obj/x86/Debug/GearsVGE.dll
 /GearsVGE/GearsVGE/obj/x86/Debug/GearsVGE.pdb

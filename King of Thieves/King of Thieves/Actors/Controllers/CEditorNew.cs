@@ -19,7 +19,7 @@ namespace King_of_Thieves.Actors.Controllers
 
             swapImage("iconNew", false);
 
-            _hitBox = new Collision.CHitBox(5,5,16, 16);
+            _hitBox = new Collision.CHitBox(this, 0,0,16, 16);
         }
 
         protected override void _addCollidables()
