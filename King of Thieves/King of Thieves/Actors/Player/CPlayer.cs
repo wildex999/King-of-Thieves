@@ -95,6 +95,9 @@ namespace King_of_Thieves.Actors.Player
             if (diffx < diffy)
                 _position.X += penx; //TODO: dont make a new vector every time
             else if (diffx > diffy)
+                _position.Y += peny; //Same here 
+            else
+                position = new Vector2(position.X + penx, position.Y + peny); //Corner cases 
         }
 
         public override void create(object sender)
