@@ -75,7 +75,7 @@ namespace King_of_Thieves.Actors
         public virtual void keyRelease(object sender) { }
         public virtual void frame(object sender) { }
         public virtual void draw(object sender) { }
-        public virtual void collide(object sender, object collider) { }
+        public virtual void collide(object sender, CActor collider) { }
         public virtual void animationEnd(object sender) { }
         public virtual void timer0(object sender, ElapsedEventArgs e) { if (_timer0 != null) { _timer0.Stop(); _timer0 = null; } }
         public virtual void timer1(object sender, ElapsedEventArgs e) { if (_timer1 != null) { _timer1.Stop(); _timer1 = null; } }

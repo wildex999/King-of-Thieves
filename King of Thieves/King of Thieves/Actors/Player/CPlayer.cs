@@ -13,6 +13,7 @@ namespace King_of_Thieves.Actors.Player
     class CPlayer : CActor
     {
         private bool _swordReleased = true;
+        private bool _rollReleased = true;
         private static Vector2 _readableCoords = new Vector2();
 
         public CPlayer() :
@@ -46,14 +47,18 @@ namespace King_of_Thieves.Actors.Player
             _imageIndex.Add("PlayerSwingRight", new Graphics.CSprite("Player:SwingLeft", Graphics.CTextures.textures["Player:SwingLeft"],null, true));
             _imageIndex.Add("PlayerSwingLeft", new Graphics.CSprite("Player:SwingLeft", Graphics.CTextures.textures["Player:SwingLeft"]));
 
+            _imageIndex.Add("PlayerRollDown", new Graphics.CSprite("Player:RollDown", Graphics.CTextures.textures["Player:RollDown"]));
+            _imageIndex.Add("PlayerRollUp", new Graphics.CSprite("Player:RollUp", Graphics.CTextures.textures["Player:RollUp"]));
+            _imageIndex.Add("PlayerRollLeft", new Graphics.CSprite("Player:RollLeft", Graphics.CTextures.textures["Player:RollLeft"]));
+            _imageIndex.Add("PlayerRollRight", new Graphics.CSprite("Player:RollLeft", Graphics.CTextures.textures["Player:RollLeft"], null, true));
 
         }
 
-        public override void collide(object sender, object collider)
+        public override void collide(object sender, CActor collider)
         {
-            if (collider.GetType() == typeof(CSolidTile))
+            if (collider.GetType() == typeof(CSolidTile) || collider.GetType() == typeof(Items.decoration.CPot)) //this is gonna need to be a bit more elegant
             {
-                solidCollide(collider as CActor);
+                solidCollide(collider);
             }
         }
 
@@ -88,9 +93,9 @@ namespace King_of_Thieves.Actors.Player
 			diffy *= diffy;
 
             if (diffx < diffy)
-                position = new Vector2(position.X + penx, position.Y); //TODO: dont make a new vector every time
+                _position.X += penx; //TODO: dont make a new vector every time
             else if (diffx > diffy)
-                position = new Vector2(position.X, position.Y + peny); //Same here
+                _position.Y += peny; //Same here
             else
                 position = new Vector2(position.X + penx, position.Y + peny); //Corner cases
         }
@@ -115,6 +120,10 @@ namespace King_of_Thieves.Actors.Player
             {
                 case "Swinging":
                       _state = "Idle";
+                    break;
+
+                case "Rolling":
+                    _state = "Idle";
                     break;
             }
 
@@ -170,6 +179,14 @@ namespace King_of_Thieves.Actors.Player
                     _state = "Moving";
                 }
 
+                if (input.keysPressed.Contains(Keys.LeftShift) && _state == "Moving")
+                {
+                    _state = "Rolling";
+                    _rollReleased = false;
+                    //get the FUCK out of this
+                    return;
+                }
+
                 if (input.keysPressed.Contains(Keys.Space))
                 {
                     _state = "Swinging";
@@ -193,6 +210,39 @@ namespace King_of_Thieves.Actors.Player
 
             switch (_state)
             {
+
+                case "Rolling":
+                    if (!_rollReleased)
+                    {
+                        _rollReleased = true;
+                        CMasterControl.audioPlayer.addSfx(CMasterControl.audioPlayer.soundBank["Player:Attack3"]);
+                    }
+                        switch (_direction)
+                        {
+
+                            case DIRECTION.DOWN:
+                                swapImage("PlayerRollDown");
+                                _position.Y += 2;
+                                break;
+
+                            case DIRECTION.UP:
+                                swapImage("PlayerRollUp");
+                                _position.Y -= 2;
+                                break;
+
+                            case DIRECTION.LEFT:
+                                swapImage("PlayerRollLeft");
+                                _position.X -= 2;
+                                break;
+
+                            case DIRECTION.RIGHT:
+                                swapImage("PlayerRollRight");
+                                _position.X += 2;
+                                break;
+                        }
+                    
+                    break;
+
                 case "Swinging":
                     if (!_swordReleased)
                     {
@@ -292,6 +342,7 @@ namespace King_of_Thieves.Actors.Player
         {
             _collidables.Add(typeof(Actors.NPC.Enemies.Keese.CKeese));
             _collidables.Add(typeof(Actors.Collision.CSolidTile));
+            _collidables.Add(typeof(Actors.Items.decoration.CPot));
         }
     }
 }

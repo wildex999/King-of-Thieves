@@ -27,7 +27,7 @@ namespace King_of_Thieves.Actors
             //throw new NotImplementedException();
         }
 
-        public override void collide(object sender, object collider)
+        public override void collide(object sender, Actors.CActor collider)
         {
             //throw new NotImplementedException();
         }

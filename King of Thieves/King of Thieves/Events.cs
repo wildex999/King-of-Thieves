@@ -12,7 +12,7 @@ namespace King_of_Thieves
     public delegate void frameHandler(object sender);
     public delegate void drawHandler(object sender);
     public delegate void keyReleaseHandler(object sender);
-    public delegate void collideHandler(object sender, object collider);
+    public delegate void collideHandler(object sender, Actors.CActor collider);
     public delegate void roomStartHandler(object sender);
     public delegate void roomEndHandler(object sender);
     public delegate void animationEndHandler(object sender);

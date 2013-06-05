@@ -69,7 +69,7 @@ namespace King_of_Thieves.Actors.Items.Swords
             
         }
 
-        public override void collide(object sender, object collider)
+        public override void collide(object sender, CActor collider)
         {
             throw new NotImplementedException();
         }
