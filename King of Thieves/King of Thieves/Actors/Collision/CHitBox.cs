@@ -29,7 +29,7 @@ namespace King_of_Thieves.Actors.Collision
                 //Make a single pixel with transparency that we later stretch to the size of our hitbox
                 texture = new Texture2D(CGraphics.GPU, 1, 1, false, SurfaceFormat.Color);
                 Color[] c = new Color[1];
-                c[0] = Color.FromNonPremultiplied(255, 255, 255, 200);
+                c[0] = Color.FromNonPremultiplied(255, 0, 0, 200);
                 texture.SetData<Color>(c);
             }
         }
