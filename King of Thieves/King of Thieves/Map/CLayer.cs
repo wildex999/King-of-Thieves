@@ -36,6 +36,19 @@ namespace King_of_Thieves.Map
              _image = null;
         }
 
+        public int indexOfTile(Vector2 coords)
+        {
+            int outPut = -1;
+
+            for (int i = 0; i < _tiles.Count; i++)
+            {
+                if (_tiles[i].checkForClick(coords))
+                    return i;
+            }
+
+            return outPut;
+        }
+
         public void updateTileSet(Graphics.CSprite newSet)
         {
             foreach (CTile tile in _tiles)
@@ -55,6 +68,11 @@ namespace King_of_Thieves.Map
         public void addTile(CTile tile)
         {
             _tiles.Add(tile);
+        }
+
+        public void removeTile(int index)
+        {
+            _tiles.RemoveAt(index);
         }
 
         public void updateLayer(Microsoft.Xna.Framework.GameTime gameTime)

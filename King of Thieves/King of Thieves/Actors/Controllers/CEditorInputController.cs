@@ -29,7 +29,7 @@ namespace King_of_Thieves.Actors.Controllers
 
         }
 
-        public override void mouseClick(object sender)
+        public override void tap(object sender)
         {
             if (System.Windows.Forms.Form.ActiveForm ==
                 (System.Windows.Forms.Control.FromHandle(Gears.Cloud.Master.GetGame().Window.Handle) as System.Windows.Forms.Form))

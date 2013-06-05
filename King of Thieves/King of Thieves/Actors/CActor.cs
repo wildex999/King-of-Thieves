@@ -67,6 +67,7 @@ namespace King_of_Thieves.Actors
         public event timerHandler onTimer2;
         public event mouseLeftClickHandler onMouseClick;
         public event clickHandler onClick;
+        public event tapHandler onTap;
 
         public virtual void create(object sender) { }
         public virtual void destroy(object sender) { }
@@ -80,6 +81,7 @@ namespace King_of_Thieves.Actors
         public virtual void timer1(object sender, ElapsedEventArgs e) { if (_timer1 != null) { _timer1.Stop(); _timer1 = null; } }
         public virtual void mouseClick(object sender) { }
         public virtual void click(object sender) { }
+        public virtual void tap(object sender) { }
 
         protected virtual void _addCollidables() { } //Use this guy to tell the Actor what kind of actors it can collide with
         protected Random _randNum = new Random();
@@ -100,6 +102,7 @@ namespace King_of_Thieves.Actors
             onAnimationEnd += new animationEndHandler(animationEnd);
             onCollide += new collideHandler(collide);
             onMouseClick += new mouseLeftClickHandler(mouseClick);
+            onTap += new tapHandler(tap);
 
             _name = name;
             _collidables = new List<Type>();
@@ -271,6 +274,11 @@ namespace King_of_Thieves.Actors
                 {
                     click(this);
                 }
+            }
+
+            if ((Master.GetInputManager().GetCurrentInputHandler() as CInput).mouseLeftRelease)
+            {
+                onTap(this);
             }
 
             //do timer events
