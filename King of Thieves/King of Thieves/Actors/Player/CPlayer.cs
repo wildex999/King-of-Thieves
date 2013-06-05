@@ -74,9 +74,9 @@ namespace King_of_Thieves.Actors.Player
 			int px = 1;
 			int py = 1;
 			
-			if (collider.position.X < position.X)
+			if (collider.position.X+otherbox.center.X < position.X+hitBox.center.X)
 				px = -1;
-			if (collider.position.Y < position.Y+(hitBox.halfHeight*2))
+			if (collider.position.Y+otherbox.center.Y < position.Y+hitBox.center.Y)
 				py = -1;
 			
 			float penx = px*(distx - lenx);
@@ -91,8 +91,9 @@ namespace King_of_Thieves.Actors.Player
                 position = new Vector2(position.X + penx, position.Y); //TODO: dont make a new vector every time
             else if (diffx > diffy)
                 position = new Vector2(position.X, position.Y + peny); //Same here
-            else
-                position = new Vector2(position.X + penx, position.Y + peny); //Corner cases
+            //TODO: Make an corner cases where it does not snag the corners, removing this for since it's pretty hard to hit the corners perectly.
+            /*else
+                position = new Vector2(position.X + penx, position.Y + peny); //Corner cases*/
         }
 
         public override void create(object sender)
