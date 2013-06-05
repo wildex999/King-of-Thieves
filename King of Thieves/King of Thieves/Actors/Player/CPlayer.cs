@@ -74,9 +74,9 @@ namespace King_of_Thieves.Actors.Player
 			int px = 1;
 			int py = 1;
 			
-			if (collider.position.X < position.X)
+			if (collider.position.X+otherbox.center.X < position.X+hitBox.center.X)
 				px = -1;
-			if (collider.position.Y < position.Y+(hitBox.halfHeight*2))
+			if (collider.position.Y+otherbox.center.Y < position.Y+hitBox.center.Y)
 				py = -1;
 			
 			float penx = px*(distx - lenx);
