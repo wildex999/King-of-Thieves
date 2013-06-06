@@ -5,6 +5,10 @@
 /King of Thieves/King of Thieves/obj/x86/Debug/DesignTimeResolveAssemblyReferencesInput.cache
 /King of Thieves/King of Thieves/obj/x86/Debug/ResolveAssemblyReference.cache
 /King of Thieves/King of Thieves/obj/x86/Debug/TempPE
+/King of Thieves/King of Thieves/bin/x86/Debug/*.dll
+/King of Thieves/King of Thieves/bin/x86/Debug/*.pdb
+/King of Thieves/King of Thieves/bin/x86/Debug/*.exe
+/King of Thieves/King of Thieves/bin/x86/Debug/Content
 *.suo
 /King of Thieves/King of ThievesContent/obj/x86/Debug/King of ThievesContent.contentproj.FileListAbsolute.txt
 /King of Thieves/King of ThievesContent/obj/x86/Debug/ResolveAssemblyReference.cache
@@ -19,6 +23,7 @@
 /King of Thieves/King of ThievesContent/bin
 /King of Thieves/King of Thieves/King of Thieves.csproj.user
 *.cachefile
+/gearsvge
 /GearsVGE/GearsVGE.suo
 /GearsVGE/GearsVGE/obj/x86/Debug/GearsVGE.dll
 /GearsVGE/GearsVGE/obj/x86/Debug/GearsVGE.pdb

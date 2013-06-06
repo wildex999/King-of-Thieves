@@ -51,7 +51,7 @@ namespace King_of_Thieves.Actors.NPC.Enemies
         }
 
         //look for the player while idling
-        private bool hunt()
+        protected bool hunt()
         {
             //check if the player is within the line of sight
             //switch (_direction)
