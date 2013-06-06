@@ -48,6 +48,7 @@ namespace King_of_Thieves.Actors
         public bool _followRoot = true;
         public int layer;
         public CComponent component;
+        protected Vector2 _velocity;
 
         protected Collision.CHitBox _hitBox;
         protected List<Type> _collidables;
@@ -68,6 +69,7 @@ namespace King_of_Thieves.Actors
         public event timerHandler onTimer2;
         public event mouseLeftClickHandler onMouseClick;
         public event clickHandler onClick;
+        public event tapHandler onTap;
 
         public virtual void create(object sender) { }
         public virtual void destroy(object sender) { }
@@ -75,12 +77,13 @@ namespace King_of_Thieves.Actors
         public virtual void keyRelease(object sender) { }
         public virtual void frame(object sender) { }
         public virtual void draw(object sender) { }
-        public virtual void collide(object sender, object collider) { }
+        public virtual void collide(object sender, CActor collider) { }
         public virtual void animationEnd(object sender) { }
         public virtual void timer0(object sender, ElapsedEventArgs e) { if (_timer0 != null) { _timer0.Stop(); _timer0 = null; } }
         public virtual void timer1(object sender, ElapsedEventArgs e) { if (_timer1 != null) { _timer1.Stop(); _timer1 = null; } }
         public virtual void mouseClick(object sender) { }
         public virtual void click(object sender) { }
+        public virtual void tap(object sender) { }
 
         protected virtual void _addCollidables() { } //Use this guy to tell the Actor what kind of actors it can collide with
         protected Random _randNum = new Random();
@@ -101,6 +104,7 @@ namespace King_of_Thieves.Actors
             onAnimationEnd += new animationEndHandler(animationEnd);
             onCollide += new collideHandler(collide);
             onMouseClick += new mouseLeftClickHandler(mouseClick);
+            onTap += new tapHandler(tap);
 
             _name = name;
             _collidables = new List<Type>();
@@ -161,27 +165,58 @@ namespace King_of_Thieves.Actors
             _componentAddress = (int)compAddress;
         }
 
+        public Vector2 velocity
+        {
+            get
+            {
+                return _velocity;
+            }
+        }
+
+        public int componentAddress
+        {
+            get
+            {
+                return _componentAddress;
+            }
+        }
+
+        public void setVelocity(float x, float y)
+        {
+            _velocity.X = x;
+            _velocity.Y = y;
+        }
+
         public string state
         {
             get
             {
                 return _state;
             }
+            set
+            {
+                _state = value;
+            }
         }
 
-        public void moveToPoint(int x, int y, double speed)
+        public void moveToPoint(float x, float y, float speed)
         {
-            double distX = 0, distY = 0;
+            float distX = 0, distY = 0;
 
-            distX = (int)(x - _position.X);
-            distY = (int)(y - _position.Y);
+            distX = (x - _position.X);
+            distY = (y - _position.Y);
 
             distX = Math.Sign(distX);
             distY = Math.Sign(distY);
 
-            _position.X += (float)(speed * distX);
-            _position.Y += (float)(speed * distY);
+            _position.X += (speed * distX);
+            _position.Y += (speed * distY);
+        }
 
+        public void jumpToPoint(float x, float y)
+        {
+            _position.X = x;
+            _position.Y = y;
         }
 
         public void swapImage(string imageIndex, bool triggerAnimEnd = true)
@@ -203,6 +238,14 @@ namespace King_of_Thieves.Actors
         {
             _userEvents = new Dictionary<uint, userEventHandler>();
             _userEventsToFire = new List<uint>();
+        }
+
+        public DIRECTION direction
+        {
+            get
+            {
+                return _direction;
+            }
         }
 
         public CAnimation spriteIndex
@@ -272,6 +315,11 @@ namespace King_of_Thieves.Actors
                 {
                     click(this);
                 }
+            }
+
+            if ((Master.GetInputManager().GetCurrentInputHandler() as CInput).mouseLeftRelease)
+            {
+                onTap(this);
             }
 
             //do timer events
@@ -367,7 +415,7 @@ namespace King_of_Thieves.Actors
 
         //this will go up to the component and trigger the specified user event in the specified actor
         //what this does is create a "packet" that will float around in some higher level scope for the component to pick up
-        protected void _triggerUserEvent(int eventNum, string actorName, params string[] param)
+        protected void _triggerUserEvent(int eventNum, string actorName, params object[] param)
         {
             CMasterControl.commNet[_componentAddress].Add(new CActorPacket(eventNum, actorName, param));
         }

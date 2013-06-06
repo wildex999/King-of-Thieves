@@ -126,6 +126,8 @@
     <Compile Include="Actors\Effects\CIce.cs" />
     <Compile Include="Actors\Effects\CShadow.cs" />
     <Compile Include="Actors\Effects\CThunder.cs" />
+    <Compile Include="Actors\Items\CLiftable.cs" />
+    <Compile Include="Actors\Items\decoration\CPot.cs" />
     <Compile Include="Actors\Items\Swords\CGerudoSword.cs" />
     <Compile Include="Actors\Menu\CMenuCursor.cs" />
     <Compile Include="Actors\NPC\Enemies\CBaseEnemy.cs" />

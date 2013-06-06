@@ -60,12 +60,21 @@ namespace King_of_Thieves.Actors.Collision
             float distance = 0;
             float length = 0;
 
-            distance = Math.Abs((actor.position.X + _center.X) - (point.X));
+
+            if (actor == null)
+                distance = Math.Abs((offset.X) - (point.X));
+            else
+                distance = Math.Abs((actor.position.X + _center.X) - (point.X));
             length = _halfSize.X * 2;
 
             if (distance < length)
             {
-                distance = Math.Abs((actor.position.Y + _center.Y) - (point.Y));
+
+                if (actor == null)
+                    distance = Math.Abs((offset.Y) - (point.Y));
+                else
+                    distance = Math.Abs((actor.position.Y + _center.Y) - (point.Y));
+
                 length = _halfSize.Y * 2;
 
                 return distance < length;

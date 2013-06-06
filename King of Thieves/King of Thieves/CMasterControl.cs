@@ -14,5 +14,6 @@ namespace King_of_Thieves
         public static GameTime gameTime;
         public static Dictionary<int, List<Actors.CActorPacket>> commNet = new Dictionary<int, List<Actors.CActorPacket>>();
         public static ContentManager glblContent;
+        public static Input.CInput glblInput;
     }
 }

@@ -82,7 +82,7 @@ namespace King_of_Thieves.Actors.NPC.Enemies.Chuchus
         protected override void chase()
         {
             //moveToPoint((int)Player.CPlayer.glblX, (int)Player.CPlayer.glblY, 3);
-            moveToPoint((int)Player.CPlayer.glblX, (int)Player.CPlayer.glblY, .25);
+            moveToPoint(Player.CPlayer.glblX, Player.CPlayer.glblY, .25f);
 
             if (_randNum.Next(0,100000) <= 250)
             {

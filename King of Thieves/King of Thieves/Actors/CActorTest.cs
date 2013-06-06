@@ -27,11 +27,6 @@ namespace King_of_Thieves.Actors
             //throw new NotImplementedException();
         }
 
-        public override void collide(object sender, object collider)
-        {
-            //throw new NotImplementedException();
-        }
-
         public override void destroy(object sender)
         {
             //throw new NotImplementedException();
