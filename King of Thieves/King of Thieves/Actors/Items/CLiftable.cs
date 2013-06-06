@@ -60,6 +60,23 @@ namespace King_of_Thieves.Actors.Items
                 position = new Vector2(position.X + penx, position.Y + peny); //Corner cases 
         }
 
+        public override void update(GameTime gameTime)
+        {
+            base.update(gameTime);
+
+            switch (_state)
+            {
+                case "Lift":
+                    switch (_direction)
+                    {
+                        case DIRECTION.UP:
+                            _position.Y -= 2;
+                            break;
+                    }
+                    break;
+            }
+        }
+
         public override void collide(object sender, CActor collider)
         {
             if (collider is CSolidTile)
@@ -74,28 +91,60 @@ namespace King_of_Thieves.Actors.Items
                 {
                     collider.state = "Lift";
                     _state = "Lift";
+
+
+                    //center with the player's hitbox
+                    DIRECTION movein = collider.direction;
+                    switch (movein)
+                    {
+                        case DIRECTION.DOWN:
+                            _direction = DIRECTION.UP;
+                            jumpToPoint(collider.position.X - 7, _position.Y);
+                            break;
+
+                        case DIRECTION.UP:
+                            _direction = DIRECTION.DOWN;
+                            jumpToPoint(collider.position.X - 7, _position.Y);
+                            break;
+
+                        case DIRECTION.LEFT:
+                            _direction = DIRECTION.RIGHT;
+                            jumpToPoint(_position.X, collider.position.Y - 16);
+                            break;
+
+                        case DIRECTION.RIGHT:
+                            _direction = DIRECTION.LEFT;
+                            jumpToPoint(_position.X, collider.position.Y - 16);
+                            break;
+                    }
+
+
+                    //moveToPoint((moveTo.X + collider.position.X), (moveTo.Y + collider.position.Y), 30);
                 }
-
-                //get the direction the player walked into this at
-                DIRECTION movein = collider.direction;
-
-                switch (movein)
+                else
                 {
-                    case DIRECTION.DOWN:
-                        _position.Y += collider.velocity.Y;
-                        break;
+                    //get the direction the player walked into this at
+                    DIRECTION movein = collider.direction;
 
-                    case DIRECTION.UP:
-                        _position.Y -= collider.velocity.Y;
-                        break;
+                    switch (movein)
+                    {
+                        case DIRECTION.DOWN:
 
-                    case DIRECTION.LEFT:
-                        _position.X -= collider.velocity.X;
-                        break;
+                            _position.Y += collider.velocity.Y;
+                            break;
 
-                    case DIRECTION.RIGHT:
-                        _position.X += collider.velocity.X;
-                        break;
+                        case DIRECTION.UP:
+                            _position.Y -= collider.velocity.Y;
+                            break;
+
+                        case DIRECTION.LEFT:
+                            _position.X -= collider.velocity.X;
+                            break;
+
+                        case DIRECTION.RIGHT:
+                            _position.X += collider.velocity.X;
+                            break;
+                    }
                 }
             }
         }

@@ -15,6 +15,7 @@ namespace King_of_Thieves.Actors.Player
         private bool _swordReleased = true;
         private bool _rollReleased = true;
         private static Vector2 _readableCoords = new Vector2();
+        public static readonly Vector2 carrySpot = new Vector2(-6, -10); //will need to be played with
 
         public CPlayer() :
             base()
@@ -59,7 +60,7 @@ namespace King_of_Thieves.Actors.Player
 
         public override void collide(object sender, CActor collider)
         {
-            if (collider is CSolidTile)
+            if (_state != "Lift" && collider is CSolidTile)
             {
                 solidCollide(collider);
             }
@@ -135,11 +136,6 @@ namespace King_of_Thieves.Actors.Player
             }
 
             
-        }
-
-        public override void frame(object sender)
-        {
-            //throw new NotImplementedException();
         }
 
         public override void keyDown(object sender)

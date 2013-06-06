@@ -172,6 +172,14 @@ namespace King_of_Thieves.Actors
             }
         }
 
+        public int componentAddress
+        {
+            get
+            {
+                return _componentAddress;
+            }
+        }
+
         public void setVelocity(float x, float y)
         {
             _velocity.X = x;
@@ -190,19 +198,24 @@ namespace King_of_Thieves.Actors
             }
         }
 
-        public void moveToPoint(int x, int y, double speed)
+        public void moveToPoint(float x, float y, float speed)
         {
-            double distX = 0, distY = 0;
+            float distX = 0, distY = 0;
 
-            distX = (int)(x - _position.X);
-            distY = (int)(y - _position.Y);
+            distX = (x - _position.X);
+            distY = (y - _position.Y);
 
             distX = Math.Sign(distX);
             distY = Math.Sign(distY);
 
-            _position.X += (float)(speed * distX);
-            _position.Y += (float)(speed * distY);
+            _position.X += (speed * distX);
+            _position.Y += (speed * distY);
+        }
 
+        public void jumpToPoint(float x, float y)
+        {
+            _position.X = x;
+            _position.Y = y;
         }
 
         public void swapImage(string imageIndex, bool triggerAnimEnd = true)

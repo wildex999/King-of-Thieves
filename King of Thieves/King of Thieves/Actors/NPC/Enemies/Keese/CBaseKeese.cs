@@ -89,7 +89,7 @@ namespace King_of_Thieves.Actors.NPC.Enemies.Keese
 
         protected override void chase()
         {
-            moveToPoint((int)Player.CPlayer.glblX, (int)Player.CPlayer.glblY, .75);
+            moveToPoint((int)Player.CPlayer.glblX, (int)Player.CPlayer.glblY, .75f);
 
             if (MathExt.MathExt.distance(_position, new Microsoft.Xna.Framework.Vector2(Player.CPlayer.glblX, Player.CPlayer.glblX)) > 150)
             {
