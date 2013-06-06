@@ -117,10 +117,15 @@
     <Compile Include="Actors\CActorTest.cs" />
     <Compile Include="Actors\CComponent.cs" />
     <Compile Include="Actors\Collision\CHitBox.cs" />
+    <Compile Include="Actors\Collision\CSolidTile.cs" />
     <Compile Include="Actors\Controllers\CEditorInputController.cs" />
     <Compile Include="Actors\Controllers\CEditorNew.cs" />
     <Compile Include="Actors\Controllers\CEditorOpen.cs" />
     <Compile Include="Actors\Controllers\CEditorSave.cs" />
+    <Compile Include="Actors\Effects\CFire.cs" />
+    <Compile Include="Actors\Effects\CIce.cs" />
+    <Compile Include="Actors\Effects\CShadow.cs" />
+    <Compile Include="Actors\Effects\CThunder.cs" />
     <Compile Include="Actors\Items\Swords\CGerudoSword.cs" />
     <Compile Include="Actors\Menu\CMenuCursor.cs" />
     <Compile Include="Actors\NPC\Enemies\CBaseEnemy.cs" />
@@ -129,6 +134,9 @@
     <Compile Include="Actors\NPC\Enemies\Keese\CBaseKeese.cs" />
     <Compile Include="Actors\NPC\Enemies\Keese\CKeese.cs" />
     <Compile Include="Actors\NPC\Enemies\Keese\CKeeseFire.cs" />
+    <Compile Include="Actors\NPC\Enemies\Keese\CKeeseIce.cs" />
+    <Compile Include="Actors\NPC\Enemies\Keese\CKeeseShadow.cs" />
+    <Compile Include="Actors\NPC\Enemies\Keese\CKeeseThunder.cs" />
     <Compile Include="Forms\Map Editor\EditorComponents.cs">
       <SubType>Form</SubType>
     </Compile>

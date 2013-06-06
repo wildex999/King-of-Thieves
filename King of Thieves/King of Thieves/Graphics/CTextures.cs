@@ -49,9 +49,23 @@ namespace King_of_Thieves.Graphics
             textures.Add("chuChu:PopDown", new CTextureAtlas("chuchuGreen", 32, 32, 1, "7:2", "9:2", 5));
             textures.Add("keese:Idle", new CTextureAtlas("keese", 32, 32, 1, "0:0", "0:0"));
             textures.Add("keese:Fly", new CTextureAtlas("keese", 32, 32, 1, "1:0", "5:0",15));
+            textures.Add("keeseFire:Idle", new CTextureAtlas("keese", 32, 32, 1, "0:1", "0:1"));
+            textures.Add("keeseFire:Fly", new CTextureAtlas("keese", 32, 32, 1, "1:1", "5:1", 15));
+            textures.Add("keeseIce:Idle", new CTextureAtlas("keese", 32, 32, 1, "0:2", "0:2"));
+            textures.Add("keeseIce:Fly", new CTextureAtlas("keese", 32, 32, 1, "1:2", "5:2", 15));
+            textures.Add("keeseShadow:Idle", new CTextureAtlas("keese", 32, 32, 1, "0:3", "0:3"));
+            textures.Add("keeseShadow:Fly", new CTextureAtlas("keese", 32, 32, 1, "1:3", "5:3", 15));
+            textures.Add("keeseThunder:Idle", new CTextureAtlas("keese", 32, 32, 1, "0:4", "0:4"));
+            textures.Add("keeseThunder:Fly", new CTextureAtlas("keese", 32, 32, 1, "1:4", "5:4", 15));
+
+            textures.Add("effects:Fire", new CTextureAtlas("effects", 32, 32, 1, "0:0", "3:0", 15));
+            textures.Add("effects:Ice", new CTextureAtlas("effects", 32, 32, 1, "0:1", "3:1", 8));
+            textures.Add("effects:Shadow", new CTextureAtlas("effects", 32, 32, 1, "0:2", "3:2", 15));
+            textures.Add("effects:Thunder", new CTextureAtlas("effects", 32, 32, 1, "0:3", "2:3", 10));
 
             //tilesets
             textures.Add("tileset:test", new CTextureAtlas("test", 16, 16, 0, "0:0", "15:15",0,false,false,true));
+            textures.Add("tileset:ages", new CTextureAtlas("ages", 16, 16, 0, "0:0", "15:15", 0, false, false, true));
 
             //editor icons
             textures.Add("editor:icons", new CTextureAtlas("icons", 16, 16, 0, "0:0", "0:0"));
@@ -66,8 +80,10 @@ namespace King_of_Thieves.Graphics
             rawTextures.Add("chuchuGreen", _content.Load<Texture2D>("chuchuGreen"));
             rawTextures.Add("keese", _content.Load<Texture2D>("keese"));
             rawTextures.Add("test", _content.Load<Texture2D>("tiletest"));
+            rawTextures.Add("ages", _content.Load<Texture2D>("AGES_TILESET_1F"));
             rawTextures.Add("icons", _content.Load<Texture2D>("icons"));
             rawTextures.Add("pointer", _content.Load<Texture2D>("pointer"));
+            rawTextures.Add("effects", _content.Load<Texture2D>("effects"));
         }
 
         public static void cleanUp(string nameSpace = "")

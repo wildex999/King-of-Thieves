@@ -86,7 +86,6 @@ namespace King_of_Thieves.Actors.Items.Swords
 
         public override void draw(object sender)
         {
-            throw new NotImplementedException();
         }
 
         public override void animationEnd(object sender)

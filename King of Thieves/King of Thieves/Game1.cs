@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using Gears.Cloud;
 using King_of_Thieves.usr.local;
 using King_of_Thieves.Input;
+using System.Linq;
 
 namespace King_of_Thieves
 {
@@ -33,7 +34,7 @@ namespace King_of_Thieves
 
         public Game1()
         {
-            this.IsFixedTimeStep = false;
+            this.IsFixedTimeStep = true;
             
             graphics = new GraphicsDeviceManager(this);
             graphics.SynchronizeWithVerticalRetrace = false;
@@ -159,6 +160,14 @@ namespace King_of_Thieves
             {
                 this.Exit();
             }
+            //Exit when Escape is pressed(Dunno if this iterferes with the editor?)
+            if (Keyboard.GetState(PlayerIndex.One).IsKeyDown(Keys.Escape))
+                this.Exit();
+
+            CInput input = Master.GetInputManager().GetCurrentInputHandler() as CInput;
+            if (input.getInputRelease(Microsoft.Xna.Framework.Input.Keys.B))
+                CActor.showHitBox = !CActor.showHitBox;
+
 
             Master.Update(gameTime);
             //CMasterControl.mapManager.updateMap(gameTime);
