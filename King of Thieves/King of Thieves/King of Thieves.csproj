@@ -122,6 +122,7 @@
     <Compile Include="Actors\Controllers\CEditorNew.cs" />
     <Compile Include="Actors\Controllers\CEditorOpen.cs" />
     <Compile Include="Actors\Controllers\CEditorSave.cs" />
+    <Compile Include="Actors\Items\CLiftable.cs" />
     <Compile Include="Actors\Items\decoration\CPot.cs" />
     <Compile Include="Actors\Items\Swords\CGerudoSword.cs" />
     <Compile Include="Actors\Menu\CMenuCursor.cs" />

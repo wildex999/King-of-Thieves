@@ -5,7 +5,7 @@ using System.Text;
 
 namespace King_of_Thieves.Actors.Items.decoration
 {
-    class CPot : CActor
+    class CPot : CLiftable
     {
         public CPot() :
             base()

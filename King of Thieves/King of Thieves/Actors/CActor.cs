@@ -47,6 +47,7 @@ namespace King_of_Thieves.Actors
         public List<object> userParams = new List<object>();
         public bool _followRoot = true;
         public int layer;
+        protected Vector2 _velocity;
 
         protected Collision.CHitBox _hitBox;
         protected List<Type> _collidables;
@@ -163,11 +164,29 @@ namespace King_of_Thieves.Actors
             _componentAddress = (int)compAddress;
         }
 
+        public Vector2 velocity
+        {
+            get
+            {
+                return _velocity;
+            }
+        }
+
+        public void setVelocity(float x, float y)
+        {
+            _velocity.X = x;
+            _velocity.Y = y;
+        }
+
         public string state
         {
             get
             {
                 return _state;
+            }
+            set
+            {
+                _state = value;
             }
         }
 
@@ -205,6 +224,14 @@ namespace King_of_Thieves.Actors
         {
             _userEvents = new Dictionary<uint, userEventHandler>();
             _userEventsToFire = new List<uint>();
+        }
+
+        public DIRECTION direction
+        {
+            get
+            {
+                return _direction;
+            }
         }
 
         public CAnimation spriteIndex
@@ -374,7 +401,7 @@ namespace King_of_Thieves.Actors
 
         //this will go up to the component and trigger the specified user event in the specified actor
         //what this does is create a "packet" that will float around in some higher level scope for the component to pick up
-        protected void _triggerUserEvent(int eventNum, string actorName, params string[] param)
+        protected void _triggerUserEvent(int eventNum, string actorName, params object[] param)
         {
             CMasterControl.commNet[_componentAddress].Add(new CActorPacket(eventNum, actorName, param));
         }

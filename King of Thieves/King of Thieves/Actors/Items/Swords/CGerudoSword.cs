@@ -44,22 +44,22 @@ namespace King_of_Thieves.Actors.Items.Swords
 
         public void userEventSwing(object sender)
         {
-            _position = new Vector2(Convert.ToInt32(userParams[1]), Convert.ToInt32(userParams[2]));
-            switch (userParams[0].ToString())
+            _position = new Vector2((float)userParams[1], (float)userParams[2]);
+            switch ((DIRECTION)userParams[0])
             {
-                case "UP":
+                case DIRECTION.UP:
                     image = _imageIndex["swingUp"];
                     break;
 
-                case "DOWN":
+                case DIRECTION.DOWN:
                     image = _imageIndex["swingDown"];
                     break;
 
-                case "LEFT":
+                case DIRECTION.LEFT:
                     image = _imageIndex["swingLeft"];
                     break;
 
-                case "RIGHT":
+                case DIRECTION.RIGHT:
                     image = _imageIndex["swingRight"];
                     break;
 
@@ -67,11 +67,6 @@ namespace King_of_Thieves.Actors.Items.Swords
                     break;
             }
             
-        }
-
-        public override void collide(object sender, CActor collider)
-        {
-            throw new NotImplementedException();
         }
 
         public override void create(object sender)
