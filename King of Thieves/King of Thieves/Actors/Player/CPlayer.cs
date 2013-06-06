@@ -291,7 +291,7 @@ namespace King_of_Thieves.Actors.Player
 
         protected override void _addCollidables()
         {
-            _collidables.Add(typeof(Actors.NPC.Enemies.Keese.CKeese));
+            //_collidables.Add(typeof(Actors.NPC.Enemies.Keese.CKeese));
             _collidables.Add(typeof(Actors.Collision.CSolidTile));
         }
     }

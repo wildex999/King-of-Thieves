@@ -5,20 +5,20 @@ using System.Text;
 
 namespace King_of_Thieves.Actors.NPC.Enemies.Keese
 {
-    class CKeeseFire : CBaseKeese
+    class CKeeseIce : CBaseKeese
     {
-        public CKeeseFire()
+        public CKeeseIce()
             : base(60)
         {
-            _type = KEESETYPE.FIRE;
+            _type = KEESETYPE.ICE;
         }
 
         protected override void _initializeResources()
         {
             base._initializeResources();
 
-            _imageIndex.Add("keeseIdle", new Graphics.CSprite("keeseFire:Idle", Graphics.CTextures.textures["keeseFire:Idle"]));
-            _imageIndex.Add("keeseFly", new Graphics.CSprite("keeseFire:Fly", Graphics.CTextures.textures["keeseFire:Fly"]));
+            _imageIndex.Add("keeseIdle", new Graphics.CSprite("keeseIce:Idle", Graphics.CTextures.textures["keeseIce:Idle"]));
+            _imageIndex.Add("keeseFly", new Graphics.CSprite("keeseIce:Fly", Graphics.CTextures.textures["keeseIce:Fly"]));
         }
 
         protected override void _addCollidables()

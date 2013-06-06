@@ -47,6 +47,7 @@ namespace King_of_Thieves.Actors
         public List<object> userParams = new List<object>();
         public bool _followRoot = true;
         public int layer;
+        public CComponent component;
 
         protected Collision.CHitBox _hitBox;
         protected List<Type> _collidables;

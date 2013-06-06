@@ -13,8 +13,10 @@ namespace King_of_Thieves.Actors
         //if the root moves, all children follow it.  Actors otherwise are free to move freely of each other.
         //actors can also rotate around the root.
         public CActor root;
+        public uint rootDrawHeight; //The height that root is to draw at, that is, how many elements to draw behind root
         public Dictionary<string, CActor> actors;
         private uint _address;
+        private uint currentDrawHeight;
 
         protected override string TextureFileLocation
         {
@@ -72,11 +74,16 @@ namespace King_of_Thieves.Actors
 
         public override void Draw(SpriteBatch spriteBatch) //spritebatch not used
         {
-            root.drawMe();
+            currentDrawHeight = 0;
             foreach (KeyValuePair<string, CActor> kvp in actors)
             {
+                if(rootDrawHeight == currentDrawHeight++)
+                    root.drawMe();
                 kvp.Value.drawMe();
             }
+            //If root is last
+            if (rootDrawHeight == currentDrawHeight)
+                root.drawMe();
         }
 
         public void destroyActors()
@@ -85,6 +92,36 @@ namespace King_of_Thieves.Actors
             foreach (KeyValuePair<string, CActor> kvp in actors)
             {
                 kvp.Value.remove();
+            }
+        }
+
+        public void addActor(CActor actor, String name)
+        {
+            //Add as root if no root is set
+            if (root != null)
+                actors.Add(name, actor);
+            else
+                root = actor;
+            //Allow actor to access it's component
+            actor.component = this;
+        }
+
+        public void removeActor(CActor actor)
+        {
+            if (actor.component == this)
+            {
+                //If we are removing the root, we need to add the next actor as root
+                if (root == actor)
+                {
+                    root = actors.GetEnumerator().Current.Value;
+                    actors.Remove(root.name);
+                    //This will fail if there are no more root, but in that case we can't realy do much, nor should that happen.
+                }
+                else
+                {
+                    actor.component = null;
+                    actors.Remove(actor.name);
+                }
             }
         }
 

@@ -64,7 +64,6 @@ namespace King_of_Thieves.Map
                     foreach (Gears.Cartography.component component in layer.COMPONENTS)
                     {
                         CComponent tempComp = new CComponent(componentAddresses);
-                        bool root = true;
                         foreach (Gears.Cartography.actors actor in component.ACTORS)
                         {
                             Type actorType = Type.GetType(actor.TYPE);
@@ -78,15 +77,11 @@ namespace King_of_Thieves.Map
                             coordinates.X = (float)Convert.ToDouble(_valSplitter.Split(actor.COORDS)[0]);
                             coordinates.Y = (float)Convert.ToDouble(_valSplitter.Split(actor.COORDS)[1]);
 
+                            tempComp.addActor(tempActor, actor.NAME);
+
                             tempActor.init(actor.NAME, coordinates, componentAddresses, actor.param == null ? null : actor.param.Split(','));
                             tempActor.layer = layerCount;
 
-                            if (root)
-                                tempComp.root = tempActor;
-                            else
-                                tempComp.actors.Add(actor.NAME, tempActor);
-
-                            root = false;
                             _actorRegistry.Add(tempActor);
 
                         }

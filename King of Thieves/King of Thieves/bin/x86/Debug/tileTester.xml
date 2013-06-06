@@ -38,6 +38,36 @@
 					<actor name = "solidtile8" type = "King_of_Thieves.Actors.Collision.CSolidTile" coordinates = "192:48"></actor>
 				</actors>
 			</component>
+			<component>
+				<actors>
+					<actor name = "keeseTest" type = "King_of_Thieves.Actors.NPC.Enemies.Keese.CKeeseFire" coordinates = "50:50"></actor>
+				</actors>
+			</component>
+						<component>
+				<actors>
+					<actor name = "keeseTest" type = "King_of_Thieves.Actors.NPC.Enemies.Keese.CKeeseShadow" coordinates = "160:150"></actor>
+				</actors>
+			</component>
+						<component>
+				<actors>
+					<actor name = "keeseTest" type = "King_of_Thieves.Actors.NPC.Enemies.Keese.CKeeseIce" coordinates = "35:90"></actor>
+				</actors>
+			</component>
+						<component>
+				<actors>
+					<actor name = "keeseTest" type = "King_of_Thieves.Actors.NPC.Enemies.Keese.CKeeseThunder" coordinates = "200:100"></actor>
+				</actors>
+			</component>
+						<component>
+				<actors>
+					<actor name = "keeseTest" type = "King_of_Thieves.Actors.NPC.Enemies.Keese.CKeese" coordinates = "45:76"></actor>
+				</actors>
+			</component>
+						<component>
+				<actors>
+					<actor name = "keeseTest" type = "King_of_Thieves.Actors.NPC.Enemies.Keese.CKeese" coordinates = "200:32"></actor>
+				</actors>
+			</component>
 		</components>
 	</layer>
   </layers>

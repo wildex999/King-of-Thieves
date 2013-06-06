@@ -17,108 +17,179 @@ namespace King_of_Thieves.Actors.NPC.Enemies.Keese
 
     class CBaseKeese : CBaseEnemy
     {
-        private KEESETYPE _type = 0;
-        protected Vector2 _home = Vector2.Zero;
+        protected KEESETYPE _type;
+        private double _dirChangeProbability; //The probability that the keese will change direction while flying(between 1 and 0)
 
-        public CBaseKeese(int sight, float fov, int foh, params dropRate[] drops)
+        private int _flyTimeMax; //Max ammount of frames the Keese will stay in the air
+        private int _flyTimeMin; //The minimum ammount of frames the Keese will have to stay in the air once it has started flying
+        private int _flyTime; //how many frames since the Keese went into the air
+
+        private int _groundTimeMax; //The max ammount of frames the Keese will stay on the ground
+        private int _groundTimeMin; //The minimum ammount of frames the Keese will stay on the ground before it can fly again(Rest)
+        private int _groundTime; //How many frames since it landed
+
+        private Vector2 _attackVector; //The vector between the Keese and the player when the player first enters attack range
+        private bool _attacking; //Set to true once an attack vector has been set, and false once the attack is done
+        private bool _attacked; //Only attack once per flight
+        private int _attackTime; //Number of frames it has been chasing
+
+        private float _movementSpeed; //Speed while moving normaly
+        private float _attackSpeed; //Movement speed when attacking
+
+        public CBaseKeese(int foh, params dropRate[] drops)
             : base(drops)
         {
-            //cant see shit, captain
-            _fovMagnitude = 0;
-            _lineOfSight = 0;
-
             _hearingRadius = foh;
             image = _imageIndex["keeseIdle"];
             _state = "idle";
             _followRoot = false;
+
+            _attacking = false;
+            _attacked = false;
+            _attackTime = 0;
+
+            _movementSpeed = 1f;
+            _attackSpeed = 1.5f;
+
+            _type = KEESETYPE.NORMAL;
+            _dirChangeProbability = 0.10;
+
+            _flyTimeMax = 360; //6 seconds
+            _flyTimeMin = 60; //1 second
+            _flyTime = 0;
+
+            _groundTimeMax = 180; //3 seconds
+            _groundTimeMin = 60; //1 second
+            _groundTime = 0;
+
+            _attackVector = new Vector2();
+            _attacking = false;
         }
 
         protected override void _initializeResources()
         {
             base._initializeResources();
-
-
         }
 
         public override void init(string name, Vector2 position, uint compAddress, params string[] additional)
         {
             base.init(name, position, compAddress, additional);
-            _home = position;
+
+            //Initialize effect depending on type
+            CActor effect = null;
+            switch (_type)
+            {
+                case KEESETYPE.NORMAL:
+                    //Do Nothing
+                    return; //Skip effects
+                case KEESETYPE.FIRE:
+                    effect = new Effects.CFire();
+                break;
+                case KEESETYPE.ICE:
+                    effect = new Effects.CIce();
+                break;
+                case KEESETYPE.SHADOW:
+                    effect = new Effects.CShadow();
+                break;
+                case KEESETYPE.THUNDER:
+                    effect = new Effects.CThunder();
+                break;
+            }
+
+            if (component != null)
+                component.addActor(effect, "keeseEffect");
+
+            effect.init("keeseEffect", new Vector2(_position.X, _position.Y), compAddress);
+            effect.layer = layer;
+
+            component.rootDrawHeight = 1; //Draw effect behind
         }
 
         protected override void idle()
         {
-            base.idle();
-
-            if (!_huntPlayer)
-                return;
-
-            //chase the player
-            swapImage("keeseFly");
-            _state = "chase";
-        }
-
-        public override void timer0(object sender, System.Timers.ElapsedEventArgs e)
-        {
-            base.timer0(sender, e);
-            _state = "return";
-        }
-
-        public override void timer1(object sender, System.Timers.ElapsedEventArgs e)
-        {
-            base.timer1(sender, e);
-
-            //pick a random direction to fly in
-            if (_state == "flying")
+            //Check if we should fly
+            _groundTime++;
+            if (_groundTime >= _groundTimeMin)
             {
-                _direction = (DIRECTION)_randNum.Next(0, 3);
-                startTimer1(2);
+                if (_groundTime > _groundTimeMax || _groundTime == _randNum.Next(_groundTimeMin, _groundTimeMax))
+                {
+                    //Fly
+                    _state = "flying";
+                    swapImage("keeseFly");
+                    _flyTime = 0; //Reset flytime
+                }
             }
-        }
 
-        protected virtual void goHome()
-        {
-            moveToPoint((int)_home.X, (int)_home.Y, 1);
-
-            if (MathExt.MathExt.distance(_position, _home) <= 1.1)
-            {
-                swapImage("keeseIdle");
-                _state = "idle";
-            }
         }
 
         protected override void chase()
         {
-            moveToPoint((int)Player.CPlayer.glblX, (int)Player.CPlayer.glblY, .75);
-
-            if (MathExt.MathExt.distance(_position, new Microsoft.Xna.Framework.Vector2(Player.CPlayer.glblX, Player.CPlayer.glblX)) > 150)
+            //Follow the attack vector
+            if(!_attacking)
             {
-                _state = "flying";
-                startTimer0(8); //return time
-                startTimer1(2); //direction change time
+                _attackVector.X = Player.CPlayer.glblX - _position.X;
+                _attackVector.Y = Player.CPlayer.glblY - _position.Y;
+                _attackVector.Normalize(); //Make it a unit vector(Direction, not speed)
+                _attacking = true;
+                _attackTime = 0;
             }
+
+            //Move in the attack vector
+            _attackTime++;
+            _position += _attackVector * _attackSpeed;
+            if (_attackTime > _hearingRadius / _attackSpeed) //Move only the max hearing distance
+            {
+                _attacked = true;
+                _attacking = false;
+                _state = "flying";
+            }
+
         }
 
         protected virtual void fly()
         {
+            //Check if we are to change direction
+            if (_randNum.NextDouble() >= 1 - _dirChangeProbability)
+                _direction = (DIRECTION)_randNum.Next(0, 4);
+
+            //Fly in the current direction
             switch (_direction)
             {
                 case DIRECTION.DOWN:
-                    _position.Y += 1f;
+                    _position.Y += _movementSpeed;
                     break;
 
                 case DIRECTION.LEFT:
-                    _position.X -= 1;
+                    _position.X -= _movementSpeed;
                     break;
 
                 case DIRECTION.RIGHT:
-                    _position.X += 1f;
+                    _position.X += _movementSpeed;
                     break;
 
                 case DIRECTION.UP:
-                    _position.Y -= 1f;
+                    _position.Y -= _movementSpeed;
                     break;
             }
+
+            //Check if we should land
+            _flyTime++;
+            if (_flyTime >= _flyTimeMin)
+            {
+                if (_flyTime > _flyTimeMax || _flyTime == _randNum.Next(_flyTimeMin, _flyTimeMax))
+                {
+                    //Land
+                    _state = "idle";
+                    swapImage("keeseIdle");
+                    _groundTime = 0; //Reset ground time
+                    _attacked = false;
+                    return; //Bypass attack check
+                }
+            }
+
+            //Check if we should attack the player
+            if (!_attacked && hunt())
+                _state = "chase";
         }
 
         public override void update(Microsoft.Xna.Framework.GameTime gameTime)
@@ -138,16 +209,12 @@ namespace King_of_Thieves.Actors.NPC.Enemies.Keese
                 case "chase":
                     chase();
                     break;
-
-                case "return":
-                    goHome();
-                    break;
             }
-        }
 
-        protected override void _addCollidables()
-        {
-            throw new NotImplementedException();
+            //Make sure we don't go out of bounds
+            //if(_position.X < 0)
+            //    _position.X = 0;
+            //TODO: Do we know map sizes yet?
         }
     }
 }

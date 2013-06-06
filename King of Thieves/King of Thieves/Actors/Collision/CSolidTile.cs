@@ -10,6 +10,7 @@ namespace King_of_Thieves.Actors.Collision
         public CSolidTile() : base()
         {
             _hitBox = new CHitBox(this, 0, 0, 16, 16);
+            _followRoot = false;
         }
     }
 }
