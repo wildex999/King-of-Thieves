@@ -29,7 +29,7 @@ namespace King_of_Thieves.Actors
             _address = address;
         }
 
-        private void passMessage(ref CActor actor, uint eventID, params string[] param)
+        private void passMessage(ref CActor actor, uint eventID, params object[] param)
         {
             actor.addFireTrigger(eventID);
             actor.userParams.AddRange(param);

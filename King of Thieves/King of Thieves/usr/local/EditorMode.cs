@@ -40,30 +40,28 @@ namespace King_of_Thieves.usr.local
             float cursorY = (float)Math.Floor(((double)((Gears.Cloud.Master.GetInputManager().GetCurrentInputHandler() as Input.CInput).mouseY / Graphics.CTextures.textures[_tileEditor.defaultTileSet].FrameHeight)) * 
                                                         Graphics.CTextures.textures[_tileEditor.defaultTileSet].FrameHeight);
 
-            Vector2 cursorTile = new Vector2(cursorX,cursorY);
-            //draw the interface
-            Vector2 sampleTileSize = new Vector2(_selectedTiles[0,0].Width, _selectedTiles[0,0].Height);
-                for (int i = 0; i < _selectedTiles.GetUpperBound(0) + 1; i++)
-                    for (int j = 0; j < _selectedTiles.GetUpperBound(1) + 1; j++)
-                    {
-                        spriteBatch.Draw(_tileEditor.sourceSet, cursorTile + new Vector2(i * sampleTileSize.X, j * sampleTileSize.Y), _selectedTiles[i, j], Color.White);
-                    }
             
+            //draw the tiles
+            layers[0].drawLayer(true);
 
-            
-
-            //draw the selected rectangle in the top left for now
-            spriteBatch.Draw(_tileEditor.sourceSet, new Vector2(5, 25), _selectedTiles[0,0], Color.White);
+            Vector2 cursorTile = new Vector2(cursorX, cursorY);
+            //draw the selected tiles
+            Vector2 sampleTileSize = new Vector2(_selectedTiles[0, 0].Width, _selectedTiles[0, 0].Height);
+            for (int i = 0; i < _selectedTiles.GetUpperBound(0) + 1; i++)
+                for (int j = 0; j < _selectedTiles.GetUpperBound(1) + 1; j++)
+                {
+                    spriteBatch.Draw(_tileEditor.sourceSet, cursorTile + new Vector2(i * sampleTileSize.X, j * sampleTileSize.Y), _selectedTiles[i, j], Color.White);
+                }
 
             _controlManager.Draw(spriteBatch);
 
-            //draw the tiles
-            layers[0].drawLayer(true);
+            
         }
 
         public override void Update(Microsoft.Xna.Framework.GameTime gameTime)
         {
             _controlManager.Update(gameTime);
+            Input.CInput input = Gears.Cloud.Master.GetInputManager().GetCurrentInputHandler() as Input.CInput;
 
             if (_tileEditor.selectorChange)
                 _currentTileSet = new Graphics.CSprite(_tileEditor.Controls["cmbTexture"].Text, Graphics.CTextures.textures[_tileEditor.Controls["cmbTexture"].Text]);
@@ -95,16 +93,15 @@ namespace King_of_Thieves.usr.local
             if (((Actors.Controllers.CEditorInputController)_controlManager.root).dropTile)
             {
                 
-                Vector2 mouseCoords = new Vector2((Gears.Cloud.Master.GetInputManager().GetCurrentInputHandler() as Input.CInput).mouseX,
-                                                  (Gears.Cloud.Master.GetInputManager().GetCurrentInputHandler() as Input.CInput).mouseY);
+                Vector2 mouseCoords = new Vector2(input.mouseX, input.mouseY);
                 string tileSet = "";
 
                 if (mouseCoords.Y <= 64)
                     return;
 
-                if (_tileEditor.Controls["cmbTexture"].Text == _tileEditor.defaultTileSet)
-                    tileSet = null;
-                else
+                //if (_tileEditor.Controls["cmbTexture"].Text == _tileEditor.defaultTileSet)
+                    //tileSet = null;
+                //else
                     tileSet = _tileEditor.Controls["cmbTexture"].Text;
 
                 Map.CTile[,] temp = new Map.CTile[_selectedTiles.GetUpperBound(0) + 1, _selectedTiles.GetUpperBound(1) + 1];
@@ -124,6 +121,16 @@ namespace King_of_Thieves.usr.local
                     layers[0].otherImages.Add(_currentTileSet.atlasName, _currentTileSet);
 
                 
+            }
+
+            if (input.mouseRightClick)
+            {
+                Vector2 mouseCoords = new Vector2(input.mouseX, input.mouseY);
+                int index = 0;
+
+                if ((index = layers[0].indexOfTile(mouseCoords)) > -1)
+                    layers[0].removeTile(index);
+
             }
             
         }

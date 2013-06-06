@@ -59,11 +59,6 @@ namespace King_of_Thieves.Actors.Menu
             throw new NotImplementedException();
         }
 
-        public override void collide(object sender, object collider)
-        {
-            //throw new NotImplementedException();
-        }
-
         public override void create(object sender)
         {
             
