@@ -75,6 +75,8 @@ namespace King_of_Thieves.Actors.NPC.Enemies.Keese
         {
             base.init(name, position, compAddress, additional);
 
+            _hitBox = new Collision.CHitBox(this, 12, 8, 8, 12);
+
             //Initialize effect depending on type
             CActor effect = null;
             switch (_type)
