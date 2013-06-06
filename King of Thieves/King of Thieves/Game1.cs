@@ -11,6 +11,7 @@ using Gears.Cloud;
 using King_of_Thieves.usr.local;
 using King_of_Thieves.Input;
 using System.Linq;
+using Gears.Cloud.Utility;
 
 namespace King_of_Thieves
 {
@@ -27,6 +28,7 @@ namespace King_of_Thieves
         CComponent compTest = new CComponent();
         Actors.Menu.CMenu testMenu;
         CComponent menuComo = new CComponent();
+        HighPerfTimer _benchmarker = new HighPerfTimer();
 
         //Screen Resolution defaults
         private const int ScreenWidth = 320;
@@ -34,7 +36,7 @@ namespace King_of_Thieves
 
         public Game1()
         {
-            this.IsFixedTimeStep = true;
+            this.IsFixedTimeStep = false;
             
             graphics = new GraphicsDeviceManager(this);
             graphics.SynchronizeWithVerticalRetrace = false;
@@ -78,6 +80,7 @@ namespace King_of_Thieves
             //Master.Push(new PlayableState());
 
             Master.GetInputManager().AddInputHandler(new CInput());
+            CMasterControl.glblInput = Master.GetInputManager().GetCurrentInputHandler() as Input.CInput;
 
             base.Initialize();
         }
@@ -167,13 +170,14 @@ namespace King_of_Thieves
             CInput input = Master.GetInputManager().GetCurrentInputHandler() as CInput;
             if (input.getInputRelease(Microsoft.Xna.Framework.Input.Keys.B))
                 CActor.showHitBox = !CActor.showHitBox;
-
-
+            _benchmarker.Start();
+            
             Master.Update(gameTime);
             //CMasterControl.mapManager.updateMap(gameTime);
-            
+            _benchmarker.Stop();
             //CMasterControl.audioPlayer.Update();
             base.Update(gameTime);
+            
         }
 
         /// <summary>
@@ -186,12 +190,23 @@ namespace King_of_Thieves
 
             spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend);
             //spriteBatch.Begin(SpriteSortMode.Immediate, null, null, null, RasterizerState.CullNone, null, globalTransformation);
-
+            
             Master.Draw(spriteBatch);
             //CMasterControl.mapManager.drawMap();
+            
+            if (CActor.showHitBox)
+            {
+                double fps = (1 / _benchmarker.Duration);
+                spriteBatch.DrawString(Content.Load<SpriteFont>("Fonts/benchmarker"), _benchmarker.Duration.ToString(), Vector2.Zero, Color.White);
+            }
+
             spriteBatch.End();
 
+            
+
             base.Draw(gameTime);
+
+            System.GC.Collect();
         }
     }
 }

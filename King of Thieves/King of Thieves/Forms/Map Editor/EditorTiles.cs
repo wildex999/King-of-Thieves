@@ -174,7 +174,7 @@ namespace King_of_Thieves.Forms.Map_Editor
                 for (int i = 0; i < selectionWidth; i++)
                     for (int j = 0; j < selectionHeight; j++)
                     {
-                        selectedTile[i, j] = new Microsoft.Xna.Framework.Rectangle(i * (int)cellSize.X, j * (int)cellSize.Y, (int)cellSize.X, (int)cellSize.Y);
+                        selectedTile[i, j] = new Microsoft.Xna.Framework.Rectangle(selectionRect.X + i * (int)cellSize.X, selectionRect.Y + j * (int)cellSize.Y, (int)cellSize.X, (int)cellSize.Y);
                     }
 
             }

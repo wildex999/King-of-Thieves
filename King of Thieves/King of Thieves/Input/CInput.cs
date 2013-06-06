@@ -141,6 +141,30 @@ namespace King_of_Thieves.Input
             }    
         }
 
+        public bool mouseRightClick
+        {
+            get
+            {
+                return _mouseStateCurrent.RightButton == ButtonState.Pressed;
+            }
+        }
+
+        public bool mouseLeftRelease
+        {
+            get
+            {
+                return (_mouseStatePrevious.LeftButton == ButtonState.Pressed && _mouseStateCurrent.LeftButton == ButtonState.Released);
+            }
+        }
+
+        public bool mouseRightRelease
+        {
+            get
+            {
+                return (_mouseStatePrevious.RightButton == ButtonState.Pressed && _mouseStateCurrent.RightButton == ButtonState.Released);
+            }
+        }
+
 
         public override void Update(GameTime gameTime)
         {

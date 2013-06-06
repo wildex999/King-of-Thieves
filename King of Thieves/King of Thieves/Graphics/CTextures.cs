@@ -39,6 +39,11 @@ namespace King_of_Thieves.Graphics
             textures.Add("Player:SwingUp", new CTextureAtlas("Player", 32, 32, 1, "23:2", "33:2", 55));
             textures.Add("Player:SwingDown", new CTextureAtlas("Player", 32, 32, 1, "23:0", "33:0", 55));
             textures.Add("Player:SwingLeft", new CTextureAtlas("Player", 32, 32, 1, "23:1", "32:1", 55));
+            textures.Add("Player:RollDown", new CTextureAtlas("Player", 32, 32, 1, "40:12", "47:12", 15));
+            textures.Add("Player:RollUp", new CTextureAtlas("Player", 32, 32, 1, "40:13", "47:13", 15));
+            textures.Add("Player:RollLeft", new CTextureAtlas("Player", 32, 32, 1, "40:14", "46:14", 15));
+            textures.Add("Player:LiftDown", new CTextureAtlas("Player", 32, 32, 1, "0:29", "4:29", 10));
+
             textures.Add("GerudoSword:SwingDown", new CTextureAtlas("Swords", 64, 64, 1, "0:0", "7:0", 55));
             textures.Add("GerudoSword:SwingUp", new CTextureAtlas("Swords", 64, 64, 1, "0:1", "7:1", 55));
             textures.Add("GerudoSword:SwingRight", new CTextureAtlas("Swords", 64, 64, 1, "0:2", "7:2", 55));
@@ -71,6 +76,10 @@ namespace King_of_Thieves.Graphics
             textures.Add("editor:icons", new CTextureAtlas("icons", 16, 16, 0, "0:0", "0:0"));
             textures.Add("editor:icons:open", new CTextureAtlas("icons", 16, 16, 0, "1:0", "1:0"));
             textures.Add("editor:icons:save", new CTextureAtlas("icons", 16, 16, 0, "2:0", "2:0"));
+
+            //items and shit
+            textures.Add("items:decor:potSmall", new CTextureAtlas("potSmall", 48, 48, 1, "0:0", "0:0"));
+            textures.Add("items:decor:potSmallBreak", new CTextureAtlas("potSmall", 48, 48, 1, "1:0", "8:0",5));
         }
 
         private static void _prepareTextures()
@@ -84,6 +93,7 @@ namespace King_of_Thieves.Graphics
             rawTextures.Add("icons", _content.Load<Texture2D>("icons"));
             rawTextures.Add("pointer", _content.Load<Texture2D>("pointer"));
             rawTextures.Add("effects", _content.Load<Texture2D>("effects"));
+            rawTextures.Add("potSmall", _content.Load<Texture2D>("potSmall"));
         }
 
         public static void cleanUp(string nameSpace = "")

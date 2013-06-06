@@ -13,7 +13,9 @@ namespace King_of_Thieves.Actors.Player
     class CPlayer : CActor
     {
         private bool _swordReleased = true;
+        private bool _rollReleased = true;
         private static Vector2 _readableCoords = new Vector2();
+        public static readonly Vector2 carrySpot = new Vector2(-6, -10); //will need to be played with
 
         public CPlayer() :
             base()
@@ -26,6 +28,7 @@ namespace King_of_Thieves.Actors.Player
 
             
             image = _imageIndex["PlayerWalkDown"];
+            _velocity = new Vector2(1, 1);
         }
 
         protected override void _initializeResources()
@@ -46,14 +49,20 @@ namespace King_of_Thieves.Actors.Player
             _imageIndex.Add("PlayerSwingRight", new Graphics.CSprite("Player:SwingLeft", Graphics.CTextures.textures["Player:SwingLeft"],null, true));
             _imageIndex.Add("PlayerSwingLeft", new Graphics.CSprite("Player:SwingLeft", Graphics.CTextures.textures["Player:SwingLeft"]));
 
+            _imageIndex.Add("PlayerRollDown", new Graphics.CSprite("Player:RollDown", Graphics.CTextures.textures["Player:RollDown"]));
+            _imageIndex.Add("PlayerRollUp", new Graphics.CSprite("Player:RollUp", Graphics.CTextures.textures["Player:RollUp"]));
+            _imageIndex.Add("PlayerRollLeft", new Graphics.CSprite("Player:RollLeft", Graphics.CTextures.textures["Player:RollLeft"]));
+            _imageIndex.Add("PlayerRollRight", new Graphics.CSprite("Player:RollLeft", Graphics.CTextures.textures["Player:RollLeft"], null, true));
+
+            _imageIndex.Add("PlayerLiftDown", new Graphics.CSprite("Player:LiftDown", Graphics.CTextures.textures["Player:LiftDown"]));
 
         }
 
-        public override void collide(object sender, object collider)
+        public override void collide(object sender, CActor collider)
         {
-            if (collider.GetType() == typeof(CSolidTile))
+            if (_state != "Lift" && collider is CSolidTile)
             {
-                solidCollide(collider as CActor);
+                solidCollide(collider);
             }
         }
 
@@ -88,12 +97,11 @@ namespace King_of_Thieves.Actors.Player
 			diffy *= diffy;
 
             if (diffx < diffy)
-                position = new Vector2(position.X + penx, position.Y); //TODO: dont make a new vector every time
+                _position.X += penx; //TODO: dont make a new vector every time
             else if (diffx > diffy)
-                position = new Vector2(position.X, position.Y + peny); //Same here
-            //TODO: Make an corner cases where it does not snag the corners, removing this for since it's pretty hard to hit the corners perectly.
-            /*else
-                position = new Vector2(position.X + penx, position.Y + peny); //Corner cases*/
+                _position.Y += peny; //Same here 
+            else
+                position = new Vector2(position.X + penx, position.Y + peny); //Corner cases 
         }
 
         public override void create(object sender)
@@ -117,14 +125,17 @@ namespace King_of_Thieves.Actors.Player
                 case "Swinging":
                       _state = "Idle";
                     break;
+
+                case "Rolling":
+                    _state = "Idle";
+                    break;
+
+                case "Lift":
+                    _state = "Idle"; //change this to carry
+                    break;
             }
 
             
-        }
-
-        public override void frame(object sender)
-        {
-            //throw new NotImplementedException();
         }
 
         public override void keyDown(object sender)
@@ -141,7 +152,7 @@ namespace King_of_Thieves.Actors.Player
 
                 if (input.keysPressed.Contains(Keys.A))
                 {
-                    _position.X -= 1;
+                    _position.X -= _velocity.X;
                     image = _imageIndex["PlayerWalkLeft"];
                     _direction = DIRECTION.LEFT;
                     _state = "Moving";
@@ -149,7 +160,7 @@ namespace King_of_Thieves.Actors.Player
 
                 if (input.keysPressed.Contains(Keys.D))
                 {
-                    _position.X += 1;
+                    _position.X += _velocity.X;
                     image = _imageIndex["PlayerWalkRight"];
                     _direction = DIRECTION.RIGHT;
                     _state = "Moving";
@@ -157,7 +168,7 @@ namespace King_of_Thieves.Actors.Player
 
                 if (input.keysPressed.Contains(Keys.W))
                 {
-                    _position.Y -= 1;
+                    _position.Y -= _velocity.Y;
                     image = _imageIndex["PlayerWalkUp"];
                     _direction = DIRECTION.UP;
                     _state = "Moving";
@@ -165,10 +176,18 @@ namespace King_of_Thieves.Actors.Player
 
                 if (input.keysPressed.Contains(Keys.S))
                 {
-                    _position.Y += 1;
+                    _position.Y += _velocity.Y;
                     image = _imageIndex["PlayerWalkDown"];
                     _direction = DIRECTION.DOWN;
                     _state = "Moving";
+                }
+
+                if (input.keysPressed.Contains(Keys.LeftShift) && _state == "Moving")
+                {
+                    _state = "Rolling";
+                    _rollReleased = false;
+                    //get the FUCK out of this
+                    return;
                 }
 
                 if (input.keysPressed.Contains(Keys.Space))
@@ -194,6 +213,42 @@ namespace King_of_Thieves.Actors.Player
 
             switch (_state)
             {
+                case "Lift": //nada yet
+                    swapImage("PlayerLiftDown");
+                    break;
+
+                case "Rolling":
+                    if (!_rollReleased)
+                    {
+                        _rollReleased = true;
+                        CMasterControl.audioPlayer.addSfx(CMasterControl.audioPlayer.soundBank["Player:Attack3"]);
+                    }
+                        switch (_direction)
+                        {
+
+                            case DIRECTION.DOWN:
+                                swapImage("PlayerRollDown");
+                                _position.Y += 2;
+                                break;
+
+                            case DIRECTION.UP:
+                                swapImage("PlayerRollUp");
+                                _position.Y -= 2;
+                                break;
+
+                            case DIRECTION.LEFT:
+                                swapImage("PlayerRollLeft");
+                                _position.X -= 2;
+                                break;
+
+                            case DIRECTION.RIGHT:
+                                swapImage("PlayerRollRight");
+                                _position.X += 2;
+                                break;
+                        }
+                    
+                    break;
+
                 case "Swinging":
                     if (!_swordReleased)
                     {
@@ -239,7 +294,7 @@ namespace King_of_Thieves.Actors.Player
                                 break;
                         }
 
-                        _triggerUserEvent(0, "sword", _direction.ToString(), swordPos.X.ToString(), swordPos.Y.ToString());
+                        _triggerUserEvent(0, "sword", _direction, swordPos.X, swordPos.Y);
                     }
 
                     break;
@@ -293,6 +348,7 @@ namespace King_of_Thieves.Actors.Player
         {
             //_collidables.Add(typeof(Actors.NPC.Enemies.Keese.CKeese));
             _collidables.Add(typeof(Actors.Collision.CSolidTile));
+            _collidables.Add(typeof(Actors.Items.decoration.CPot));
         }
     }
 }
