@@ -15,6 +15,12 @@ namespace King_of_Thieves.Actors.Items.decoration
             swapImage("PotChillinLikeaVillain");
         }
 
+        public override void timer1(object sender)
+        {
+            base.timer1(sender);
+            swapImage("PotBreaking");
+        }
+
         protected override void _initializeResources()
         {
             base._initializeResources();

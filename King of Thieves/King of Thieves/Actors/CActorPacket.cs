@@ -10,11 +10,13 @@ namespace King_of_Thieves.Actors
         private int _userEventID;
         private string _actorName;
         private List<object> _parameters = new List<object>();
+        private CActor _sender;
 
-        public CActorPacket(int userEvent, string actor, params object[] param)
+        public CActorPacket(int userEvent, string actor, CActor sender, params object[] param)
         {
             _userEventID = userEvent;
             _actorName = actor;
+            _sender = sender;
 
             if (param.Count() > 0)
                 _parameters.AddRange(param);
@@ -23,6 +25,14 @@ namespace King_of_Thieves.Actors
         public object getParam(int index)
         {
             return _parameters[index];
+        }
+
+        public CActor sender
+        {
+            get
+            {
+                return _sender;
+            }
         }
 
         public object[] getParams()

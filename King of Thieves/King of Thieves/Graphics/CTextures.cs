@@ -43,6 +43,8 @@ namespace King_of_Thieves.Graphics
             textures.Add("Player:RollUp", new CTextureAtlas("Player", 32, 32, 1, "40:13", "47:13", 15));
             textures.Add("Player:RollLeft", new CTextureAtlas("Player", 32, 32, 1, "40:14", "46:14", 15));
             textures.Add("Player:LiftDown", new CTextureAtlas("Player", 32, 32, 1, "0:29", "4:29", 10));
+            textures.Add("Player:LiftUp", new CTextureAtlas("Player", 32, 32, 1, "0:31", "4:31", 10));
+            textures.Add("Player:LiftLeft", new CTextureAtlas("Player", 32, 32, 1, "0:30", "4:30", 10));
 
             textures.Add("GerudoSword:SwingDown", new CTextureAtlas("Swords", 64, 64, 1, "0:0", "7:0", 55));
             textures.Add("GerudoSword:SwingUp", new CTextureAtlas("Swords", 64, 64, 1, "0:1", "7:1", 55));
@@ -79,7 +81,7 @@ namespace King_of_Thieves.Graphics
 
             //items and shit
             textures.Add("items:decor:potSmall", new CTextureAtlas("potSmall", 48, 48, 1, "0:0", "0:0"));
-            textures.Add("items:decor:potSmallBreak", new CTextureAtlas("potSmall", 48, 48, 1, "1:0", "8:0",5));
+            textures.Add("items:decor:potSmallBreak", new CTextureAtlas("potSmall", 48, 48, 1, "1:0", "8:0",10));
         }
 
         private static void _prepareTextures()

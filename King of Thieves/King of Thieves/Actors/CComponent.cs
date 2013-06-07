@@ -18,6 +18,7 @@ namespace King_of_Thieves.Actors
         private uint _address;
         private uint currentDrawHeight;
         public bool enabled = true;
+        private List<CActor> _removeThese = new List<CActor>();
 
         protected override string TextureFileLocation
         {
@@ -30,9 +31,9 @@ namespace King_of_Thieves.Actors
             _address = address;
         }
 
-        private void passMessage(ref CActor actor, uint eventID, params object[] param)
+        private void passMessage(ref CActor actor, CActor sender, uint eventID, params object[] param)
         {
-            actor.addFireTrigger(eventID);
+            actor.addFireTrigger(eventID, sender);
             actor.userParams.AddRange(param);
         }
 
@@ -40,38 +41,58 @@ namespace King_of_Thieves.Actors
         {
             if (enabled)
             {
-                root.update(gameTime);
 
-                foreach (KeyValuePair<string, CActor> kvp in actors)
+                if (root.killMe)
                 {
-                    //first get messages from the commNet
-                    if (CMasterControl.commNet[(int)_address].Count() > 0)
+                    removeActor(root);
+                }
+                else
+                {
+                    root.update(gameTime);
+
+                    foreach (KeyValuePair<string, CActor> kvp in actors)
                     {
-                        CActorPacket[] packetData = new CActorPacket[CMasterControl.commNet[(int)_address].Count()];
-                        CMasterControl.commNet[(int)_address].CopyTo(packetData);
-
-                        var group = from packets in packetData
-                                    where kvp.Key == packets.actor
-                                    select packets;
-
-                        foreach (var result in group)
+                        if (kvp.Value.killMe)
                         {
+                            removeActor(kvp.Value, true);
+                            continue;
+                        }
 
-                            //pass the message to the actor
-                            CActor temp = kvp.Value;
-                            passMessage(ref temp, (uint)result.userEventID, result.getParams());
-                            CMasterControl.commNet[(int)_address].Remove(result);
+                        //first get messages from the commNet
+                        if (CMasterControl.commNet[(int)_address].Count() > 0)
+                        {
+                            CActorPacket[] packetData = new CActorPacket[CMasterControl.commNet[(int)_address].Count()];
+                            CMasterControl.commNet[(int)_address].CopyTo(packetData);
+
+                            var group = from packets in packetData
+                                        where kvp.Key == packets.actor
+                                        select packets;
+
+                            
+                                foreach (var result in group)
+                                {
+
+                                    //pass the message to the actor
+                                    CActor temp = kvp.Value;
+                                    passMessage(ref temp, result.sender, (uint)result.userEventID, result.getParams());
+                                    CMasterControl.commNet[(int)_address].Remove(result);
+                                }
+                            
 
                         }
 
+                        //update position relative to the root
+                        if (kvp.Value._followRoot)
+                            kvp.Value.position += root.distanceFromLastFrame;
+
+                        //update
+                        kvp.Value.update(gameTime);
                     }
+                    //remove any actors that are to be removed
+                    for (int i = 0; i < _removeThese.Count(); i++)
+                        removeActor(_removeThese[i]);
 
-                    //update position relative to the root
-                    if (kvp.Value._followRoot)
-                        kvp.Value.position += root.distanceFromLastFrame;
-
-                    //update
-                    kvp.Value.update(gameTime);
+                    _removeThese.Clear();
                 }
             }
         }
@@ -81,12 +102,15 @@ namespace King_of_Thieves.Actors
             currentDrawHeight = 0;
             foreach (KeyValuePair<string, CActor> kvp in actors)
             {
-                if(rootDrawHeight == currentDrawHeight++)
-                    root.drawMe();
-                kvp.Value.drawMe();
+                if (!kvp.Value.killMe)
+                {
+                    if (!root.killMe && rootDrawHeight == currentDrawHeight++)
+                        root.drawMe();
+                    kvp.Value.drawMe();
+                }
             }
             //If root is last
-            if (rootDrawHeight == currentDrawHeight)
+            if (!root.killMe && rootDrawHeight == currentDrawHeight)
                 root.drawMe();
         }
 
@@ -110,9 +134,9 @@ namespace King_of_Thieves.Actors
             actor.component = this;
         }
 
-        public void removeActor(CActor actor)
+        public void removeActor(CActor actor, bool nextCycle = false)
         {
-            if (actor.component == this)
+            if (!nextCycle)
             {
                 //If we are removing the root, we need to add the next actor as root
                 if (root == actor)
@@ -127,7 +151,10 @@ namespace King_of_Thieves.Actors
                     actors.Remove(actor.name);
                 }
             }
+            else
+                _removeThese.Add(actor);
         }
+        
 
 
     }

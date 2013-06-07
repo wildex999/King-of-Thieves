@@ -16,6 +16,7 @@ namespace King_of_Thieves.Actors.Player
         private bool _rollReleased = true;
         private static Vector2 _readableCoords = new Vector2();
         public static readonly Vector2 carrySpot = new Vector2(-6, -10); //will need to be played with
+        private bool _carrying = false;
 
         public CPlayer() :
             base()
@@ -55,12 +56,15 @@ namespace King_of_Thieves.Actors.Player
             _imageIndex.Add("PlayerRollRight", new Graphics.CSprite("Player:RollLeft", Graphics.CTextures.textures["Player:RollLeft"], null, true));
 
             _imageIndex.Add("PlayerLiftDown", new Graphics.CSprite("Player:LiftDown", Graphics.CTextures.textures["Player:LiftDown"]));
+            _imageIndex.Add("PlayerLiftUp", new Graphics.CSprite("Player:LiftUp", Graphics.CTextures.textures["Player:LiftUp"]));
+            _imageIndex.Add("PlayerLiftLeft", new Graphics.CSprite("Player:LiftLeft", Graphics.CTextures.textures["Player:LiftLeft"]));
+            _imageIndex.Add("PlayerLiftRight", new Graphics.CSprite("Player:LiftLeft", Graphics.CTextures.textures["Player:LiftLeft"], null, true));
 
         }
 
         public override void collide(object sender, CActor collider)
         {
-            if (_state != "Lift" && collider is CSolidTile)
+            if (!collider.noCollide && collider is CSolidTile)
             {
                 solidCollide(collider);
             }
@@ -131,7 +135,8 @@ namespace King_of_Thieves.Actors.Player
                     break;
 
                 case "Lift":
-                    _state = "Carry"; //change this to carry
+                    _state = "Idle";
+                    _carrying = true;
                     break;
             }
 
@@ -140,7 +145,7 @@ namespace King_of_Thieves.Actors.Player
 
         public override void keyDown(object sender)
         {
-            if (_state == "Idle" || _state == "Moving" || _state == "Carry")
+            if (_state == "Idle" || _state == "Moving")
             {
                 //Store this so we can type less
                 CInput input = Master.GetInputManager().GetCurrentInputHandler() as CInput;
@@ -184,6 +189,11 @@ namespace King_of_Thieves.Actors.Player
 
                 if (input.keysPressed.Contains(Keys.LeftShift) && _state == "Moving")
                 {
+                    if (_carrying)
+                    {
+                        _triggerUserEvent(0, "carryMe", _direction);
+                        return;
+                    }
                     _state = "Rolling";
                     _rollReleased = false;
                     //get the FUCK out of this
@@ -213,8 +223,27 @@ namespace King_of_Thieves.Actors.Player
 
             switch (_state)
             {
-                case "Lift": //nada yet
-                    swapImage("PlayerLiftDown");
+                case "Lift":
+                    switch (_direction)
+                    {
+                        case DIRECTION.DOWN:
+                            swapImage("PlayerLiftDown");
+                            break;
+
+                        case DIRECTION.UP:
+                            swapImage("PlayerLiftUp");
+                            break;
+
+                        case DIRECTION.LEFT:
+                            swapImage("PlayerLiftLeft");
+                            break;
+
+                        case DIRECTION.RIGHT:
+                            swapImage("PlayerLiftRight");
+                            break;
+
+                    }
+                    
                     break;
 
                 case "Rolling":

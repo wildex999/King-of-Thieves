@@ -39,7 +39,7 @@ namespace King_of_Thieves.Actors
         protected Boolean _moving = false; //used for prioritized movement
         private int _componentAddress = 0;
         protected Dictionary<uint, userEventHandler> _userEvents;
-        protected List<uint> _userEventsToFire;
+        protected Dictionary<uint, CActor> _userEventsToFire;
         protected string _state = "Idle";
         public Graphics.CSprite image;
         protected Dictionary<string, Graphics.CSprite> _imageIndex;
@@ -50,6 +50,10 @@ namespace King_of_Thieves.Actors
         public int layer;
         public CComponent component;
         protected Vector2 _velocity;
+        public bool noCollide = false;
+        protected string _oldName = ""; //for when moving to different components
+        protected CComponent _oldComponent = null;
+        protected bool _killMe = false;
 
         protected Collision.CHitBox _hitBox;
         protected List<Type> _collidables;
@@ -80,11 +84,8 @@ namespace King_of_Thieves.Actors
         public virtual void draw(object sender) { }
         public virtual void collide(object sender, CActor collider) { }
         public virtual void animationEnd(object sender) { }
-        public virtual void timer0(object sender) 
-        {
-            
-        }
-        public virtual void timer1(object sender, ElapsedEventArgs e) { if (_timer1 != null) { _timer1.Stop(); _timer1 = null; } }
+        public virtual void timer0(object sender)  { }
+        public virtual void timer1(object sender) { }
         public virtual void mouseClick(object sender) { }
         public virtual void click(object sender) { }
         public virtual void tap(object sender) { }
@@ -92,10 +93,8 @@ namespace King_of_Thieves.Actors
         protected virtual void _addCollidables() { } //Use this guy to tell the Actor what kind of actors it can collide with
         protected Random _randNum = new Random();
 
-        private Timer _timer0;
-        private Timer _timer1;
-
         private CTimer _dateTimer = new CTimer();
+        private CTimer _dateTimer1 = new CTimer();
         
 
         public CActor()
@@ -111,6 +110,8 @@ namespace King_of_Thieves.Actors
             onCollide += new collideHandler(collide);
             onMouseClick += new mouseLeftClickHandler(mouseClick);
             onTap += new tapHandler(tap);
+            onTimer0 += new timerHandler(timer0);
+            onTimer1 += new timerHandler(timer1);
 
             _name = name;
             _collidables = new List<Type>();
@@ -147,22 +148,13 @@ namespace King_of_Thieves.Actors
 
         public void startTimer0(int ticks)
         {
-            //_timer0 = new Timer(ticks * 1000);
-            //_timer0.Elapsed += new ElapsedEventHandler(timer0);
-
-            //_timer0.Enabled = true;
-            //_timer0.Start();
             _dateTimer.start(ticks);
         }
 
-        //public void startTimer1(double ticks)
-        //{
-        //    _timer1 = new Timer(ticks * 1000);
-        //    _timer1.Elapsed += new ElapsedEventHandler(timer1);
-
-        //    _timer1.Enabled = true;
-        //    _timer1.Start();
-        //}
+        public void startTimer1(int ticks)
+        {
+            _dateTimer1.start(ticks);
+        }
 
         //overload this and call the base to process your own parameters
         public virtual void init(string name, Vector2 position, uint compAddress, params string[] additional)
@@ -236,15 +228,15 @@ namespace King_of_Thieves.Actors
             }
         }
 
-        public void addFireTrigger(uint userEvent)
+        public void addFireTrigger(uint userEvent, CActor sender)
         {
-            _userEventsToFire.Add(userEvent);
+            _userEventsToFire.Add(userEvent, sender);
         }
 
         protected virtual void _registerUserEvents()
         {
             _userEvents = new Dictionary<uint, userEventHandler>();
-            _userEventsToFire = new List<uint>();
+            _userEventsToFire = new Dictionary<uint, CActor>();
         }
 
         public DIRECTION direction
@@ -273,21 +265,31 @@ namespace King_of_Thieves.Actors
             //onFrame(this);
 
             //check collisions(This should realy be done after all objects have updated. As it is now two objects can be colliding, be drawn and THEN acted on for their collision)
-            foreach (Type actor in _collidables)
+            if (!noCollide)
             {
-                //fetch all actors of this type and check them for collisions
-                CActor[] collideCheck = Map.CMapManager.queryActorRegistry(actor, layer);
-                if (collideCheck == null)
-                    continue;
-                
-                foreach (CActor x in collideCheck)
+                foreach (Type actor in _collidables)
                 {
-                    if (_hitBox.checkCollision(x))
+
+                    //fetch all actors of this type and check them for collisions
+                    CActor[] collideCheck = Map.CMapManager.queryActorRegistry(actor, layer);
+                    if (collideCheck == null)
+                        continue;
+
+                    foreach (CActor x in collideCheck)
                     {
-                        //trigger collision event
-                        onCollide(this, x);
+                        if (_hitBox.checkCollision(x))
+                        {
+                            //trigger collision event
+                            onCollide(this, x);
+                        }
                     }
                 }
+            }
+
+            if (_killMe)
+            {
+                onDestroy(this);
+                return;
             }
 
             if (_animationHasEnded)
@@ -335,11 +337,16 @@ namespace King_of_Thieves.Actors
                 timer0(this);
                 _dateTimer.stop();
             }
-
-
-            foreach (uint ID in _userEventsToFire)
+            if (_dateTimer1.isActive && _dateTimer1.runTime())
             {
-                _userEvents[ID](this);
+                onTimer1(this);
+                _dateTimer1.stop();
+            }
+
+
+            foreach (KeyValuePair<uint, CActor> ID in _userEventsToFire)
+            {
+                _userEvents[ID.Key](ID.Value);
             }
 
             _userEventsToFire.Clear();
@@ -396,6 +403,14 @@ namespace King_of_Thieves.Actors
             
         }
 
+        public bool killMe
+        {
+            get
+            {
+                return _killMe;
+            }
+        }
+
         public King_of_Thieves.Actors.Collision.CHitBox hitBox
         {
             get
@@ -423,13 +438,17 @@ namespace King_of_Thieves.Actors
             {
                 return _name;
             }
+            set
+            {
+                _name = value;
+            }
         }
 
         //this will go up to the component and trigger the specified user event in the specified actor
         //what this does is create a "packet" that will float around in some higher level scope for the component to pick up
         protected void _triggerUserEvent(int eventNum, string actorName, params object[] param)
         {
-            CMasterControl.commNet[_componentAddress].Add(new CActorPacket(eventNum, actorName, param));
+            CMasterControl.commNet[_componentAddress].Add(new CActorPacket(eventNum, actorName, this, param));
         }
     }
 }

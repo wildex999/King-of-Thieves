@@ -15,6 +15,7 @@ namespace King_of_Thieves.Actors.Items
             base()
         {
             _followRoot = true;
+            _userEvents.Add(0, _toss);
         }
 
         protected override void _addCollidables()
@@ -22,6 +23,8 @@ namespace King_of_Thieves.Actors.Items
             base._addCollidables();
             _collidables.Add(typeof(Player.CPlayer));
             _collidables.Add(typeof(CSolidTile));
+
+            
         }
 
         private void solidCollide(CActor collider)
@@ -62,13 +65,41 @@ namespace King_of_Thieves.Actors.Items
                 position = new Vector2(position.X + penx, position.Y + peny); //Corner cases 
         }
 
+        private void _toss(object sender)
+        {
+            _direction = (DIRECTION)userParams[0];
+            _state = "Tossing";
+            CActor _sender = (CActor)sender;
+            startTimer1(500);
+            _sender.component.removeActor(this, true);
+            this.component = this._oldComponent;
+            this.component.enabled = true;
+            
+        }
+
+        public override void animationEnd(object sender)
+        {
+            if (_state == "Smash") //ELLO EEELYYYYYZZAAAAA
+            {
+                this.name = _oldName;
+                _killMe = true;
+            }
+        }
+
         public override void timer0(object sender)
         {
-            
+
             _state = "Carry";
             this.component.enabled = false;
+            this._oldComponent = this.component;
+            this._oldName = this.name;
+            this.name = "carryMe";
             _collider.component.addActor(this, _name);
-            base.timer0(sender);
+        }
+
+        public override void timer1(object sender)
+        {
+            _state = "Smash";
         }
 
         public override void update(GameTime gameTime)
@@ -82,6 +113,30 @@ namespace King_of_Thieves.Actors.Items
                     {
                         case DIRECTION.UP:
                             _position.Y -= 2;
+                            break;
+
+                        case DIRECTION.RIGHT:
+                            _position.Y -= 1;
+                            _position.X += .9f;
+                            break;
+
+                        case DIRECTION.LEFT:
+                            _position.Y -= 1;
+                            _position.X -= .8f;
+                            break;
+
+                        case DIRECTION.DOWN:
+                            _position.Y -= .1f;
+                            break;
+                    }
+                    break;
+
+                case "Tossing":
+                    
+                    switch (_direction)
+                    {
+                        case DIRECTION.UP:
+                            _position.Y -= 1.5f;
                             break;
                     }
                     break;
@@ -105,21 +160,21 @@ namespace King_of_Thieves.Actors.Items
                         collider.state = "Lift";
                         _state = "Lift";
                         _collider = collider;
-
+                        noCollide = true;
 
                         //center with the player's hitbox
                         DIRECTION movein = collider.direction;
-                        startTimer0(190);
+                        startTimer0(250);
                         switch (movein)
                         {
                             case DIRECTION.DOWN:
                                 _direction = DIRECTION.UP;
-                                jumpToPoint(collider.position.X - 7, _position.Y);
+                                jumpToPoint(collider.position.X - 8, _position.Y);
                                 break;
 
                             case DIRECTION.UP:
                                 _direction = DIRECTION.DOWN;
-                                jumpToPoint(collider.position.X - 7, _position.Y);
+                                jumpToPoint(collider.position.X - 8, _position.Y);
                                 break;
 
                             case DIRECTION.LEFT:
