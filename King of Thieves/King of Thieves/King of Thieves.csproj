@@ -139,6 +139,7 @@
     <Compile Include="Actors\NPC\Enemies\Keese\CKeeseIce.cs" />
     <Compile Include="Actors\NPC\Enemies\Keese\CKeeseShadow.cs" />
     <Compile Include="Actors\NPC\Enemies\Keese\CKeeseThunder.cs" />
+    <Compile Include="CTimer.cs" />
     <Compile Include="Forms\Map Editor\EditorComponents.cs">
       <SubType>Form</SubType>
     </Compile>

@@ -217,6 +217,7 @@ namespace King_of_Thieves.Actors.NPC.Enemies.Keese
             //if(_position.X < 0)
             //    _position.X = 0;
             //TODO: Do we know map sizes yet?
+            //MGZero: Nope
         }
     }
 }

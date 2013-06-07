@@ -8,6 +8,7 @@ using King_of_Thieves.Graphics;
 using Gears.Cloud;
 using King_of_Thieves.Input;
 using System.Timers;
+using Gears.Cloud.Utility;
 
 namespace King_of_Thieves.Actors
 {
@@ -79,7 +80,10 @@ namespace King_of_Thieves.Actors
         public virtual void draw(object sender) { }
         public virtual void collide(object sender, CActor collider) { }
         public virtual void animationEnd(object sender) { }
-        public virtual void timer0(object sender, ElapsedEventArgs e) { if (_timer0 != null) { _timer0.Stop(); _timer0 = null; } }
+        public virtual void timer0(object sender) 
+        {
+            
+        }
         public virtual void timer1(object sender, ElapsedEventArgs e) { if (_timer1 != null) { _timer1.Stop(); _timer1 = null; } }
         public virtual void mouseClick(object sender) { }
         public virtual void click(object sender) { }
@@ -90,6 +94,8 @@ namespace King_of_Thieves.Actors
 
         private Timer _timer0;
         private Timer _timer1;
+
+        private CTimer _dateTimer = new CTimer();
         
 
         public CActor()
@@ -139,23 +145,24 @@ namespace King_of_Thieves.Actors
             onDraw -= new drawHandler(draw);
         }
 
-        public void startTimer0(double ticks)
+        public void startTimer0(int ticks)
         {
-            _timer0 = new Timer(ticks * 1000);
-            _timer0.Elapsed += new ElapsedEventHandler(timer0);
+            //_timer0 = new Timer(ticks * 1000);
+            //_timer0.Elapsed += new ElapsedEventHandler(timer0);
 
-            _timer0.Enabled = true;
-            _timer0.Start();
+            //_timer0.Enabled = true;
+            //_timer0.Start();
+            _dateTimer.start(ticks);
         }
 
-        public void startTimer1(double ticks)
-        {
-            _timer1 = new Timer(ticks * 1000);
-            _timer1.Elapsed += new ElapsedEventHandler(timer1);
+        //public void startTimer1(double ticks)
+        //{
+        //    _timer1 = new Timer(ticks * 1000);
+        //    _timer1.Elapsed += new ElapsedEventHandler(timer1);
 
-            _timer1.Enabled = true;
-            _timer1.Start();
-        }
+        //    _timer1.Enabled = true;
+        //    _timer1.Start();
+        //}
 
         //overload this and call the base to process your own parameters
         public virtual void init(string name, Vector2 position, uint compAddress, params string[] additional)
@@ -323,7 +330,12 @@ namespace King_of_Thieves.Actors
             }
 
             //do timer events
-            
+            if (_dateTimer.isActive && _dateTimer.runTime())
+            {
+                timer0(this);
+                _dateTimer.stop();
+            }
+
 
             foreach (uint ID in _userEventsToFire)
             {

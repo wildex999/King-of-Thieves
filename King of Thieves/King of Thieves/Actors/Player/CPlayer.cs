@@ -131,7 +131,7 @@ namespace King_of_Thieves.Actors.Player
                     break;
 
                 case "Lift":
-                    _state = "Idle"; //change this to carry
+                    _state = "Carry"; //change this to carry
                     break;
             }
 
@@ -140,7 +140,7 @@ namespace King_of_Thieves.Actors.Player
 
         public override void keyDown(object sender)
         {
-            if (_state == "Idle" || _state == "Moving")
+            if (_state == "Idle" || _state == "Moving" || _state == "Carry")
             {
                 //Store this so we can type less
                 CInput input = Master.GetInputManager().GetCurrentInputHandler() as CInput;
