@@ -19,10 +19,14 @@ namespace King_of_Thieves.Map
             //    for (int j = 0; j < factories[i].
         }
 
-        private void registerActors(Actors.CComponent component)
+        public void addComponent(Actors.CComponent component)
         {
-            
+            base.AddUnit(component, 0);
         }
-        
+
+        public void removeComponent(Actors.CComponent component)
+        {
+            base.RemoveUnit(component, 0);
+        }
     }
 }

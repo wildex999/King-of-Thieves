@@ -19,6 +19,8 @@ namespace King_of_Thieves.Actors
         private uint currentDrawHeight;
         public bool enabled = true;
         private List<CActor> _removeThese = new List<CActor>();
+        private bool _killMe = false;
+        public int layer = 0;
 
         protected override string TextureFileLocation
         {
@@ -29,6 +31,14 @@ namespace King_of_Thieves.Actors
         {
             actors = new Dictionary<string, CActor>();
             _address = address;
+        }
+
+        public bool killMe
+        {
+            get
+            {
+                return _killMe;
+            }
         }
 
         private void passMessage(ref CActor actor, CActor sender, uint eventID, params object[] param)
@@ -110,7 +120,7 @@ namespace King_of_Thieves.Actors
                 }
             }
             //If root is last
-            if (!root.killMe && rootDrawHeight == currentDrawHeight)
+            if (root != null && !root.killMe && rootDrawHeight == currentDrawHeight)
                 root.drawMe();
         }
 
@@ -129,7 +139,10 @@ namespace King_of_Thieves.Actors
             if (root != null)
                 actors.Add(name, actor);
             else
+            {
+                layer = actor.layer;
                 root = actor;
+            }
             //Allow actor to access it's component
             actor.component = this;
         }
@@ -138,17 +151,32 @@ namespace King_of_Thieves.Actors
         {
             if (!nextCycle)
             {
-                //If we are removing the root, we need to add the next actor as root
-                if (root == actor)
+                ////If we are removing the root, we need to add the next actor as root
+                //if (root == actor)
+                //{
+                    
+                //    root = actors.GetEnumerator().Current.Value;
+                //    actors.Remove(root.name);
+                //    //This will fail if there are no more root, but in that case we can't realy do much, nor should that happen.
+                //}
+                //else
+                //{
+                //    actor.component = null;
+                //    actors.Remove(actor.name);
+                //}
+                if (actor == root)
                 {
-                    root = actors.GetEnumerator().Current.Value;
-                    actors.Remove(root.name);
-                    //This will fail if there are no more root, but in that case we can't realy do much, nor should that happen.
+                    root = null;
+                    _killMe = true;
                 }
                 else
                 {
-                    actor.component = null;
-                    actors.Remove(actor.name);
+                    try
+                    {
+                        actors.Remove(actor.name);
+                        actor.component = null;
+                    }
+                    catch (KeyNotFoundException) { }
                 }
             }
             else

@@ -15,7 +15,7 @@ namespace King_of_Thieves.Actors.Items
             base()
         {
             _followRoot = true;
-            _userEvents.Add(0, _toss);
+            
         }
 
         protected override void _addCollidables()
@@ -25,6 +25,12 @@ namespace King_of_Thieves.Actors.Items
             _collidables.Add(typeof(CSolidTile));
 
             
+        }
+
+        protected override void _registerUserEvents()
+        {
+            base._registerUserEvents();
+            _userEvents.Add(0, _toss);
         }
 
         private void solidCollide(CActor collider)
@@ -95,11 +101,13 @@ namespace King_of_Thieves.Actors.Items
             this._oldName = this.name;
             this.name = "carryMe";
             _collider.component.addActor(this, _name);
+            
         }
 
         public override void timer1(object sender)
         {
             _state = "Smash";
+            CMasterControl.audioPlayer.addSfx(CMasterControl.audioPlayer.soundBank["Items:Decor:ItemSmash"]);
         }
 
         public override void update(GameTime gameTime)

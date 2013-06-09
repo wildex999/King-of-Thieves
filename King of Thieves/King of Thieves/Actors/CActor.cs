@@ -93,8 +93,11 @@ namespace King_of_Thieves.Actors
         protected virtual void _addCollidables() { } //Use this guy to tell the Actor what kind of actors it can collide with
         protected Random _randNum = new Random();
 
-        private CTimer _dateTimer = new CTimer();
-        private CTimer _dateTimer1 = new CTimer();
+        //private CTimer _dateTimer = new CTimer();
+        //private CTimer _dateTimer1 = new CTimer();
+
+        private int _timer0 = -1;
+        private int _timer1 = -1;
         
 
         public CActor()
@@ -148,12 +151,12 @@ namespace King_of_Thieves.Actors
 
         public void startTimer0(int ticks)
         {
-            _dateTimer.start(ticks);
+            _timer0 = ticks;
         }
 
         public void startTimer1(int ticks)
         {
-            _dateTimer1.start(ticks);
+            _timer1 = ticks;
         }
 
         //overload this and call the base to process your own parameters
@@ -289,64 +292,78 @@ namespace King_of_Thieves.Actors
             if (_killMe)
             {
                 onDestroy(this);
-                return;
-            }
 
-            if (_animationHasEnded)
-                try
+            }
+            else
+            {
+                if (_animationHasEnded)
+                    try
+                    {
+                        onAnimationEnd(this);
+                    }
+                    catch (NotImplementedException) { ;}
+
+
+                _oldPosition = _position;
+
+                if (image != null)
                 {
-                    onAnimationEnd(this);
+                    image.X = (int)_position.X;
+                    image.Y = (int)_position.Y;
                 }
-                catch (NotImplementedException) { ;}
 
-            
-            _oldPosition = _position;
+                if ((Master.GetInputManager().GetCurrentInputHandler() as CInput).areKeysPressed)
+                    onKeyDown(this);
 
-            if (image != null)
-            {
-                image.X = (int)_position.X;
-                image.Y = (int)_position.Y;
-            }
+                if ((Master.GetInputManager().GetCurrentInputHandler() as CInput).areKeysReleased)
+                    onKeyRelease(this);
 
-            if ((Master.GetInputManager().GetCurrentInputHandler() as CInput).areKeysPressed)
-                onKeyDown(this);
-
-            if ((Master.GetInputManager().GetCurrentInputHandler() as CInput).areKeysReleased)
-                onKeyRelease(this);
-
-            if ((Master.GetInputManager().GetCurrentInputHandler() as CInput).mouseLeftClick)
-            {
-                onMouseClick(this);
-
-                
-                if (_hitBox != null && _hitBox.checkCollision(new Vector2((Master.GetInputManager().GetCurrentInputHandler() as CInput).mouseX,
-                                                        (Master.GetInputManager().GetCurrentInputHandler() as CInput).mouseY)))
+                if ((Master.GetInputManager().GetCurrentInputHandler() as CInput).mouseLeftClick)
                 {
-                    click(this);
+                    onMouseClick(this);
+
+
+                    if (_hitBox != null && _hitBox.checkCollision(new Vector2((Master.GetInputManager().GetCurrentInputHandler() as CInput).mouseX,
+                                                            (Master.GetInputManager().GetCurrentInputHandler() as CInput).mouseY)))
+                    {
+                        click(this);
+                    }
                 }
-            }
 
-            if ((Master.GetInputManager().GetCurrentInputHandler() as CInput).mouseLeftRelease)
-            {
-                onTap(this);
-            }
+                if ((Master.GetInputManager().GetCurrentInputHandler() as CInput).mouseLeftRelease)
+                {
+                    onTap(this);
+                }
 
-            //do timer events
-            if (_dateTimer.isActive && _dateTimer.runTime())
-            {
-                timer0(this);
-                _dateTimer.stop();
-            }
-            if (_dateTimer1.isActive && _dateTimer1.runTime())
-            {
-                onTimer1(this);
-                _dateTimer1.stop();
-            }
+                //new timer stuff THANKS ASH
+                if (_timer0 >= 0)
+                {
+                    _timer0 -= gameTime.ElapsedGameTime.Milliseconds;
+
+                    if (_timer0 <= 0)
+                    {
+                        _timer0 = -1;
+                        onTimer0(this);
+                    }
+                }
+
+                if (_timer1 >= 0)
+                {
+                    _timer1 -= gameTime.ElapsedGameTime.Milliseconds;
+
+                    if (_timer1 <= 0)
+                    {
+                        _timer1 = -1;
+                        onTimer1(this);
+                    }
+                }
 
 
-            foreach (KeyValuePair<uint, CActor> ID in _userEventsToFire)
-            {
-                _userEvents[ID.Key](ID.Value);
+
+                foreach (KeyValuePair<uint, CActor> ID in _userEventsToFire)
+                {
+                    _userEvents[ID.Key](ID.Value);
+                }
             }
 
             _userEventsToFire.Clear();

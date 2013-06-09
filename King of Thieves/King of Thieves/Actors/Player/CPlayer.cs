@@ -187,18 +187,7 @@ namespace King_of_Thieves.Actors.Player
                     _state = "Moving";
                 }
 
-                if (input.keysPressed.Contains(Keys.LeftShift) && _state == "Moving")
-                {
-                    if (_carrying)
-                    {
-                        _triggerUserEvent(0, "carryMe", _direction);
-                        return;
-                    }
-                    _state = "Rolling";
-                    _rollReleased = false;
-                    //get the FUCK out of this
-                    return;
-                }
+                
 
                 if (input.keysPressed.Contains(Keys.Space))
                 {
@@ -210,11 +199,28 @@ namespace King_of_Thieves.Actors.Player
 
         public override void keyRelease(object sender)
         {
+            CInput input = Master.GetInputManager().GetCurrentInputHandler() as CInput;
             if (!(Master.GetInputManager().GetCurrentInputHandler() as CInput).areKeysPressed)
             {
                 if (_state == "Moving")
                     _state = "Idle";
             }
+
+            if (input.keysReleased.Contains(Keys.LeftShift) && _state == "Moving")
+            {
+                if (_carrying)
+                {
+                    _triggerUserEvent(0, "carryMe", _direction);
+                    _carrying = false;
+                    return;
+                }
+                _state = "Rolling";
+                _rollReleased = false;
+                //get the FUCK out of this
+                return;
+            }
+
+
         }
 
         public override void update(GameTime gameTime)
