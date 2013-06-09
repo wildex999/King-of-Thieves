@@ -144,8 +144,21 @@ namespace King_of_Thieves.Actors.Items
                     switch (_direction)
                     {
                         case DIRECTION.UP:
-                            _position.Y -= 1.5f;
+                            _position.Y -= _velocity.Y;
                             break;
+
+                        case DIRECTION.DOWN:
+                            _position.Y += _velocity.Y;
+                            break;
+
+                        case DIRECTION.LEFT:
+                            _position.X -= _velocity.X;
+                            break;
+
+                        case DIRECTION.RIGHT:
+                            _position.X += _velocity.X;
+                            break;
+
                     }
                     break;
             }

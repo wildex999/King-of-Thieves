@@ -60,6 +60,15 @@ namespace King_of_Thieves.Actors.Player
             _imageIndex.Add("PlayerLiftLeft", new Graphics.CSprite("Player:LiftLeft", Graphics.CTextures.textures["Player:LiftLeft"]));
             _imageIndex.Add("PlayerLiftRight", new Graphics.CSprite("Player:LiftLeft", Graphics.CTextures.textures["Player:LiftLeft"], null, true));
 
+            _imageIndex.Add("PlayerCarryDown", new Graphics.CSprite("Player:CarryDown", Graphics.CTextures.textures["Player:CarryDown"]));
+            _imageIndex.Add("PlayerCarryUp", new Graphics.CSprite("Player:CarryUp", Graphics.CTextures.textures["Player:CarryUp"]));
+            _imageIndex.Add("PlayerCarryLeft", new Graphics.CSprite("Player:CarryLeft", Graphics.CTextures.textures["Player:CarryLeft"]));
+            _imageIndex.Add("PlayerCarryRight", new Graphics.CSprite("Player:CarryLeft", Graphics.CTextures.textures["Player:CarryLeft"], null, true));
+
+            _imageIndex.Add("PlayerLiftIdleDown", new Graphics.CSprite("Player:LiftIdleDown", Graphics.CTextures.textures["Player:LiftIdleDown"]));
+            _imageIndex.Add("PlayerLiftIdleUp", new Graphics.CSprite("Player:LiftIdleUp", Graphics.CTextures.textures["Player:LiftIdleUp"]));
+            _imageIndex.Add("PlayerLiftIdleLeft", new Graphics.CSprite("Player:LiftIdleLeft", Graphics.CTextures.textures["Player:LiftIdleLeft"]));
+            _imageIndex.Add("PlayerLiftIdleRight", new Graphics.CSprite("Player:LiftIdleLeft", Graphics.CTextures.textures["Player:LiftIdleLeft"], null, true));
         }
 
         public override void collide(object sender, CActor collider)
@@ -158,7 +167,12 @@ namespace King_of_Thieves.Actors.Player
                 if (input.keysPressed.Contains(Keys.A))
                 {
                     _position.X -= _velocity.X;
-                    image = _imageIndex["PlayerWalkLeft"];
+
+                    if (_carrying)
+                        swapImage("PlayerCarryLeft");
+                    else
+                        image = _imageIndex["PlayerWalkLeft"];
+
                     _direction = DIRECTION.LEFT;
                     _state = "Moving";
                 }
@@ -166,7 +180,12 @@ namespace King_of_Thieves.Actors.Player
                 if (input.keysPressed.Contains(Keys.D))
                 {
                     _position.X += _velocity.X;
-                    image = _imageIndex["PlayerWalkRight"];
+
+                    if (_carrying)
+                        swapImage("PlayerCarryRight");
+                    else
+                        image = _imageIndex["PlayerWalkRight"];
+
                     _direction = DIRECTION.RIGHT;
                     _state = "Moving";
                 }
@@ -174,7 +193,12 @@ namespace King_of_Thieves.Actors.Player
                 if (input.keysPressed.Contains(Keys.W))
                 {
                     _position.Y -= _velocity.Y;
-                    image = _imageIndex["PlayerWalkUp"];
+
+                    if (_carrying)
+                        swapImage("PlayerCarryUp");
+                    else
+                        image = _imageIndex["PlayerWalkUp"];
+
                     _direction = DIRECTION.UP;
                     _state = "Moving";
                 }
@@ -182,7 +206,12 @@ namespace King_of_Thieves.Actors.Player
                 if (input.keysPressed.Contains(Keys.S))
                 {
                     _position.Y += _velocity.Y;
-                    image = _imageIndex["PlayerWalkDown"];
+
+                    if (_carrying)
+                        swapImage("PlayerCarryDown");
+                    else
+                        image = _imageIndex["PlayerWalkDown"];
+
                     _direction = DIRECTION.DOWN;
                     _state = "Moving";
                 }
@@ -337,19 +366,31 @@ namespace King_of_Thieves.Actors.Player
                     switch (_direction)
                     {
                         case DIRECTION.DOWN:
-                            swapImage("PlayerIdleDown", false);
+                            if (_carrying)
+                                swapImage("PlayerLiftIdleDown");
+                            else
+                                swapImage("PlayerIdleDown", false);
                             break;
 
                         case DIRECTION.UP:
-                            swapImage("PlayerIdleUp", false);
+                            if (_carrying)
+                                swapImage("PlayerLiftIdleUp");
+                            else
+                                swapImage("PlayerIdleUp", false);
                             break;
 
                         case DIRECTION.LEFT:
-                            swapImage("PlayerIdleLeft", false);
+                            if (_carrying)
+                                swapImage("PlayerLiftIdleLeft");
+                            else
+                                swapImage("PlayerIdleLeft", false);
                             break;
 
                         case DIRECTION.RIGHT:
-                            swapImage("PlayerIdleRight", false);
+                            if (_carrying)
+                                swapImage("PlayerLiftIdleRight");
+                            else
+                                swapImage("PlayerIdleRight", false);
                             break;
                     }
 
