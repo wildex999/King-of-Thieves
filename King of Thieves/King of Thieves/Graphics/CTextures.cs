@@ -51,6 +51,9 @@ namespace King_of_Thieves.Graphics
             textures.Add("Player:LiftIdleDown", new CTextureAtlas("Player", 32, 32, 1, "4:29", "4:29", 0));
             textures.Add("Player:LiftIdleUp", new CTextureAtlas("Player", 32, 32, 1, "4:31", "4:31", 0));
             textures.Add("Player:LiftIdleLeft", new CTextureAtlas("Player", 32, 32, 1, "4:30", "4:30", 0));
+            textures.Add("Player:ThrowDown", new CTextureAtlas("Player", 32, 32, 1, "5:29", "8:29", 10));
+            textures.Add("Player:ThrowUp", new CTextureAtlas("Player", 32, 32, 1, "5:31", "8:31", 10));
+            textures.Add("Player:ThrowLeft", new CTextureAtlas("Player", 32, 32, 1, "5:30", "8:30", 10));
 
             textures.Add("GerudoSword:SwingDown", new CTextureAtlas("Swords", 64, 64, 1, "0:0", "7:0", 55));
             textures.Add("GerudoSword:SwingUp", new CTextureAtlas("Swords", 64, 64, 1, "0:1", "7:1", 55));

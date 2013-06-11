@@ -10,6 +10,8 @@ namespace King_of_Thieves.Actors.Items
     class CLiftable : Collision.CSolidTile
     {
         private CActor _collider = null;
+        private CActor _thrower = null;
+        protected double _mass;
 
         public CLiftable() :
             base()
@@ -76,8 +78,14 @@ namespace King_of_Thieves.Actors.Items
             _direction = (DIRECTION)userParams[0];
             _state = "Tossing";
             CActor _sender = (CActor)sender;
-            startTimer1(500);
-            _sender.component.removeActor(this, true);
+
+            if (_sender.direction == DIRECTION.DOWN)
+                startTimer1(800); //direction down needs more time to throw due to height difference
+            else
+                startTimer1(250);
+
+            _thrower = _sender;
+            //_sender.component.removeActor(this, true);
             this.component = this._oldComponent;
             this.component.enabled = true;
             
@@ -107,6 +115,8 @@ namespace King_of_Thieves.Actors.Items
         public override void timer1(object sender)
         {
             _state = "Smash";
+            _position.Y += 12;
+            _thrower.component.removeActor(this, true);
             CMasterControl.audioPlayer.addSfx(CMasterControl.audioPlayer.soundBank["Items:Decor:ItemSmash"]);
         }
 
@@ -161,6 +171,14 @@ namespace King_of_Thieves.Actors.Items
 
                     }
                     break;
+            }
+        }
+
+        public double mass
+        {
+            get
+            {
+                return _mass;
             }
         }
 

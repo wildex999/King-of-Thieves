@@ -17,6 +17,7 @@ namespace King_of_Thieves.Actors.Player
         private static Vector2 _readableCoords = new Vector2();
         public static readonly Vector2 carrySpot = new Vector2(-6, -10); //will need to be played with
         private bool _carrying = false;
+        private double _carryWeight = 0;
 
         public CPlayer() :
             base()
@@ -69,6 +70,11 @@ namespace King_of_Thieves.Actors.Player
             _imageIndex.Add("PlayerLiftIdleUp", new Graphics.CSprite("Player:LiftIdleUp", Graphics.CTextures.textures["Player:LiftIdleUp"]));
             _imageIndex.Add("PlayerLiftIdleLeft", new Graphics.CSprite("Player:LiftIdleLeft", Graphics.CTextures.textures["Player:LiftIdleLeft"]));
             _imageIndex.Add("PlayerLiftIdleRight", new Graphics.CSprite("Player:LiftIdleLeft", Graphics.CTextures.textures["Player:LiftIdleLeft"], null, true));
+
+            _imageIndex.Add("PlayerThrowDown", new Graphics.CSprite("Player:ThrowDown", Graphics.CTextures.textures["Player:ThrowDown"]));
+            _imageIndex.Add("PlayerThrowUp", new Graphics.CSprite("Player:ThrowUp", Graphics.CTextures.textures["Player:ThrowUp"]));
+            _imageIndex.Add("PlayerThrowLeft", new Graphics.CSprite("Player:ThrowLeft", Graphics.CTextures.textures["Player:ThrowLeft"]));
+            _imageIndex.Add("PlayerThrowRight", new Graphics.CSprite("Player:ThrowLeft", Graphics.CTextures.textures["Player:ThrowLeft"], null, true));
         }
 
         public override void collide(object sender, CActor collider)
@@ -146,6 +152,10 @@ namespace King_of_Thieves.Actors.Player
                 case "Lift":
                     _state = "Idle";
                     _carrying = true;
+                    break;
+
+                case "Throwing":
+                    _state = "Idle";
                     break;
             }
 
@@ -240,6 +250,27 @@ namespace King_of_Thieves.Actors.Player
                 if (_carrying)
                 {
                     _triggerUserEvent(0, "carryMe", _direction);
+                    _state = "Throwing";
+
+                    switch (_direction)
+                    {
+                        case DIRECTION.DOWN:
+                            swapImage("PlayerThrowDown");
+                            break;
+
+                        case DIRECTION.UP:
+                            swapImage("PlayerThrowUp");
+                            break;
+
+                        case DIRECTION.LEFT:
+                            swapImage("PlayerThrowLeft");
+                            break;
+
+                        case DIRECTION.RIGHT:
+                            swapImage("PlayerThrowRight");
+                            break;
+                    }
+
                     _carrying = false;
                     return;
                 }
