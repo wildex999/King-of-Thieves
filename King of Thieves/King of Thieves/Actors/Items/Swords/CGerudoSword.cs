@@ -36,10 +36,10 @@ namespace King_of_Thieves.Actors.Items.Swords
         {
             base._initializeResources();
             //use the gerudo sword for now
-            _imageIndex.Add("swingDown", new Graphics.CSprite("GerudoSword:SwingDown", Graphics.CTextures.textures["GerudoSword:SwingDown"]));
-            _imageIndex.Add("swingRight", new Graphics.CSprite("GerudoSword:SwingRight", Graphics.CTextures.textures["GerudoSword:SwingRight"]));
-            _imageIndex.Add("swingLeft", new Graphics.CSprite("GerudoSword:SwingRight", Graphics.CTextures.textures["GerudoSword:SwingRight"], null, true));
-            _imageIndex.Add("swingUp", new Graphics.CSprite("GerudoSword:SwingUp", Graphics.CTextures.textures["GerudoSword:SwingUp"]));
+            _imageIndex.Add("swingDown", new Graphics.CSprite("GerudoSword:SwingDown"));
+            _imageIndex.Add("swingRight", new Graphics.CSprite("GerudoSword:SwingRight"));
+            _imageIndex.Add("swingLeft", new Graphics.CSprite("GerudoSword:SwingRight", true));
+            _imageIndex.Add("swingUp", new Graphics.CSprite("GerudoSword:SwingUp"));
         }
 
         public void userEventSwing(object sender)

@@ -12,6 +12,7 @@ using King_of_Thieves.usr.local;
 using King_of_Thieves.Input;
 using System.Linq;
 using Gears.Cloud.Utility;
+using System.Timers;
 
 namespace King_of_Thieves
 {
@@ -28,7 +29,15 @@ namespace King_of_Thieves
         CComponent compTest = new CComponent();
         Actors.Menu.CMenu testMenu;
         CComponent menuComo = new CComponent();
-        HighPerfTimer _benchmarker = new HighPerfTimer();
+
+        HighPerfTimer _updateTimer = new HighPerfTimer();
+        HighPerfTimer _drawTimer = new HighPerfTimer();
+        System.Timers.Timer _fpsTimer = new System.Timers.Timer(1000);
+        public void _fpsHandler(object sender, ElapsedEventArgs e) { updateFPS = updateFrames; updateFrames = 0; drawFPS = drawFrames; drawFrames = 0; }
+        int updateFrames;
+        int drawFrames;
+        int updateFPS;
+        int drawFPS;
 
         //Screen Resolution defaults
         private const int ScreenWidth = 320;
@@ -70,7 +79,9 @@ namespace King_of_Thieves
             graphics.ApplyChanges();
             Graphics.CGraphics.acquireGraphics(ref graphics);
 
-            
+            _fpsTimer.Elapsed += new ElapsedEventHandler(_fpsHandler);
+            _fpsTimer.Enabled = true;
+            _fpsTimer.Start();
 
             Master.SetClearColor(Color.CornflowerBlue);
 
@@ -157,6 +168,7 @@ namespace King_of_Thieves
         protected override void Update(GameTime gameTime)
         {
             CMasterControl.gameTime = gameTime;
+            updateFrames++;
 
             // Allows the game to exit
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
@@ -170,11 +182,11 @@ namespace King_of_Thieves
             CInput input = Master.GetInputManager().GetCurrentInputHandler() as CInput;
             if (input.getInputRelease(Microsoft.Xna.Framework.Input.Keys.B))
                 CActor.showHitBox = !CActor.showHitBox;
-            _benchmarker.Start();
+            _updateTimer.Start();
             
             Master.Update(gameTime);
             //CMasterControl.mapManager.updateMap(gameTime);
-            _benchmarker.Stop();
+            _updateTimer.Stop();
             //CMasterControl.audioPlayer.Update();
             base.Update(gameTime);
             
@@ -186,6 +198,13 @@ namespace King_of_Thieves
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
+            drawFrames++;
+
+            //Store drawtime from previous frame
+            float updateTime = (float)System.Math.Ceiling(_updateTimer.Duration * 1000.0);
+            float drawTime = (float)System.Math.Ceiling(_drawTimer.Duration * 1000.0);
+
+            _drawTimer.Start();
             GraphicsDevice.Clear(Master.GetClearColor());
 
             spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend);
@@ -196,8 +215,10 @@ namespace King_of_Thieves
             
             if (CActor.showHitBox)
             {
-                double fps = (1 / _benchmarker.Duration);
-                spriteBatch.DrawString(Content.Load<SpriteFont>("Fonts/benchmarker"), _benchmarker.Duration.ToString(), Vector2.Zero, Color.White);
+                string debugString = "UpdateTime: " + updateTime + " ms\n" +
+                                    "DrawTime: " + drawTime + " ms\n" +
+                                    "FPS(Draw: " + drawFPS + " | Update: " + updateFPS + ") \n";
+                spriteBatch.DrawString(Content.Load<SpriteFont>("Fonts/benchmarker"), debugString, Vector2.Zero, Color.White);
             }
 
             spriteBatch.End();
@@ -207,6 +228,8 @@ namespace King_of_Thieves
             base.Draw(gameTime);
 
             System.GC.Collect();
+            _drawTimer.Stop();
+
         }
     }
 }

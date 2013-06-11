@@ -34,27 +34,27 @@ namespace King_of_Thieves.Actors.Player
         protected override void _initializeResources()
         {
             base._initializeResources();
-            _imageIndex.Add("PlayerWalkDown", new Graphics.CSprite("Player:WalkDown", Graphics.CTextures.textures["Player:WalkDown"]));
-            _imageIndex.Add("PlayerWalkLeft", new Graphics.CSprite("Player:WalkLeft", Graphics.CTextures.textures["Player:WalkLeft"]));
-            _imageIndex.Add("PlayerWalkRight", new Graphics.CSprite("Player:WalkLeft", Graphics.CTextures.textures["Player:WalkLeft"],null,true));
-            _imageIndex.Add("PlayerWalkUp", new Graphics.CSprite("Player:WalkUp", Graphics.CTextures.textures["Player:WalkUp"]));
+            _imageIndex.Add("PlayerWalkDown", new Graphics.CSprite("Player:WalkDown"));
+            _imageIndex.Add("PlayerWalkLeft", new Graphics.CSprite("Player:WalkLeft"));
+            _imageIndex.Add("PlayerWalkRight", new Graphics.CSprite("Player:WalkLeft", true));
+            _imageIndex.Add("PlayerWalkUp", new Graphics.CSprite("Player:WalkUp"));
 
-            _imageIndex.Add("PlayerIdleDown", new Graphics.CSprite("Player:IdleDown", Graphics.CTextures.textures["Player:IdleDown"]));
-            _imageIndex.Add("PlayerIdleUp", new Graphics.CSprite("Player:IdleUp", Graphics.CTextures.textures["Player:IdleUp"]));
-            _imageIndex.Add("PlayerIdleLeft", new Graphics.CSprite("Player:IdleLeft", Graphics.CTextures.textures["Player:IdleLeft"]));
-            _imageIndex.Add("PlayerIdleRight", new Graphics.CSprite("Player:IdleLeft", Graphics.CTextures.textures["Player:IdleLeft"],null,true));
+            _imageIndex.Add("PlayerIdleDown", new Graphics.CSprite("Player:IdleDown"));
+            _imageIndex.Add("PlayerIdleUp", new Graphics.CSprite("Player:IdleUp"));
+            _imageIndex.Add("PlayerIdleLeft", new Graphics.CSprite("Player:IdleLeft"));
+            _imageIndex.Add("PlayerIdleRight", new Graphics.CSprite("Player:IdleLeft", true));
 
-            _imageIndex.Add("PlayerSwingUp", new Graphics.CSprite("Player:SwingUp", Graphics.CTextures.textures["Player:SwingUp"]));
-            _imageIndex.Add("PlayerSwingDown", new Graphics.CSprite("Player:SwingDown", Graphics.CTextures.textures["Player:SwingDown"]));
-            _imageIndex.Add("PlayerSwingRight", new Graphics.CSprite("Player:SwingLeft", Graphics.CTextures.textures["Player:SwingLeft"],null, true));
-            _imageIndex.Add("PlayerSwingLeft", new Graphics.CSprite("Player:SwingLeft", Graphics.CTextures.textures["Player:SwingLeft"]));
+            _imageIndex.Add("PlayerSwingUp", new Graphics.CSprite("Player:SwingUp"));
+            _imageIndex.Add("PlayerSwingDown", new Graphics.CSprite("Player:SwingDown"));
+            _imageIndex.Add("PlayerSwingRight", new Graphics.CSprite("Player:SwingLeft", true));
+            _imageIndex.Add("PlayerSwingLeft", new Graphics.CSprite("Player:SwingLeft"));
 
-            _imageIndex.Add("PlayerRollDown", new Graphics.CSprite("Player:RollDown", Graphics.CTextures.textures["Player:RollDown"]));
-            _imageIndex.Add("PlayerRollUp", new Graphics.CSprite("Player:RollUp", Graphics.CTextures.textures["Player:RollUp"]));
-            _imageIndex.Add("PlayerRollLeft", new Graphics.CSprite("Player:RollLeft", Graphics.CTextures.textures["Player:RollLeft"]));
-            _imageIndex.Add("PlayerRollRight", new Graphics.CSprite("Player:RollLeft", Graphics.CTextures.textures["Player:RollLeft"], null, true));
+            _imageIndex.Add("PlayerRollDown", new Graphics.CSprite("Player:RollDown"));
+            _imageIndex.Add("PlayerRollUp", new Graphics.CSprite("Player:RollUp"));
+            _imageIndex.Add("PlayerRollLeft", new Graphics.CSprite("Player:RollLeft"));
+            _imageIndex.Add("PlayerRollRight", new Graphics.CSprite("Player:RollLeft", true));
 
-            _imageIndex.Add("PlayerLiftDown", new Graphics.CSprite("Player:LiftDown", Graphics.CTextures.textures["Player:LiftDown"]));
+            _imageIndex.Add("PlayerLiftDown", new Graphics.CSprite("Player:LiftDown"));
 
         }
 

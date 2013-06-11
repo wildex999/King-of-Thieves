@@ -18,11 +18,11 @@ namespace King_of_Thieves.Actors.NPC.Enemies.Chuchus
         protected override void _initializeResources()
         {
             base._initializeResources();
-            _imageIndex.Add("chuChuWobble", new Graphics.CSprite("chuChu:Wobble", Graphics.CTextures.textures["chuChu:Wobble"]));
-            _imageIndex.Add("chuChuPopUp", new Graphics.CSprite("chuChu:PopUp", Graphics.CTextures.textures["chuChu:PopUp"]));
-            _imageIndex.Add("chuChuIdle", new Graphics.CSprite("chuChu:Idle", Graphics.CTextures.textures["chuChu:Idle"]));
-            _imageIndex.Add("chuChuHop", new Graphics.CSprite("chuChu:Hop", Graphics.CTextures.textures["chuChu:Hop"]));
-            _imageIndex.Add("chuChuPopDown", new Graphics.CSprite("chuChu:PopDown", Graphics.CTextures.textures["chuChu:PopDown"]));
+            _imageIndex.Add("chuChuWobble", new Graphics.CSprite("chuChu:Wobble"));
+            _imageIndex.Add("chuChuPopUp", new Graphics.CSprite("chuChu:PopUp"));
+            _imageIndex.Add("chuChuIdle", new Graphics.CSprite("chuChu:Idle"));
+            _imageIndex.Add("chuChuHop", new Graphics.CSprite("chuChu:Hop"));
+            _imageIndex.Add("chuChuPopDown", new Graphics.CSprite("chuChu:PopDown"));
         }
 
         protected override void _addCollidables()

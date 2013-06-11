@@ -17,8 +17,8 @@ namespace King_of_Thieves.Actors.NPC.Enemies.Keese
         {
             base._initializeResources();
 
-            _imageIndex.Add("keeseIdle", new Graphics.CSprite("keeseIce:Idle", Graphics.CTextures.textures["keeseIce:Idle"]));
-            _imageIndex.Add("keeseFly", new Graphics.CSprite("keeseIce:Fly", Graphics.CTextures.textures["keeseIce:Fly"]));
+            _imageIndex.Add("keeseIdle", new Graphics.CSprite("keeseIce:Idle"));
+            _imageIndex.Add("keeseFly", new Graphics.CSprite("keeseIce:Fly"));
         }
 
         protected override void _addCollidables()

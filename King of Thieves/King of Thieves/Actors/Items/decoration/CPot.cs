@@ -18,8 +18,8 @@ namespace King_of_Thieves.Actors.Items.decoration
         protected override void _initializeResources()
         {
             base._initializeResources();
-            _imageIndex.Add("PotChillinLikeaVillain", new Graphics.CSprite("items:decor:potSmall", Graphics.CTextures.textures["items:decor:potSmall"]));
-            _imageIndex.Add("PotBreaking", new Graphics.CSprite("items:decor:potSmallBreak", Graphics.CTextures.textures["items:decor:potSmallBreak"]));
+            _imageIndex.Add("PotChillinLikeaVillain", new Graphics.CSprite("items:decor:potSmall");
+            _imageIndex.Add("PotBreaking", new Graphics.CSprite("items:decor:potSmallBreak");
         }
     }
 }

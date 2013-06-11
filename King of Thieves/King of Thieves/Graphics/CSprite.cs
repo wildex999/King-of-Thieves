@@ -22,12 +22,29 @@ namespace King_of_Thieves.Graphics
         private int _totalFrames = 0;
         private int _framesPassed = 0;
 
+        public CSprite(string atlasName, bool flipH = false, bool flipV = false, Effect shader = null, params VertexPositionColor[] vertices)
+            : base(shader, vertices)
+        {
+            init(atlasName, Graphics.CTextures.textures[atlasName], shader, flipH, flipV, vertices);
+        }
+
+        public CSprite(string atlasName, Dictionary<string, CTextureAtlas> texture, Effect shader = null, bool flipH = false, bool flipV = false, params VertexPositionColor[] vertices)
+            : base(shader, vertices)
+        {
+            init(atlasName, texture[atlasName], shader, flipH, flipV, vertices);
+        }
+
         public CSprite(string atlasName, CTextureAtlas atlas, Effect shader = null, bool flipH = false, bool flipV = false, params VertexPositionColor[] vertices)
             : base(shader, vertices)
         {
+            init(atlasName, atlas, shader, flipH, flipV, vertices);
+        }
+
+        private void init(string atlasName, CTextureAtlas atlas, Effect shader = null, bool flipH = false, bool flipV = false, params VertexPositionColor[] vertices)
+        {
             _imageAtlas = atlas;
             _atlasName = atlasName;
-            _size = new Rectangle(0,0, atlas.FrameWidth, atlas.FrameHeight);
+            _size = new Rectangle(0, 0, atlas.FrameWidth, atlas.FrameHeight);
             _name = _imageAtlas.sourceImage.Name;
             _flipH = flipH;
             _flipV = flipV;
