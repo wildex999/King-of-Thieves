@@ -36,6 +36,16 @@ namespace King_of_Thieves.Map
              _image = null;
         }
 
+        public void addComponent(Actors.CComponent component)
+        {
+            _components.addComponent(component);
+        }
+
+        public void removeComponent(Actors.CComponent component)
+        {
+            _components.removeComponent(component);
+        }
+
         public int indexOfTile(Vector2 coords)
         {
             int outPut = -1;

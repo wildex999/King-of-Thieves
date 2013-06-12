@@ -142,6 +142,7 @@
     <Compile Include="Actors\World\Water\CBaseWater.cs" />
     <Compile Include="Actors\World\Water\CDeepWater.cs" />
     <Compile Include="Actors\World\Water\CShallowWater.cs" />
+    <Compile Include="CTimer.cs" />
     <Compile Include="Forms\Map Editor\EditorComponents.cs">
       <SubType>Form</SubType>
     </Compile>

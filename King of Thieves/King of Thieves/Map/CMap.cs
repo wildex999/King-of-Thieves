@@ -17,7 +17,7 @@ namespace King_of_Thieves.Map
         private static Regex _coordFormat = new Regex("^[0-9]+:[0-9]+$");
         private static Regex _valSplitter = new Regex(":");
         private List<CActor> _actorRegistry = new List<CActor>();
-        private Dictionary<int, CComponent> _componentRegistry = new Dictionary<int, CComponent>();
+        private List<CComponent> _componentRegistry = new List<CComponent>();
         private Gears.Cartography.Map _internalMap;
         private Graphics.CSprite _tileIndex = null;
 
@@ -87,7 +87,7 @@ namespace King_of_Thieves.Map
 
                         }
                         //register component
-                        _componentRegistry.Add((int)componentAddresses, tempComp);
+                        _componentRegistry.Add(tempComp);
                         CMasterControl.commNet.Add((int)componentAddresses++, new List<CActorPacket>());
                         compList[componentCount++] = tempComp;
 
@@ -97,6 +97,16 @@ namespace King_of_Thieves.Map
 
             }
 
+        }
+
+        public void addComponent(CComponent component, int layer)
+        {
+            _layers[layer].addComponent(component);
+        }
+
+        public void removeComponent(CComponent component, int layer)
+        {
+            _layers[layer].removeComponent(component);
         }
 
         public void draw()
@@ -109,6 +119,15 @@ namespace King_of_Thieves.Map
 
         public void update(GameTime gameTime)
         {
+            //check for components from last frame that need to be removed
+            var removeUs = from component in _componentRegistry
+                           where component.killMe == true
+                           select component;
+
+            foreach (Actors.CComponent component in removeUs)
+                removeComponent(component, component.layer);
+            
+
             foreach (CLayer layer in _layers)
                 layer.updateLayer(gameTime);
         }
@@ -130,24 +149,5 @@ namespace King_of_Thieves.Map
             serializer.Serialize(writer, this);
             writer.Close();
         }
-
-        public void addActorToComponent(int componentAddress, CActor actor)
-        {
-            _componentRegistry[componentAddress].actors.Add(actor.name, actor);
-        }
-
-        public CActor removeActorFromComponent(int componentAddress, CActor actor)
-        {
-            
-            var toRemove = _componentRegistry[componentAddress].actors.Where(pair => pair.Value == actor)
-                         .Select(pair => pair)
-                         .ToList();
-
-            CActor outPut = toRemove[0].Value;
-            _componentRegistry[componentAddress].actors.Remove(toRemove[0].Key);
-            return outPut;
-        }
-
-       
     }
 }

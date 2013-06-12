@@ -13,6 +13,13 @@ namespace King_of_Thieves.Actors.Items.decoration
             _hitBox = new Collision.CHitBox(this, 16, 32, 16, 16);
 
             swapImage("PotChillinLikeaVillain");
+            _velocity = new Microsoft.Xna.Framework.Vector2(1.5f, 1);
+        }
+
+        public override void timer1(object sender)
+        {
+            base.timer1(sender);
+            swapImage("PotBreaking");
         }
 
         protected override void _initializeResources()

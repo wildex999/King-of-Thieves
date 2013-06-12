@@ -47,6 +47,7 @@ namespace King_of_Thieves.Sound
             soundBank.Add("Player:Attack3", new CSound(CMasterControl.glblContent.Load<SoundEffect>("sounds/linkAttack3")));
             soundBank.Add("Player:Attack4", new CSound(CMasterControl.glblContent.Load<SoundEffect>("sounds/linkAttack4")));
             soundBank.Add("Player:SwordSlash", new CSound(CMasterControl.glblContent.Load<SoundEffect>("sounds/linkSwordSlash")));
+            soundBank.Add("Items:Decor:ItemSmash", new CSound(CMasterControl.glblContent.Load<SoundEffect>("sounds/MC_Shatter")));
         }
 
         public void stop()

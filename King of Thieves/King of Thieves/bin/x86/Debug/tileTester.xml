@@ -19,9 +19,13 @@
 			<tile coordinates = "12:3" selection = "0:12"></tile>
 		</tiles>
 		<components>
-		<component>
+			<component>
 				<actors>
-					<actor name = "pot" type = "King_of_Thieves.Actors.Items.decoration.CPot" coordinates = "100:96"></actor>
+					<actor name = "potRoot" type = "King_of_Thieves.Actors.Items.decoration.CPot" coordinates = "100:96"></actor>
+				</actors>
+			</component>
+			<component>
+				<actors>
 					<actor name = "pot" type = "King_of_Thieves.Actors.Items.decoration.CPot" coordinates = "20:96"></actor>
 				</actors>
 			</component>

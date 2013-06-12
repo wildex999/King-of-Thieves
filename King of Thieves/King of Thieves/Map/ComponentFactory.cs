@@ -12,6 +12,16 @@ namespace King_of_Thieves.Map
             base.Register(components);
         }
 
+        public void addComponent(Actors.CComponent component)
+        {
+            AddUnit(component);
+        }
+
+        public void removeComponent(Actors.CComponent component)
+        {
+            RemoveUnit(component);
+        }
+
         //public Actors.CComponent components
         //{
         //    get

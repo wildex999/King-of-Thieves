@@ -17,6 +17,10 @@ namespace King_of_Thieves.Actors
         public Dictionary<string, CActor> actors;
         private uint _address;
         private uint currentDrawHeight;
+        public bool enabled = true;
+        private List<CActor> _removeThese = new List<CActor>();
+        private bool _killMe = false;
+        public int layer = 0;
 
         protected override string TextureFileLocation
         {
@@ -29,46 +33,77 @@ namespace King_of_Thieves.Actors
             _address = address;
         }
 
-        private void passMessage(ref CActor actor, uint eventID, params object[] param)
+        public bool killMe
         {
-            actor.addFireTrigger(eventID);
+            get
+            {
+                return _killMe;
+            }
+        }
+
+        private void passMessage(ref CActor actor, CActor sender, uint eventID, params object[] param)
+        {
+            actor.addFireTrigger(eventID, sender);
             actor.userParams.AddRange(param);
         }
 
         public override void Update(GameTime gameTime)
         {
-            root.update(gameTime);
-
-            foreach (KeyValuePair<string, CActor> kvp in actors)
+            if (enabled)
             {
-                //first get messages from the commNet
-                if (CMasterControl.commNet[(int)_address].Count() > 0)
+
+                if (root.killMe)
                 {
-                    CActorPacket[] packetData = new CActorPacket[CMasterControl.commNet[(int)_address].Count()];
-                    CMasterControl.commNet[(int)_address].CopyTo(packetData);
-
-                    var group = from packets in packetData
-                                where kvp.Key == packets.actor
-                                select packets;
-
-                    foreach (var result in group)
-                    {
-                        
-                        //pass the message to the actor
-                        CActor temp = kvp.Value;
-                        passMessage(ref temp, (uint)result.userEventID, result.getParams());
-                        CMasterControl.commNet[(int)_address].Remove(result);
-                        
-                    }
-          
+                    removeActor(root);
                 }
+                else
+                {
+                    root.update(gameTime);
 
-                //update position relative to the root
-                if (kvp.Value._followRoot)
-                    kvp.Value.position += root.distanceFromLastFrame;
+                    foreach (KeyValuePair<string, CActor> kvp in actors)
+                    {
+                        if (kvp.Value.killMe)
+                        {
+                            removeActor(kvp.Value, true);
+                            continue;
+                        }
 
-                //update
-                kvp.Value.update(gameTime);
+                        //first get messages from the commNet
+                        if (CMasterControl.commNet[(int)_address].Count() > 0)
+                        {
+                            CActorPacket[] packetData = new CActorPacket[CMasterControl.commNet[(int)_address].Count()];
+                            CMasterControl.commNet[(int)_address].CopyTo(packetData);
+
+                            var group = from packets in packetData
+                                        where kvp.Key == packets.actor
+                                        select packets;
+
+                            
+                                foreach (var result in group)
+                                {
+
+                                    //pass the message to the actor
+                                    CActor temp = kvp.Value;
+                                    passMessage(ref temp, result.sender, (uint)result.userEventID, result.getParams());
+                                    CMasterControl.commNet[(int)_address].Remove(result);
+                                }
+                            
+
+                        }
+
+                        //update position relative to the root
+                        if (kvp.Value._followRoot)
+                            kvp.Value.position += root.distanceFromLastFrame;
+
+                        //update
+                        kvp.Value.update(gameTime);
+                    }
+                    //remove any actors that are to be removed
+                    for (int i = 0; i < _removeThese.Count(); i++)
+                        removeActor(_removeThese[i]);
+
+                    _removeThese.Clear();
+                }
             }
         }
 
@@ -77,12 +112,15 @@ namespace King_of_Thieves.Actors
             currentDrawHeight = 0;
             foreach (KeyValuePair<string, CActor> kvp in actors)
             {
-                if(rootDrawHeight == currentDrawHeight++)
-                    root.drawMe();
-                kvp.Value.drawMe();
+                if (!kvp.Value.killMe)
+                {
+                    if (!root.killMe && rootDrawHeight == currentDrawHeight++)
+                        root.drawMe();
+                    kvp.Value.drawMe();
+                }
             }
             //If root is last
-            if (rootDrawHeight == currentDrawHeight)
+            if (root != null && !root.killMe && rootDrawHeight == currentDrawHeight)
                 root.drawMe();
         }
 
@@ -101,29 +139,50 @@ namespace King_of_Thieves.Actors
             if (root != null)
                 actors.Add(name, actor);
             else
+            {
+                layer = actor.layer;
                 root = actor;
+            }
             //Allow actor to access it's component
             actor.component = this;
         }
 
-        public void removeActor(CActor actor)
+        public void removeActor(CActor actor, bool nextCycle = false)
         {
-            if (actor.component == this)
+            if (!nextCycle)
             {
-                //If we are removing the root, we need to add the next actor as root
-                if (root == actor)
+                ////If we are removing the root, we need to add the next actor as root
+                //if (root == actor)
+                //{
+                    
+                //    root = actors.GetEnumerator().Current.Value;
+                //    actors.Remove(root.name);
+                //    //This will fail if there are no more root, but in that case we can't realy do much, nor should that happen.
+                //}
+                //else
+                //{
+                //    actor.component = null;
+                //    actors.Remove(actor.name);
+                //}
+                if (actor == root)
                 {
-                    root = actors.GetEnumerator().Current.Value;
-                    actors.Remove(root.name);
-                    //This will fail if there are no more root, but in that case we can't realy do much, nor should that happen.
+                    root = null;
+                    _killMe = true;
                 }
                 else
                 {
-                    actor.component = null;
-                    actors.Remove(actor.name);
+                    try
+                    {
+                        actors.Remove(actor.name);
+                        actor.component = null;
+                    }
+                    catch (KeyNotFoundException) { }
                 }
             }
+            else
+                _removeThese.Add(actor);
         }
+        
 
 
     }

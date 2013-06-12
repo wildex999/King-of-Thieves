@@ -71,12 +71,12 @@ namespace King_of_Thieves.Actors.NPC.Enemies.Chuchus
             }
         }
 
-        public override void timer0(object sender, System.Timers.ElapsedEventArgs e)
+        public override void timer0(object sender)
         {
-            base.timer0(sender, e);
+            
             _state = "popdown";
             swapImage("chuChuPopDown", false);
-
+            base.timer0(sender);
         }
 
         protected override void chase()

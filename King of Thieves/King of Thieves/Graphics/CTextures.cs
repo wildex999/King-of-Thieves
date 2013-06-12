@@ -43,15 +43,28 @@ namespace King_of_Thieves.Graphics
             textures.Add("Player:RollUp", new CTextureAtlas("Player", 32, 32, 1, "40:13", "47:13", 15));
             textures.Add("Player:RollLeft", new CTextureAtlas("Player", 32, 32, 1, "40:14", "46:14", 15));
             textures.Add("Player:LiftDown", new CTextureAtlas("Player", 32, 32, 1, "0:29", "4:29", 10));
+            textures.Add("Player:LiftUp", new CTextureAtlas("Player", 32, 32, 1, "0:31", "4:31", 10));
+            textures.Add("Player:LiftLeft", new CTextureAtlas("Player", 32, 32, 1, "0:30", "4:30", 10));
+            textures.Add("Player:CarryDown", new CTextureAtlas("Player", 32, 32, 1, "0:32", "9:32", 15));
+            textures.Add("Player:CarryUp", new CTextureAtlas("Player", 32, 32, 1, "0:34", "9:34", 15));
+            textures.Add("Player:CarryLeft", new CTextureAtlas("Player", 32, 32, 1, "0:33", "9:33", 15));
+            textures.Add("Player:LiftIdleDown", new CTextureAtlas("Player", 32, 32, 1, "4:29", "4:29", 0));
+            textures.Add("Player:LiftIdleUp", new CTextureAtlas("Player", 32, 32, 1, "4:31", "4:31", 0));
+            textures.Add("Player:LiftIdleLeft", new CTextureAtlas("Player", 32, 32, 1, "4:30", "4:30", 0));
+            textures.Add("Player:ThrowDown", new CTextureAtlas("Player", 32, 32, 1, "5:29", "8:29", 10));
+            textures.Add("Player:ThrowUp", new CTextureAtlas("Player", 32, 32, 1, "5:31", "8:31", 10));
+            textures.Add("Player:ThrowLeft", new CTextureAtlas("Player", 32, 32, 1, "5:30", "8:30", 10));
 
             textures.Add("GerudoSword:SwingDown", new CTextureAtlas("Swords", 64, 64, 1, "0:0", "7:0", 55));
             textures.Add("GerudoSword:SwingUp", new CTextureAtlas("Swords", 64, 64, 1, "0:1", "7:1", 55));
             textures.Add("GerudoSword:SwingRight", new CTextureAtlas("Swords", 64, 64, 1, "0:2", "7:2", 55));
+
             textures.Add("chuChu:Wobble", new CTextureAtlas("chuchuGreen", 32, 32, 1, "0:0", "15:0", 12));
             textures.Add("chuChu:Idle", new CTextureAtlas("chuchuGreen", 32, 32, 1, "0:1", "7:1", 5));
             textures.Add("chuChu:PopUp", new CTextureAtlas("chuchuGreen", 32, 32, 1, "8:1", "10:1", 5));
             textures.Add("chuChu:Hop", new CTextureAtlas("chuchuGreen", 32, 32, 1, "0:2", "6:2", 7));
             textures.Add("chuChu:PopDown", new CTextureAtlas("chuchuGreen", 32, 32, 1, "7:2", "9:2", 5));
+
             textures.Add("keese:Idle", new CTextureAtlas("keese", 32, 32, 1, "0:0", "0:0"));
             textures.Add("keese:Fly", new CTextureAtlas("keese", 32, 32, 1, "1:0", "5:0",15));
             textures.Add("keeseFire:Idle", new CTextureAtlas("keese", 32, 32, 1, "0:1", "0:1"));
@@ -79,7 +92,7 @@ namespace King_of_Thieves.Graphics
 
             //items and shit
             textures.Add("items:decor:potSmall", new CTextureAtlas("potSmall", 48, 48, 1, "0:0", "0:0"));
-            textures.Add("items:decor:potSmallBreak", new CTextureAtlas("potSmall", 48, 48, 1, "1:0", "8:0",5));
+            textures.Add("items:decor:potSmallBreak", new CTextureAtlas("potSmall", 48, 48, 1, "1:0", "8:0",10));
         }
 
         private static void _prepareTextures()
